@@ -3,6 +3,9 @@
  */
 
 var mongoose = require('mongoose');
+
+var ObjectId = mongoose.Schema.Types.ObjectId;
+
 var BlogSchema = new mongoose.Schema({
     title: { type: String, index: true },
     content:{ type: String},
