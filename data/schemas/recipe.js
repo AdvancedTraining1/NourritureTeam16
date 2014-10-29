@@ -11,17 +11,17 @@ var RecipeSchema = new mongoose.Schema({
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
     author: {
-        id: ObjectId,
+        id: String,
         account: String },
 
     praiseList:{
-        id: ObjectId,
+        id: String,
         account: String
     },
 
     product:{
         author:{
-            id: ObjectId,
+            id: String,
             account: String
         },
         time: { type: Date, default: Date.now },
@@ -30,7 +30,7 @@ var RecipeSchema = new mongoose.Schema({
         like_count: { type: Number, default: 0 }
     },
 
-    comment_list: { type:ObjectId},
+    comment_list: { type:String},
 
     praise_count: { type: Number, default: 0 },
     favorite_count:{ type: Number, default: 0 },
