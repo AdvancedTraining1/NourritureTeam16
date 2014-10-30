@@ -1,7 +1,10 @@
 /**
  * Created by mengchi on 14-10-29.
  */
+
 var mongoose = require('mongoose');
+
+//the url of DB
 var dbURL = 'mongodb://localhost/nourrituredatabase';
 mongoose.connect(dbURL);
 // reference to the database connection 为这个连接创建一个引用
