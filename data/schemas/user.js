@@ -12,11 +12,11 @@ var UserSchema = new mongoose.Schema({
     sex: { type: Number },
     head:{ type:String },
     friends: {
-        id: ObjectId,
+        //id: ObjectId,
         account : String
     },
     fans:{
-        id: ObjectId,
+        //id: ObjectId,
         account : String
     },
 
