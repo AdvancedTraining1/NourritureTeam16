@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose');
+
 var SeasonFoodSchema = new mongoose.Schema({
     name: { type: String, index: true },
     month:{ type: String },

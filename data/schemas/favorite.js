@@ -3,6 +3,8 @@
  */
 
 var mongoose = require('mongoose');
+
+var ObjectId = mongoose.Schema.Types.ObjectId;
 var FavoriteSchema = new mongoose.Schema({
     user_id: { type: ObjectId },
     type:{ type:Number },
