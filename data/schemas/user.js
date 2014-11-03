@@ -3,7 +3,7 @@
  */
 
 var mongoose = require('mongoose');
-//var ObjectId = mongoose.Schema.Types.ObjectId;
+var ObjectId = mongoose.Schema.Types.ObjectId;
 var UserSchema = new mongoose.Schema({
     username: { type: String, index: true },
     account: { type: String, unique: true },

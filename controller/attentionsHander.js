@@ -10,20 +10,20 @@ function AttentionsHander(){
 
 AttentionsHander.addUser=function(req,res){
     var user = new Attentions({
-        username: "zhaiyuan",
-        account: "zhaiyuan",
-        password: "zhaiyuan",
+        username: "mengchi",
+        account: "mengchi",
+        password: "mengchi",
         type: 0,
-        phone: "15201346036",
+        phone: "15201345941",
         sex: 0,
-        head:"1.img",
+        head:"2.img",
         friends: {
-            //id: ObjectId,
-            account : "mengchi"
+            _id: 1,
+            account : "zhaiyuan"
         },
         fans:{
-            //id: ObjectId,
-            account : "mengchi"
+            _id: 1,
+            account : "zhaiyuan"
         },
 
         recipe_count: 2,
