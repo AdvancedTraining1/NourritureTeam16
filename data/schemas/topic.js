@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 var TopicSchema = new mongoose.Schema({
     topicName:{ type: String, unique: true },
     content: String,
