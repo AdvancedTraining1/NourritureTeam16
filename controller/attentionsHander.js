@@ -9,12 +9,15 @@ function AttentionsHander(){
 }
 
 AttentionsHander.addUser=function(req,res){
+    var username = req.param('username');
+    var password = req.param('password');
+
     var user = new Attentions({
-        username: "mengchi",
-        account: "mengchi",
-        password: "mengchi",
+        username: username,
+        account: "aa",
+        password: password,
         type: 0,
-        phone: "15201345941",
+        phone: "15201340000",
         sex: 0,
         head:"2.img",
         friends: {
@@ -40,6 +43,7 @@ AttentionsHander.addUser=function(req,res){
         }
         console.log(newuser)
         res.json(201, newuser);
+        res.render('index');
     });
 };
 
