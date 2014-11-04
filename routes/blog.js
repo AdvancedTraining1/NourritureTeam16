@@ -34,6 +34,7 @@ router.get("/",function(req,res){
 router.get('/createBlog', function(req, res) {
     res.render('createBlog');
 });
+router.get('/showBlogDetail',BlogsHander.getABlogs)
 router.get('/showBlogList',BlogsHander.getAllBlogs);
 router.post('/publishBlog',BlogsHander.publishABlog);
 router.post('/saveBlog',BlogsHander.saveABlog);
