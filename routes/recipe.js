@@ -1,7 +1,10 @@
 /*
- * GET users listing.
+ * chenmm
+ * 2014/10/31
+ * 菜谱
  */
 
+var db = require('../util/database')
 var Recipe = require("./../data/models/recipe");
 var path = require('path');
 
