@@ -21,5 +21,12 @@ CommentDao.delete = function (conditions,callback) {
     });
 }
 
+// chenmm.add.start 2014/11/07 加入方法：列举一个菜谱的评论
+CommentDao.listComment = function (recipeId,callback) {
+    CommentModel.find({"replyId":recipeId}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
+        if(error) return callback(error,null);
 
-module.exports = CommentDao;
+        return callback(null, recipe);
+    });
+}
+// chenmm.add.end 2014/11/07
