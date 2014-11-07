@@ -9,6 +9,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var BlogSchema = new mongoose.Schema({
     title: { type: String, index: true },
     content:{ type: String},
+    type:{type:String},
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
     author: {

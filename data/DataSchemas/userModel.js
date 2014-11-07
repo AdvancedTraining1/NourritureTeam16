@@ -11,7 +11,7 @@ var UserSchema = new mongoose.Schema({
     type: { type: Number },
     phone: { type: String, unique: true },
     sex: { type: Number },
-    head:{ type:String },
+    head:{ type: String },
     friends: {
         id: ObjectId,
         account : String

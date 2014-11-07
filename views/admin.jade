@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to operate
+  body
+    form(id = "formchoose")
+        请选择你需要的操作:
+        br
+        input(type = "button" id = "add_user" value = "添加用户" onclick = "location.href = '/admin/add';")
+        &nbsp
+        //a(href="http://localhost:3000/admin/add") foo
+        input(type = "button" id = "remove_user" value = "删除用户" onclick = "location.href = '/admin/add';")
+        &nbsp
+        input(type = "button" id = "modify_user" value = "修改用户" onclick = "location.href = '/admin/add';")
+        //input(type = "button" id = "modify_user" value = "修改用户" onclick = "window.open('/admin/add','_blank');")  
+    output(id="result")
