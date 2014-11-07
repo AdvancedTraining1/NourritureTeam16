@@ -6,6 +6,9 @@
 var express = require('express');
 var router = express.Router();
 var adminHandler = require('../controller/adminHandler');
+var topicHandler = require('../controller/topicHandler');
+var commentHandler = require('../controller/commentHandler');
+var seasonHandler = require('../controller/seasonHandler');
 
 /* GET admin page. */
 router.get('/', function(req, res) {
@@ -17,6 +20,29 @@ router.get('/add', function(req, res) {
 });
 
 router.post('/add',adminHandler.addUser);
+router.get('/getAllUsers',adminHandler.getAllUsers);
+router.post('/delete',adminHandler.deleteUser);
+router.post('/getUserById',adminHandler.getUserById);
+router.post('/updateUser',adminHandler.updateUser);
+
+/*
+对评论的操作
+* */
+router.post('/comment/delete',commentHandler.delete);
+
+/*
+对topic的操作
+* */
+router.post('/addTopic',topicHandler.add);
+router.post('/getAllTopic',topicHandler.getAll);
+router.post('/searchTopic',topicHandler.searchTopic);
+
+/*
+对时另食物的操作
+* */
+router.post('/addSeason',seasonHandler.add);
+router.post('/getAllSeason',seasonHandler.getAll);
+router.post('/searchSeason',seasonHandler.searchSeasonFood);
 
 //传统的方法链接数据库
 //var mongo = require('mongodb');

@@ -28,8 +28,9 @@ RecipeDao.update = function(recipe,recipeNew,callback){
 }
 
 RecipeDao.delete = function (list,callback) {
-    Recipe.remove({_id:{$in:list}}).exec(function(error,recipe){
+    Recipe.remove({account:{$in:list}}).exec(function(error,recipe){
         if(error) return callback(error,null);
+
 
         return callback(null, recipe);
     });

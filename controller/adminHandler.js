@@ -1,9 +1,10 @@
 /**
  * Created by huhao on 14-11-06.
  */
-
+var mongoose = require('mongoose');
 var userModel = require('../data').user;
 var UserDao = require("../dao/UserDao");
+var TopicDao = require('../dao/TopicDao');
 
 //构造
 function AdminHandler()
@@ -24,24 +25,122 @@ AdminHandler.addUser = function(req, res)
             if(err)
             {
                 console.log(err);
+
             }else
             {
+
+                console.log(data);
+
+            }
+
+        });
+        res.send(str);
+
+
+
+    });
+};
+
+AdminHandler.updateUser = function(req, res)
+{
+    req.on('data',function(data)
+    {
+        var obj = JSON.parse(data.toString());
+        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+
+        var conditions = {account : "12221"};
+        var update = {$set : {phone : "12345",sex : "0"}};
+        var options = {update : true};
+        UserDao.update(conditions,update,options,function (err, data)
+        {
+            if(err)
+            {
+                console.log(err);
+
+            }else
+            {
+
+                console.log(data);
+
+            }
+
+        });
+        res.send(str);
+
+
+    });
+};
+
+AdminHandler.getAllUsers = function(req,res)
+{
+    UserDao.getAllUsers(function (err, data)
+    {
+        if(err)
+        {
+            console.log(err);
+
+        }else
+        {
+
+            console.log(data);
+
+        }
+
+
+
+    });
+}
+
+AdminHandler.getUserById = function(req,res)
+{
+    req.on('data',function(data)
+    {
+        var obj = JSON.parse(data.toString());
+        var id = obj.userid;
+        UserDao.getUserById(12221,function (err, data)
+        {
+            if(err)
+            {
+                console.log(err);
+
+            }else
+            {
+                //console.log('3432');
                 console.log(data);
             }
 
         });
+        res.send(obj.userid);
 
-//        user.save(function (err) {
-//            console.log(err);
-//        });
-
-//        userModel.find({username: 'userName1'}, function (err, admin) {
-//            console.log("find it")
-//        });
-
-        res.send(str);
     });
-};
+}
+
+
+AdminHandler.deleteUser = function(req,res)
+{
+    req.on('data',function(data)
+    {
+        var id =[];
+        var obj = JSON.parse(data.toString());
+        id[0] = obj.userid;
+        UserDao.delete(id,function (err, data)
+        {
+            if(err)
+            {
+                console.log(err);
+
+            }else
+            {
+
+                console.log(data);
+            }
+
+        });
+        res.send(obj.userid);
+
+    });
+
+}
 
 function createUser()
 {
@@ -71,5 +170,6 @@ function createUser()
 
     return user;
 };
+
 
 module.exports = AdminHandler;

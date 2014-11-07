@@ -16,9 +16,53 @@ UserDao.save = function (obj,callback)
     obj.save(function (err) {
         if (err)
             callback(err,null);
-        callback(null,"UserDao.prototype.save success");
+        else
+            callback(null,'UserDao.prototype.save success');
     });
 };
+
+UserDao.getAllUsers = function (callback)
+{
+    UsersModel.find({},function(err,users) {
+        if (err) {
+            callback(err,null);
+            return;
+        }
+        if (!users) {
+           callback(null,"UserDao.getAllUsers no users");
+            return;
+        }
+        callback(null,users);
+
+    });
+
+};
+
+UserDao.delete = function (list,callback) {
+    UsersModel.remove({account:{$in:list}}).exec(function(error,user){
+        if(error) return callback(error,null);
+
+        return callback(null, user);
+        //return callback(null, 'RecipeDao.delete success');
+    });
+}
+
+UserDao.update = function (conditions,update,options,callback) {
+    UsersModel.update(conditions,update,options).exec(function(error,data){
+        if(error) return callback(error,null);
+
+        return callback(null, 'UserDao.update success');
+        //return callback(null, 'RecipeDao.delete success');
+    });
+}
+
+UserDao.getUserById = function (userId,callback) {
+    UsersModel.find({"account":userId}).exec(function(error,user){
+        if(error) return callback(error,null);
+
+        return callback(null, user);
+    });
+}
 
 module.exports = UserDao;
 //UsersDAO.getById = function (id, callback) {

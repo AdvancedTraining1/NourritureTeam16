@@ -29,10 +29,11 @@ block content
         name:document.getElementById("txt_name").value,
         tel:document.getElementById("txt_cellphone").value,
         account:document.getElementById("txt_account").value,
-        type:ListBox.options[index].getAttribute("value")
+        type:ListBox.options[index].getAttribute("value"),
+        userid:ListBox.options[index].getAttribute("value")
       };
       var xhr = new XMLHttpRequest();
-      xhr.open('post','/admin/add',true);
+      xhr.open('post','/admin/getAllSeason',true);
       xhr.onload = function(e)
       {
 
