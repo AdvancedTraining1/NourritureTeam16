@@ -1,29 +1,14 @@
 /**
- * Created by zhaiyuan on 2014-10-20.
+ * Created by zhaiyuan on 2014-11-01.
  */
 var express = require('express');
 var router = express.Router();
+var AttentionsHander = require('../controller/attentionsHander');
 
-
-attentions = ['用户1','用户2','用户3'];
 /* GET home page. */
-router.get('/', function(req, res){
-    getAllAttentions(req,res, function(err, user){
-        if (err) return next(err);
-        res.send(req.allAttentions);
-    });
-});
-
-function getAllAttentions(req,res, next) {
-    console.log("查看我关注的人...");
-    if (attentions) {
-        req.allAttentions = attentions;
-        next();
-    } else {
-        console.log('还未关注任何人');
-    }
-}
-
-
+router.get('/addUser',AttentionsHander.addUser);
+router.get('/getAllAttentions',AttentionsHander.getAllAttentions);
+router.get('/addAttentions',AttentionsHander.addAttentions);
+router.get('/deleteAttentions',AttentionsHander.deleteAttentions);
 
 module.exports = router;

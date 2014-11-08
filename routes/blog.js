@@ -34,10 +34,13 @@ router.get("/",function(req,res){
 router.get('/createBlog', function(req, res) {
     res.render('createBlog');
 });
-router.get('/showBlogDetail',BlogsHander.getABlogs)
+router.get('/showBlogDetail/:blog_id',BlogsHander.getABlogs)
 router.get('/showBlogList',BlogsHander.getAllBlogs);
 router.post('/publishBlog',BlogsHander.publishABlog);
 router.post('/saveBlog',BlogsHander.saveABlog);
-router.post('/modifyBlog',BlogsHander.modifyABlog);
-
+router.get('/modifyBlog/:blog_id',BlogsHander.modifyBlog);
+router.post('/saveModifyBlog',BlogsHander.saveModifyBlog);
+router.get('/deleteBlog/:blog_id',BlogsHander.deleteBlog);
+router.get('/collectionBlog/:blog_id',BlogsHander.collectionBlog);
+router.get('/cancellationBlog/:blog_id',BlogsHander.cancellationBlog);
 module.exports = router;
