@@ -16,10 +16,10 @@ var UserSchema = new mongoose.Schema({
         id: ObjectId,
         account : String
     },
-    fans:{
+    fans:[{
         id: ObjectId,
         account : String
-    },
+    }],
 
     recipe_count: { type: Number, default: 0 },
     topic_count: { type: Number, default: 0 },

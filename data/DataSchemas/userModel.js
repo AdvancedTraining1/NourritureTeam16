@@ -13,12 +13,14 @@ var UserSchema = new mongoose.Schema({
     sex: { type: Number },
     head:{ type: String },
     friends: {
-        id: ObjectId,
-        account : String
+        _id: ObjectId,
+        account : String,
+        head: String
     },
     fans:{
-        id: ObjectId,
-        account : String
+        _id: ObjectId,
+        account : String,
+        head: String
     },
 
     recipe_count: { type: Number, default: 0 },

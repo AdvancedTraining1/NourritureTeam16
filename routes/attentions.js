@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var AttentionsHander = require('../controller/attentionsHander');
+var AttentionsHandler = require('../controller/attentionsHandler');
 
 /* GET home page. */
 router.get("/",function(req,res){
@@ -14,9 +14,9 @@ router.get("/",function(req,res){
 router.get('/register',function(req,res){
     res.render('register');
 });
-router.post('/addUser',AttentionsHander.addUser);
-router.get('/getAllAttentions',AttentionsHander.getAllAttentions);
-router.post('/addAttentions',AttentionsHander.addAttentions);
-router.post('/deleteAttentions',AttentionsHander.deleteAttentions);
+router.post('/addUser',AttentionsHandler.addUser);
+router.get('/getAllAttentions/:queryStr',AttentionsHandler.getAllAttentions);
+router.get('/addAttentions/',AttentionsHandler.addAttentions);
+router.post('/deleteAttentions/',AttentionsHandler.deleteAttentions);
 
 module.exports = router;
