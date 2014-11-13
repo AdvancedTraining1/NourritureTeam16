@@ -16,8 +16,8 @@ router.get("/",function(req,res){
             message="save successful";
         }
     });*/
-    req.session.user_id = "5457938cdde4219d2ff330c3";
-    req.session.account = "testAccount";
+    req.session.user_id = "54578976af75277b630cc379";
+    req.session.account = "zhaiyuan";
 
     console.log(req.session.user_id);
     /*var User = require('../data/models/user');
