@@ -17,6 +17,6 @@ router.get('/register',function(req,res){
 router.post('/addUser',AttentionsHandler.addUser);
 router.get('/getAllAttentions/:queryStr',AttentionsHandler.getAllAttentions);
 router.get('/addAttentions/',AttentionsHandler.addAttentions);
-router.post('/deleteAttentions/',AttentionsHandler.deleteAttentions);
+router.get('/deleteAttentions/',AttentionsHandler.deleteAttentions);
 
 module.exports = router;
