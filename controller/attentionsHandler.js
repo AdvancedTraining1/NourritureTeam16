@@ -6,11 +6,14 @@ var db = require('../util/database')
 var AttentionsDao = require("../dao/AttentionsDao");
 var Attentions = require('../data/models/user');
 var CommentDao = require("../dao/CommentDao");
+var CommentToBlogDao = require("../dao/CommentToBlogDao");
+var RecipeDao = require("../dao/RecipeDao");
 
 var User = require("./../data").user;
 var Blog = require("./../data").blog;
 var Recipe = require("./../data").Recipe;
 var Topic = require("./../data").topic;
+var CommentToBlogModel =require("./../data").CommentToBlog;
 
 var querystring = require('querystring');
 var fs = require('fs');
@@ -189,19 +192,24 @@ AttentionsHandler.lookFriendStatus=function(req,res){
 
 
 AttentionsHandler.lookOneFriendStatus=function(req,res) {
-    console.log("查看具体好友动态");
+    console.log("查看具体好友动态");                   //a little problem to do more
 
-    var statusId = "5464f8be636edfe9339fe0b0";//blog,topic or recipe id
+    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
 
     /*Blog.find({_id: statusId}, function (err, blog) {
-        res.json(blog);
-
+        //res.json(blog);
+        CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
+            CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
+            if(error) return callback(error,null);
+                return callback(null, comments);
+            });
+        };
 
     });*/
 
 
     Recipe.find({_id: statusId}, function (err, recipe) {
-        res.json(recipe);
+        //res.write(recipe);
 
         CommentDao.listComment(statusId,function (err, commentList) {
             res.json(commentList);
@@ -210,9 +218,108 @@ AttentionsHandler.lookOneFriendStatus=function(req,res) {
     });
 
    /*
-    Topic.find({_id: statusId}, function (err, topic) {
+    Topic.find({_id: statusId}, function (err, topic) {    //topic problem
         res.json(topic);
     });*/
+
+};
+
+AttentionsHandler.commentStatus=function(req,res) {
+    console.log("评论状态");
+
+    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+
+    /*Blog.find({_id: statusId}, function (err, blog) {               //interface mc
+     //res.json(blog);
+     CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
+     CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
+     if(error) return callback(error,null);
+     return callback(null, comments);
+     });
+     };
+
+     });*/
+
+
+    RecipeDao.comment = function (id,comment,callback) {
+        Recipe.findByIdAndUpdate(id,{$push:comment},function(error,recipe){
+            if(error) return callback(error,null);
+
+            return callback(null, recipe);
+        });
+    }
+
+    /*
+     Topic.find({_id: statusId}, function (err, topic) {    //interface mc
+     res.json(topic);
+     });*/
+
+};
+
+
+AttentionsHandler.likeStatus=function(req,res) {
+    console.log("点赞");
+
+    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+
+    /*Blog.find({_id: statusId}, function (err, blog) {                        //interface mc
+     //res.json(blog);
+     CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
+     CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
+     if(error) return callback(error,null);
+     return callback(null, comments);
+     });
+     };
+
+     });*/
+
+
+    /*Recipe.find({_id: statusId}, function (err, recipe) {             //no recipe,only product
+        //res.write(recipe);
+
+        CommentDao.listComment(statusId,function (err, commentList) {
+            res.json(commentList);
+        });
+
+    });
+*/
+    /*
+     Topic.find({_id: statusId}, function (err, topic) {    //interface mc
+     res.json(topic);
+     });*/
+
+};
+
+AttentionsHandler.cancelLike=function(req,res) {
+    console.log("取消点赞");
+
+    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+
+    /*Blog.find({_id: statusId}, function (err, blog) {                   //interface mc
+     //res.json(blog);
+     CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
+     CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
+     if(error) return callback(error,null);
+     return callback(null, comments);
+     });
+     };
+
+     });*/
+
+
+    /*Recipe.find({_id: statusId}, function (err, recipe) {
+        //res.write(recipe);
+
+        CommentDao.listComment(statusId,function (err, commentList) {
+            res.json(commentList);
+        });
+
+    });*/
+
+    /*
+     Topic.find({_id: statusId}, function (err, topic) {    //interface mc
+     res.json(topic);
+     });*/
 
 };
 
