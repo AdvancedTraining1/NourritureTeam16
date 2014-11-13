@@ -8,3 +8,11 @@ block content
         h1=title
 
     p=content
+
+    form(method = "post", action="/blog/addCommentToBlog")
+        p
+            labe comment
+            </br/>
+            textarea(name="comment")
+            input(type="hidden" value="#{_id}",name="_id")
+            input(type="submit" value ="submit")

@@ -1,5 +1,4 @@
-.deal
-./view/createBlog2.jade
+.idea/
 node_modules/
-
-
+npm-debug.log
+./view/createBlog2

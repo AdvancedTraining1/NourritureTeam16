@@ -1,60 +1,31 @@
-/*
- * GET users listing.
+/**
+ * chenmm
+ * 2014/11/01
+ * 菜谱routes
  */
 
-var Recipe = require("./../data/models/recipe");
-var path = require('path');
+var recipe = require('./../controller/recipeHandler');
 
-exports.list = function (req, res) {
-    res.send("respond with a resource");
-};
+//查询方法全都需要分页
 
-exports.create = function (req, res) {
-    var createUser = new UsersModel(req.body);
-    UsersModel.findOne({name:req.body.name}, function (err, user) {
-        if (err)
-            return res.json({err:err});
-        if (user) {
-            return res.json({err:"用户名已经存在"});
-        }
-        createUser.save(function (err, user) {
-            if (err) {
-                return res.json({err:err});
-            }
-            req.session["user"] = user;
-            res.json();
-        });
-    });
+module.exports = function (app) {
+    app.get('/recipe/delete/:ids', recipe.deleteRecipe);
+    app.get('/recipe/showOne/:id', recipe.showOne);
 
-};
+    app.get('/recipe/listOwn/:authorId', recipe.listOwn);
+    app.get('/recipe/listAll', recipe.listAll);
+    app.get('/recipe/search/:queryStr', recipe.searchRecipe);
+    app.get('/recipe/listComment/:recipeId', recipe.listComment);
+    app.get('/recipe/listProduct/:recipeId',recipe.listProduct);
 
-exports.login = function (req, res) {
-    UsersModel.findOne({name:req.body.name}, function (err, user) {
-        if (err)
-            return res.json({err:err});
-        if (!user) {
-            return res.json({err:'用户名不存在'});
-        }
-        if (!user.authenticate(req.body.password))
-            return res.json({err:'密码错误'});
-        req.session["user"] = user;
-        res.json(user);
-    });
-};
+    app.post('/recipe/create', recipe.create);
+    app.post('/recipe/comment', recipe.comment);
+    app.post('/recipe/modify', recipe.modify);
+    app.post('/recipe/collect', recipe.collect);
+    app.post('/recipe/createProduct', recipe.createProduct);
+    app.post('/recipe/likeProduct', recipe.likeProduct);
+    app.post('/recipe/upload', recipe.upload);
 
-exports.logout = function (req, res) {
-    req.session["user"] = null;
-    var html = path.normalize(__dirname + '/../views/index.html');
-    res.sendfile(html);
-};
-
-exports.listAll = function (req, res){
-    console.log("----find recipe")
-    Recipe.find('',function (err , recipe) {
-	if(err)
-	    return res.json({err:err});
-	if(!recipe)
-	    return res.json({meg:'无菜谱'});
-	res.json(recipe);
-    });
+    //app.post('/recipe/share', recipe.share);
+    //app.get('/recipe/showByStep/:id/:step', recipe.showByStep);
 };

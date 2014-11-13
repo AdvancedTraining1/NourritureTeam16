@@ -3,7 +3,7 @@
  */
 
 var express = require('express')
-    , routes = require('./routes/recipeRoutes')
+    , routes = require('./routes/recipe')
     , user = require('./routes')
     , http = require('http')
     , path = require('path')
