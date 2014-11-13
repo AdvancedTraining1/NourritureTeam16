@@ -36,8 +36,8 @@ BlogHander.publishABlog=function(req,res){
         content: content,
         type:"1",
         author: {
-            id: req.session.user_id,
-            account: req.session.account }
+            id: "5457aa1f0233539703192dc9",
+            account: "mengchi" }
 
     });
     var message=""

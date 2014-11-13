@@ -328,7 +328,7 @@ function modifyRecipe(recipes,params){
     recipe.commentNum=2;
     recipe.productNum=2;
     recipe.flag = true;
-    recipe.author={id:"001",head:"headPath",account:"user1"};
+    recipe.author={id:"54578976af75277b630cc379",head:"1.img",account:"zhaiyuan"};
     var commentList0 = [];
     commentList0[0]={comment:"comment1",commentTime:new Date(),speakTo:"001"};
     commentList0[1]={comment:"comment2",commentTime:new Date(),speakTo:"002"};
