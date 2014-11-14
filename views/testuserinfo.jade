@@ -1,0 +1,12 @@
+extends layout
+block content
+    form(class="form-horizontal" method="post" action="/userinfo/register")
+        p 用户注册
+        label(for="username") 用户名
+        div.controls
+        input(type="text" id="username" name="username")
+        label(for="password") 密码
+        input(type="password" id="password" name="password")
+        label(for="password") 请再次输入密码
+        input(type="password" id="password-repeat" name="password-repeat")
+        button(type="submit") 注册

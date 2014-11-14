@@ -64,7 +64,7 @@ UserinfoHandler.login=function(req,res){
 
 };
 
-UserinfoHandler.modifypass=function(req,res){
+/*UserinfoHandler.modifypass=function(req,res){
     var username = req.param('password1');
     console.log("登陆handler");
     var user =UserDao.(username,password, function (err, user)
@@ -75,6 +75,6 @@ UserinfoHandler.modifypass=function(req,res){
         res.json(user);
     });
 
-};
+};*/
 
 module.exports = UserinfoHandler;
