@@ -240,7 +240,7 @@ AttentionsHandler.lookOneFriendStatus=function(req,res) {
 AttentionsHandler.commentStatus=function(req,res) {
     console.log("评论状态");
 
-    var statusId = "5464f8be636edfe9339fe0b1";
+    var statusId = "5464fcf129b38dda3894efdc";
     //  blog  5464d32def0a5efc057c384f
     // topic  5464fcf129b38dda3894efdc
     // or recipe id   5464f8be636edfe9339fe0b1
