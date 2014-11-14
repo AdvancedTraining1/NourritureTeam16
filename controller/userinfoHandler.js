@@ -54,27 +54,65 @@ UserinfoHandler.login=function(req,res){
     var username = req.param('username');
     var password = req.param('password');
     console.log("登陆handler");
-    var user =UserDao.getUserByAccountAndPass(username,password, function (err, user)
+    UserDao.getUserByAccountAndPass(username,password, function (err, user)
     {
-        req.session.user_id = user._id;
-        req.session.account = user.account;
-        req.session.userinfo=user;
-        res.json(user);
+        if(err)
+            console.log(err);
+        else {
+            req.session.user_id = user._id;
+            req.session.account = user.account;
+            res.json(user);
+        }
     });
 
 };
 
-/*UserinfoHandler.modifypass=function(req,res){
-    var username = req.param('password1');
-    console.log("登陆handler");
-    var user =UserDao.(username,password, function (err, user)
+UserinfoHandler.modifypass=function(req,res){
+    var oldpass = req.param('passwordold');
+    var newpass = req.param('passwordnew');
+    console.log("修改密码handler");
+
+    var conditions = {_id:req.session.user_id};
+    var update={"password":newpass};
+
+    var user =UserDao.update(conditions,update,null,function (err, message)
     {
-        req.session.user_id = user._id;
-        req.session.account = user.account;
-        req.session.userinfo=user;
-        res.json(user);
+        if(err)
+        {
+            console.log(err);
+
+        }else
+        {
+
+            res.json(message);
+
+        }
     });
 
-};*/
+};
+
+UserinfoHandler.modifyinfo=function(req,res){
+    var username = req.param('username');
+    var head = req.param('head');
+    console.log("修改个人信息handler");
+
+    var conditions = {_id:req.session.user_id};
+    var update={username:username,head:head};
+
+    var user =UserDao.update(conditions,update,null,function (err, message)
+    {
+        if(err)
+        {
+            console.log(err);
+
+        }else
+        {
+
+            res.json(message);
+
+        }
+    });
+
+};
 
 module.exports = UserinfoHandler;
