@@ -12,15 +12,6 @@ var TopicSchema = new mongoose.Schema({
         account: String },
     time: { type: Date, default: Date.now },
 
-    upload: {
-        author: {
-            id: ObjectId,
-            account: String },
-        picture : String,
-        upload_time: { type: Date, default: Date.now },
-        like_count: { type: Number, default: 0 }
-    },
-
     upload_count: { type: Number, default: 0 }
 });
 module.exports = TopicSchema;
