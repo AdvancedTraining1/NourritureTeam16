@@ -5,11 +5,44 @@
  */
 
 var DaoBase = require('./DaoBase');
-var topicModel = require('../data').topic;
+var topicModel = require('../data').Topic;
 
 var TopicDao = new DaoBase(topicModel);
 
 module.exports = TopicDao;
+
+
+TopicDao.create = function(topicNew,callback){
+    topicNew.save(function (error, newtopic){
+        if(error) return callback(error,null);
+
+        return callback(null, newtopic);
+    });
+}
+
+TopicDao.getAllTopics = function (callback)
+{
+    topicModel.find({},function(err,topics) {
+        if (err) {
+            callback(err,null);
+            return;
+        }
+        if (!topics) {
+            callback(null,"no topic");
+            return;
+        }
+        callback(null,topics);
+
+    });
+
+};
+TopicDao.getOne = function (id,callback) {
+    topicModel.findOne({_id:id}).exec(function(error,topic){
+        if(error) return callback(error,null);
+        return callback(null, topic);
+    });
+};
+
 
 TopicDao.save = function (obj,callback)
 {
@@ -21,22 +54,7 @@ TopicDao.save = function (obj,callback)
     });
 };
 
-TopicDao.getAllTopics = function (callback)
-{
-    topicModel.find({},function(err,ads) {
-        if (err) {
-            callback(err,null);
-            return;
-        }
-        if (!ads) {
-            callback(null,"TopicDao.getAllUsers no users");
-            return;
-        }
-        callback(null,ads);
 
-    });
-
-};
 
 TopicDao.delete = function (conditions,callback) {
     topicModel.remove(conditions).exec(function(error,user){

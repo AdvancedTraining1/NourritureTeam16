@@ -1,16 +1,19 @@
 /**
- * Created by mengchi on 14-10-17.
+ * Created by mengchi on 14-11-13.
  */
 
 var mongoose = require('mongoose');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var CommentSchema = new mongoose.Schema({
+var TopicUploadCommentSchema = new mongoose.Schema({
     author: {
         id: ObjectId,
         account: String },
     time: { type: Date, default: Date.now },
     content: String,
-    replyid: { type: ObjectId }
+    reply_id: { type: ObjectId },
+    topicUpload_id:{ type:ObjectId }
+
 });
-module.exports = CommentSchema
+
+module.exports = TopicUploadCommentSchema;
