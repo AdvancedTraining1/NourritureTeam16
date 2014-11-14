@@ -301,8 +301,30 @@ function modifyRecipe(recipes,params){
     recipe.commentNum=2;
     recipe.productNum=2;
     recipe.flag = true;
+<<<<<<< HEAD
     recipe.author={id:"001",head:"headPath",account:"user1"};
 
+=======
+    recipe.author={id:"54578976af75277b630cc379",head:"1.img",account:"zhaiyuan"};
+    var commentList0 = [];
+    commentList0[0]={comment:"comment1",commentTime:new Date(),speakTo:"001"};
+    commentList0[1]={comment:"comment2",commentTime:new Date(),speakTo:"002"};
+    recipe.commentList = commentList0;
+    var productList0 = [];
+    productList0[0]= {
+        author: {id: "001", head: "headPath", account: "user1"},
+        time: new Date(),
+        picture: "picturePath1",
+        content: "content1",
+        likeNum: 0,
+        likeList: [{
+            id: "001", head: "headPath", account: "user1"
+        }, {
+            id: "001", head: "headPath", account: "user1"
+        }]
+    };
+    recipe.productList=productList0;
+>>>>>>> 46d97e8e57123c7491f4debe9557de7f722c54bd
     return recipe;
 }
 

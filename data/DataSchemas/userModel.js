@@ -12,16 +12,16 @@ var UserSchema = new mongoose.Schema({
     phone: { type: String, unique: true },
     sex: { type: Number },
     head:{ type: String },
-    friends: {
+    friends: [{
         _id: ObjectId,
         account : String,
         head: String
-    },
-    fans:{
+    }],
+    fans:[{
         _id: ObjectId,
         account : String,
         head: String
-    },
+    }],
 
     recipe_count: { type: Number, default: 0 },
     topic_count: { type: Number, default: 0 },
