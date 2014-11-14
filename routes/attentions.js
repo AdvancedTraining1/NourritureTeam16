@@ -19,4 +19,19 @@ router.get('/getAllAttentions/:queryStr',AttentionsHandler.getAllAttentions);
 router.get('/addAttentions/',AttentionsHandler.addAttentions);
 router.get('/deleteAttentions/',AttentionsHandler.deleteAttentions);
 
+
+router.get('/lookFriendStatus/',AttentionsHandler.lookFriendStatus);
+
+router.get('/addRecipe/',AttentionsHandler.addRecipe);
+router.get('/addTopic/',AttentionsHandler.addTopic);
+
+router.get('/lookOneFriendStatus/',AttentionsHandler.lookOneFriendStatus);
+
+router.get('/commentStatus/',AttentionsHandler.commentStatus);
+//router.get('/deleteComment/',AttentionsHandler.deleteComment);
+router.get('/likeStatus/',AttentionsHandler.likeStatus);
+router.get('/cancelLike/',AttentionsHandler.cancelLike);
+
+
+
 module.exports = router;
