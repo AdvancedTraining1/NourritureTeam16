@@ -13,6 +13,7 @@ var topic = require('./routes/topic');
 var attentions = require('./routes/attentions');
 var adminpage = require('./routes/admin');
 var advertisepage = require('./routes/advertise');
+var recipe = require('./routes/recipe');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/topic', topic);
 app.use('/attentions',attentions);
 app.use('/admin',adminpage);
 app.use('/advertise',advertisepage);
+recipe(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
