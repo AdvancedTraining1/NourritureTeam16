@@ -9,9 +9,9 @@ var RecipeDao = require("../dao/RecipeDao"),
     CollectDao = require("../dao/CollectDao"),
     ProductDao = require("../dao/ProductDao"),
     RecipeModel = require("./../data").Recipe,
-    CommentModel = require("./../data").Comments,
+    CommentModel = require("./../data").CommentRecipe,
     ProductModel = require("./../data").Product,
-    CollectModel = require("./../data").Collect,
+    CollectModel = require("./../data").CollectRecipe,
     querystring = require('querystring'),
     formidable = require('formidable'),
     fs = require('fs'),
@@ -222,16 +222,6 @@ exports.likeProduct = function(req,res){
 }
 
 exports.upload = function(req,res){
-/*    var readPath = __dirname + '/' + url.parse('../views/showImage.html').pathName;
-    console.log(__dirname);
-    console.log(readPath);
-    var indexPage = fs.readFileSync(readPath);
-    var form = new formidable.IncomingForm();
-    form.parse(req,function(err,fields,files){
-       fs.renameSync(files.image.path, BASE_DIR + '/uploadFile/test.png');
-        res.writeHead(200,{'content-Type':'text/html'});
-        res.end(indexPage);
-    });*/
 
     var form = new formidable.IncomingForm();
     form.uploadDir = "./public/upload/temp/";//改变临时目录
@@ -287,24 +277,7 @@ function createRecipe(){
     recipe.productNum=0;
     recipe.flag = true;
     recipe.author={id:"001",head:"headPath",account:"user1"};
-    var commentList0 = [];
-    commentList0[0]={comment:"comment1",commentTime:new Date(),speakTo:"001"};
-    commentList0[1]={comment:"comment2",commentTime:new Date(),speakTo:"002"};
-    recipe.commentList = commentList0;
-    var productList0 = [];
-    productList0[0]= {
-        author: {id: "001", head: "headPath", account: "user1"},
-        time: new Date(),
-        picture: "picturePath1",
-        content: "content1",
-        likeNum: 0,
-        likeList: [{
-            id: "001", head: "headPath", account: "user1"
-        }, {
-            id: "001", head: "headPath", account: "user1"
-        }]
-    };
-    recipe.productList=productList0;
+
     return recipe;
 }
 
@@ -329,24 +302,7 @@ function modifyRecipe(recipes,params){
     recipe.productNum=2;
     recipe.flag = true;
     recipe.author={id:"001",head:"headPath",account:"user1"};
-    var commentList0 = [];
-    commentList0[0]={comment:"comment1",commentTime:new Date(),speakTo:"001"};
-    commentList0[1]={comment:"comment2",commentTime:new Date(),speakTo:"002"};
-    recipe.commentList = commentList0;
-    var productList0 = [];
-    productList0[0]= {
-        author: {id: "001", head: "headPath", account: "user1"},
-        time: new Date(),
-        picture: "picturePath1",
-        content: "content1",
-        likeNum: 0,
-        likeList: [{
-            id: "001", head: "headPath", account: "user1"
-        }, {
-            id: "001", head: "headPath", account: "user1"
-        }]
-    };
-    recipe.productList=productList0;
+    
     return recipe;
 }
 

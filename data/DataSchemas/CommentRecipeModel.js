@@ -13,6 +13,7 @@ var CommentSchema = new mongoose.Schema({
     logTime: Date,
     content: String,
     replyId: String
+
 });
 
 //mongoose.model('Comments', CommentSchema);

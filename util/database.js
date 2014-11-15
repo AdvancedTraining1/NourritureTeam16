@@ -4,9 +4,10 @@
 
 var mongoose = require('mongoose');
 
-//the url of DB
+
 var dbURL = 'mongodb://localhost/nourrituredb';
-//var dbURL = 'mongodb://localhost/test';
+
+
 mongoose.connect(dbURL);
 // reference to the database connection 为这个连接创建一个引用
 var db = mongoose.connection;

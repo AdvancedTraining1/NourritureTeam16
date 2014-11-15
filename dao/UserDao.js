@@ -48,35 +48,26 @@ UserDao.delete = function (list,callback) {
 }
 
 UserDao.update = function (conditions,update,options,callback) {
-    UsersModel.update(conditions,update,options).exec(function(error,data){
+    UsersModel.update(conditions,update,options).exec(function(error,message){
         if(error) return callback(error,null);
-
-        return callback(null, 'UserDao.update success');
-        //return callback(null, 'RecipeDao.delete success');
+        return callback(null, message);
     });
 }
 
 UserDao.getUserById = function (userId,callback) {
-    UsersModel.find({"account":userId}).exec(function(error,user){
+    UsersModel.find({account:userId}).exec(function(error,user){
         if(error) return callback(error,null);
-
+        return callback(null, user);
+    });
+}
+UserDao.getUserByAccountAndPass=function (username,password,callback) {
+    UsersModel.findOne({account:username,password:password}).exec(function(error,user){
+        if(error)
+            return callback(error,null);
         return callback(null, user);
     });
 }
 
+
+
 module.exports = UserDao;
-//UsersDAO.getById = function (id, callback) {
-//    UsersModel.getById(id, function (err, user) {
-//        if (err)
-//            console.log(err);
-//        console.log(user);
-//    });
-//};
-//
-//UsersDAO.getByName = function (name, callback) {
-//    UsersModel.getByName(name, function (err, user) {
-//        if (err)
-//            console.log(err);
-//        console.log(user);
-//    });
-//};
