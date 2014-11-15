@@ -10,6 +10,7 @@ var CommentToBlogDao = require('../dao/CommentToBlogDao');
 var CommentToBlogModel = require('./../data').CommentToBlog;
 var BlogLikeModel = require('./../data').BlogLike;
 var BlogLikeDao = require('../dao/BlogLikeDao');
+var querystring=require('querystring');
 var db = require('../util/database');
 
 function BlogHander() {
@@ -52,54 +53,93 @@ BlogHander.getABlogs = function (req, res) {
 
 
 BlogHander.publishABlog = function (req, res) {
-    var title = req.param('title');
-    var content = req.param('content');
+    req.setEncoding('utf-8');
+    var postData = "";
+    console.log("ok");
 
-    var blog = new BlogModel({
-        title: title,
-        content: content,
-        type: "1",
-        author: {
-            id: req.session.user_id,
-            account: req.session.account }
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
+    });
+
+    req.addListener("end", function () {
+
+        var params = querystring.parse(postData);
+        //var title = req.param('title');
+        //var content = req.param('content');
+        var title = params.title;
+        var content = params.content;
+        console.log(title);
+        var blog = new BlogModel({
+            title: title,
+            content: content,
+            type: "1",
+            author: {
+                id: req.session.user_id,
+                account: req.session.account }
+
+        });
+        var message = ""
+        BlogDao.create(blog,function (err, newblog) {
+            if (err) {
+                message = "publish failed";
+                res.json(500, {message:message});
+            } else {
+                message = "publish successful";
+                console.log(newblog._id);
+                var id = newblog._id
+                res.render('showBlog', {title: title, content: content, message: message, _id:id})
+            }
+
+
+
+        });
 
     });
-    var message = ""
-    BlogDao.create(blog,function (err, newblog) {
-        if (err) {
-            message = "publish failed";
-            res.json(500, {message:message});
-        } else {
-            message = "publish successful";
-            res.render('showBlog', {title: title, content: content, message: message})
-        }
 
 
-
-    });
 };
 
 BlogHander.saveABlog = function (req, res) {
-    var title = req.param('title');
-    var content = req.param('content');
+    //var title = req.param('title');
+    //var content = req.param('content');
 
-    var blog = new BlogModel({
-        title: title,
-        content: content,
-        type: "2"
+    req.setEncoding('utf-8');
+    var postData = "";
+    console.log("ok");
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
     });
-    var message = "";
-    BlogDao.create(blog,function (err, newblog) {
-        if (err) {
-            message = "save failed";
-        } else {
-            message = "save successful";
-        }
-        console.log("3newBlog" + newblog)
 
-        res.render('showBlog', {title: title, content: content, message: message})
+    req.addListener("end", function () {
 
-    });
+        var params = querystring.parse(postData);
+        var title = params.title;
+        var content = params.content;
+
+        var blog = new BlogModel({
+            title: title,
+            content: content,
+            type: "2"
+        });
+        var message = "";
+        BlogDao.create(blog,function (err, newblog) {
+            if (err) {
+                message = "save failed";
+            } else {
+                message = "save successful";
+            }
+            console.log("3newBlog" + newblog)
+
+            res.render('showBlog', {title: title, content: content, message: message})
+
+        });
+
+    })
+
+
 };
 
 BlogHander.modifyBlog = function (req, res) {
@@ -119,22 +159,43 @@ BlogHander.modifyBlog = function (req, res) {
 };
 
 BlogHander.saveModifyBlog = function (req, res) {
-    var title = req.body.title;
-    var content = req.body.content;
-    var conditions = {_id: req.param('_id')}
-    var update = {$set: { title: title, content: content, update_at: new Date()}}
-    var options = {upsert: true};
-    var message = "";
-    BlogDao.update(conditions,update,options,function(error,docs){
-        if (error) {
-            console.log(error);
-            message = "update failed";
-        } else {
-            console.log(docs);
-            message = "update successful";
-            res.render('showBlog', {title: title, content: content, message: message})
-        }
+
+
+//    var title = req.body.title;
+//    var content = req.body.content;
+    req.setEncoding('utf-8');
+    var postData = "";
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
     });
+
+    req.addListener("end", function () {
+
+        var params = querystring.parse(postData);
+        var title = params.title;
+        var content = params.content;
+        var id = params._id
+
+       // var conditions = {_id: req.param('_id')}
+        var conditions = {_id: id}
+        var update = {$set: { title: title, content: content, update_at: new Date()}}
+        var options = {upsert: true};
+        var message = "";
+        BlogDao.update(conditions,update,options,function(error,docs){
+            if (error) {
+                console.log(error);
+                message = "update failed";
+            } else {
+                console.log(docs);
+                message = "update successful";
+                res.render('showBlog', {title: title, content: content, message: message})
+            }
+        });
+    })
+
+
 };
 
 BlogHander.deleteBlog = function (req, res) {
@@ -353,51 +414,72 @@ BlogHander.cancelLikeBlog = function (req, res) {
 }
 
 BlogHander.addCommentToBlog=function(req, res){
-    var content = req.param('comment');
-    var user_id = req.session.user_id;
-    var account = req.session.account;
-    var blog_id = req.param('_id');
-    var reply_id = req.param('comment_id');
-    var commentToBlog = new CommentToBlogModel({
-        author: {
-            id: user_id,
-            account: account },
-        content: content,
-        reply_id: reply_id,
-        blog_id:blog_id
+//        var content = req.param('comment');
+//        var user_id = req.session.user_id;
+//        var account = req.session.account;
+//        var blog_id = req.param('_id');
+//        var reply_id = req.param('comment_id');
+
+    req.setEncoding('utf-8');
+    var postData = "";
+    console.log("ok");
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
     });
 
-    BlogDao.getOne(blog_id, function (err, blog) {
+    req.addListener("end", function () {
 
-        CommentToBlogDao.create(commentToBlog, function (err, newCommentToBlog) {
-            if (err) {
-                console.log(err);
-                var message = "save failed";
-                res.json(500, {message: message});
-                return;
-            } else {
-                var message = "save successful";
-                console.log(message);
-                var conditions = {_id: blog_id}
-                console.log(blog.comment_count);
-                var comment_count = blog.comment_count + 1;
-                var update = {$set: { comment_count: comment_count} }
-                var options = { upsert: true};
-                BlogDao.update(conditions, update, options, function (error, docs) {
-                    if (error) {
-                        console.log(error);
-                        var message = "update failed";
-                        res.json(500, {message: message});
-                        return;
-                    } else {
-                        console.log("comment successful");
-                        res.json(201, {message: "comment successful"});
-                    }
-                });
+        var params = querystring.parse(postData);
 
-            }
+        var content = params.comment;
+        var user_id = req.session.user_id;
+        var account = req.session.account;
+        var blog_id = params._id;
+        var reply_id = params.comment_id;
+        var commentToBlog = new CommentToBlogModel({
+            author: {
+                id: user_id,
+                account: account },
+            content: content,
+            reply_id: reply_id,
+            blog_id:blog_id
+        });
+
+        BlogDao.getOne(blog_id, function (err, blog) {
+
+            CommentToBlogDao.create(commentToBlog, function (err, newCommentToBlog) {
+                if (err) {
+                    console.log(err);
+                    var message = "save failed";
+                    res.json(500, {message: message});
+                    return;
+                } else {
+                    var message = "save successful";
+                    console.log(message);
+                    var conditions = {_id: blog_id}
+                    console.log(blog.comment_count);
+                    var comment_count = blog.comment_count + 1;
+                    var update = {$set: { comment_count: comment_count} }
+                    var options = { upsert: true};
+                    BlogDao.update(conditions, update, options, function (error, docs) {
+                        if (error) {
+                            console.log(error);
+                            var message = "update failed";
+                            res.json(500, {message: message});
+                            return;
+                        } else {
+                            console.log("comment successful");
+                            res.json(201, {message: "comment successful"});
+                        }
+                    });
+
+                }
+            })
         })
-    })
+    });
+
 }
 
 BlogHander.getAllCommentToBlog = function (req, res) {

@@ -10,6 +10,7 @@ var TopicUploadCommentModel = require('./../data').TopicUploadComment;
 var TopicUploadCommentDao = require("../dao/TopicUploadCommentDao");
 var TopicUploadLikeModel = require('./../data').TopicUploadLike;
 var TopicUploadLikeDao = require("../dao/TopicUploadLikeDao");
+var querystring = require("querystring");
 //构造
 function TopicHandler()
 {
@@ -18,28 +19,46 @@ function TopicHandler()
 
 //mengchi part
 TopicHandler.publishTopic = function(req,res){
-    var topicName = req.param('topicName');
-    var content = req.param('content');
+//    var topicName = req.param('topicName');
+//    var content = req.param('content');
 
-    var topic = new TopicModel({
-        topicName: topicName,
-        content: content,
-        author: {
-            id: req.session.user_id,
-            account: req.session.account }
+    req.setEncoding('utf-8');
+    var postData = "";
+    console.log("ok");
 
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
     });
-    var message = ""
-    TopicDao.create(topic,function (err, newtopic) {
-        if (err) {
-            message = "publish failed";
-        } else {
-            message = "publish successful";
-        }
 
-        res.render('showtopic', {topicName: topicName, content: content, message: message})
+    req.addListener("end", function () {
+        var params = querystring.parse(postData);
 
-    });
+        var topicName = params.topicName;
+        var content = params.content;
+
+        var topic = new TopicModel({
+            topicName: topicName,
+            content: content,
+            author: {
+                id: req.session.user_id,
+                account: req.session.account }
+
+        });
+        var message = ""
+        TopicDao.create(topic,function (err, newtopic) {
+            if (err) {
+                message = "publish failed";
+            } else {
+                message = "publish successful";
+            }
+            var topic_id = newtopic._id;
+            res.render('showtopic', {topicName: topicName, content: content, message: message, topic_id:topic_id})
+
+        });
+
+    })
+
 }
 
 TopicHandler.getAlltopics = function (req, res) {
@@ -76,10 +95,10 @@ TopicHandler.getATopic = function (req, res) {
                 return;
             }
            // if(!uploads){
-                //res.render('showtopic', {topicName: topic.topicName, content: topic.content, topic_id:topic._id});
+        res.render('showTopicUpload', {title: topic.topicName, picture: topic.content, topic_id:topic._id});
             //}
 
-            res.json(201, {topic: topic, uploads: uploads});
+           // res.json(201, {topic: topic, uploads: uploads});
 
         })
 
@@ -87,81 +106,121 @@ TopicHandler.getATopic = function (req, res) {
 };
 
 TopicHandler.uploadProduct = function(req, res){
-    var title = req.param('title');
-    var picture = req.param('picture');
-    var topic_id = req.param('topic_id');
+//    var title = req.param('title');
+//    var picture = req.param('picture');
+//    var topic_id = req.param('topic_id');
 
-    var topicUpload = new TopicUploadModel({
-        topic_id:topic_id,
-        title: title,
-        picture: picture,
-        author: {
-            id: req.session.user_id,
-            account: req.session.account }
+    req.setEncoding('utf-8');
+    var postData = "";
+    console.log("ok");
 
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
     });
-    var message = ""
-    TopicUploadDao.create(topicUpload,function (err, newTopicUpload) {
-        if (err) {
-            console.log(err);
-            message = "publish failed";
-            res.json(500, {message: message});
-            return;
-        } else {
-            message = "publish successful";
-            res.json(200,newTopicUpload);
-        }
+
+    req.addListener("end", function () {
+        var params = querystring.parse(postData);
+        var title = params.title;
+        var picture = params.picture;
+        var topic_id = params.topic_id;
+
+
+        var topicUpload = new TopicUploadModel({
+            topic_id: topic_id,
+            title: title,
+            picture: picture,
+            author: {
+                id: req.session.user_id,
+                account: req.session.account }
+
+        });
+        var message = ""
+        TopicUploadDao.create(topicUpload, function (err, newTopicUpload) {
+            if (err) {
+                console.log(err);
+                message = "publish failed";
+                res.json(500, {message: message});
+                return;
+            } else {
+                message = "publish successful";
+                res.json(200, newTopicUpload);
+            }
+        });
+
     });
 
 }
 
 TopicHandler.addCommentToTopicUpload=function(req, res){
-    var content = req.param('comment');
-    var user_id = req.session.user_id;
-    var account = req.session.account;
-    var topicUpload_id = req.param('_id');
-    var reply_id = req.param('comment_id');
+//    var content = req.param('comment');
+//    var user_id = req.session.user_id;
+//    var account = req.session.account;
+//    var topicUpload_id = req.param('_id');
+//    var reply_id = req.param('comment_id');
 
-    var topicUploadComment = new TopicUploadCommentModel({
-        author: {
-            id: user_id,
-            account: account },
-        content: content,
-        reply_id: reply_id,
-        topicUpload_id:topicUpload_id
+    req.setEncoding('utf-8');
+    var postData = "";
+    console.log("ok");
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+        console.log(postDataChunk);
     });
 
-    TopicUploadDao.getOne(topicUpload_id, function (err, topicUpload) {
+    req.addListener("end", function () {
 
-        TopicUploadCommentDao.create(topicUploadComment, function (err, newTopicUploadComment) {
-            if (err) {
-                console.log(err);
-                var message = "save failed";
-                res.json(500, {message: message});
-                return;
-            } else {
-                var message = "save successful";
-                console.log(message);
-                var conditions = {_id: topicUpload_id}
-                console.log(topicUpload.comment_count);
-                var comment_count = topicUpload.comment_count + 1;
-                var update = {$set: { comment_count: comment_count} }
-                var options = { upsert: true};
-                TopicUploadDao.update(conditions, update, options, function (error, docs) {
-                    if (error) {
-                        console.log(error);
-                        var message = "update failed";
-                        res.json(500, {message: message});
-                        return;
-                    } else {
-                        console.log("comment successful");
-                        res.json(201, {message: "comment successful"});
-                    }
-                });
+        var params = querystring.parse(postData);
+        var content = params.comment;
+        var user_id = req.session.user_id;
+        var account = req.session.account;
+        var topicUpload_id = params._id;
+        var reply_id = params.comment_id;
 
-            }
+        var topicUploadComment = new TopicUploadCommentModel({
+            author: {
+                id: user_id,
+                account: account },
+            content: content,
+            reply_id: reply_id,
+            topicUpload_id:topicUpload_id
+        });
+
+        TopicUploadDao.getOne(topicUpload_id, function (err, topicUpload) {
+
+            TopicUploadCommentDao.create(topicUploadComment, function (err, newTopicUploadComment) {
+                if (err) {
+                    console.log(err);
+                    var message = "save failed";
+                    res.json(500, {message: message});
+                    return;
+                } else {
+                    var message = "save successful";
+                    console.log(message);
+                    var conditions = {_id: topicUpload_id}
+                    console.log(topicUpload.comment_count);
+                    var comment_count = topicUpload.comment_count + 1;
+                    var update = {$set: { comment_count: comment_count} }
+                    var options = { upsert: true};
+                    TopicUploadDao.update(conditions, update, options, function (error, docs) {
+                        if (error) {
+                            console.log(error);
+                            var message = "update failed";
+                            res.json(500, {message: message});
+                            return;
+                        } else {
+                            console.log("comment successful");
+                            res.json(201, {message: "comment successful"});
+                        }
+                    });
+
+                }
+            })
         })
-    })
+
+
+    });
+
 }
 
 TopicHandler.getAllCommentToTopicUpload = function (req, res) {
