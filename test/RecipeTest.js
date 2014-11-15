@@ -36,8 +36,7 @@ describe('Recipe API',function(){
                 if (error) throw error;
 
                 var status = response.statusCode;
-                assert.equal(200, status);
-
+                assert.equal("发布菜谱成功！", body);
                 done();
             });
         });
