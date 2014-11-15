@@ -4,9 +4,7 @@
 
 var mongoose = require('mongoose');
 
-
 var dbURL = 'mongodb://123.57.38.31/test';
-
 
 mongoose.connect(dbURL);
 // reference to the database connection 为这个连接创建一个引用

@@ -9,6 +9,8 @@ router.get('/testinterface',function(req,res){
 	res.render('testuserinfo');
 });
 router.post('/register',UserinfoHandler.register);
-
+router.post('/login',UserinfoHandler.login);
+router.post('/modifypass',UserinfoHandler.modifypass);
+router.post('/modifyinfo',UserinfoHandler.modifyinfo);
 
 module.exports = router;
