@@ -19,6 +19,9 @@ router.get('/add', function(req, res) {
   res.render('adduser', { title: '管理员' });
 });
 
+/*
+user
+* */
 router.post('/add',adminHandler.addUser);
 router.get('/getAllUsers',adminHandler.getAllUsers);
 router.post('/delete',adminHandler.deleteUser);
@@ -33,7 +36,7 @@ router.post('/comment/delete',commentHandler.delete);
 /*
 对topic的操作
 * */
-router.post('/addTopic',topicHandler.add);
+//router.post('/addTopic',topicHandler.add);
 router.post('/getAllTopic',topicHandler.getAll);
 router.post('/searchTopic',topicHandler.searchTopic);
 
