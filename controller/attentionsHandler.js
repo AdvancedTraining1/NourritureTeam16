@@ -101,65 +101,49 @@ AttentionsHandler.addAttentions=function(req,res){
     console.log("关注");
 
     var friends = {};
-    friends._id = "545f8668ac06b99c410813ec";
-    friends.account = "cc";
+    friends._id = "5464a08744ea60084850294a";
+    friends.account = "ZHAIYUAN";
     friends.head = "2.img";
 
     var fans = {};
-    fans._id = "545f7ff054e28bbc3d13df3c";
-    fans.account = "bb";
+    fans._id = "5464a134462eaef3480abb39";
+    fans.account = "ZHAI";
     fans.head = "2.img";
 
-        /*AttentionsDao.getById(fans._id,function(err,users){
-            console.log(fans._id);
-            //var num = users.friends_count + 1;console.log(users.friends_count);console.log(num);console.log(friends);
-            AttentionsDao.addAttentions(fans._id,friends);
-        });
-
-        AttentionsDao.getById(friends._id,function(err,users){
-            //var num = users.fans_count + 1;
-            AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
-                res.writeHead(500, {
-                    "Content-Type": "text/plain;charset=utf-8"
-                });
-                res.end("已关注！");
-            });
-        });*/
     AttentionsDao.addAttentions(fans._id,friends,function(err,users){
         //res.write(users);
-    });
-    AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
-        res.writeHead(500, {
-            "Content-Type": "text/plain;charset=utf-8"
+        AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
+            res.writeHead(500, {
+                "Content-Type": "text/plain;charset=utf-8"
+            });
+            res.end("已关注！");
         });
-        res.end("已关注！");
     });
+
 };
 
 AttentionsHandler.deleteAttentions=function(req,res){
     console.log("取消关注");
 
     var friends = {};
-    friends._id = "545f8668ac06b99c410813ec";
-    friends.account = "cc";
+    friends._id = "5464a08744ea60084850294a";
+    friends.account = "ZHAIYUAN";
     friends.head = "2.img";
 
     var fans = {};
-    fans._id = "545f7ff054e28bbc3d13df3c";
-    fans.account = "bb";
+    fans._id = "5464a134462eaef3480abb39";
+    fans.account = "ZHAI";
     fans.head = "2.img";
 
-    AttentionsDao.getById(fans._id,function(err,users){
-        AttentionsDao.deleteAttentions(fans._id,friends);
-    });
 
-    AttentionsDao.getById(friends._id,function(err,users){
+    AttentionsDao.deleteAttentions(fans._id,friends,function(err,users){
         AttentionsDao.deleteAttentionsFans(friends._id,fans,function (err, users) {
             res.writeHead(500, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("已取消关注！");
         });
+
     });
 
 };

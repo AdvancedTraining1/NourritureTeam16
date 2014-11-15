@@ -50,8 +50,10 @@ AttentionsDao.addAttentionsFans = function (id,fans,callback) {
 }
 
 
-AttentionsDao.deleteAttentions = function (id,friends) {
-    User.findByIdAndUpdate(id,{$pull:{friends:friends},$inc:{friends_count:-1}});
+AttentionsDao.deleteAttentions = function (id,friends,callback) {
+    User.findByIdAndUpdate(id,{$pull:{friends:friends},$inc:{friends_count:-1}},function(error,users){
+        return callback(null,users);
+    });
 
 }
 
