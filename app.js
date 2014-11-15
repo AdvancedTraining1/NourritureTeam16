@@ -14,11 +14,8 @@ var attentions = require('./routes/attentions');
 var adminpage = require('./routes/admin');
 var advertisepage = require('./routes/advertise');
 var recipe = require('./routes/recipe');
-<<<<<<< HEAD
 var sale = require('./routes/sale');
-=======
 var userinfo = require('./routes/userinfo');
->>>>>>> a1e52306c2b7a9e2b732fa5ea7961946cb1670af
 
 var app = express();
 
@@ -42,14 +39,9 @@ app.use('/topic', topic);
 app.use('/attentions',attentions);
 app.use('/admin',adminpage);
 app.use('/advertise',advertisepage);
-<<<<<<< HEAD
-app.use('/recipe',recipe);
 app.use('/sale',sale);
-=======
 app.use('/userinfo',userinfo);
-
 recipe(app);
->>>>>>> a1e52306c2b7a9e2b732fa5ea7961946cb1670af
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
