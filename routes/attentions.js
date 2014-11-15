@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var AttentionsHandler = require('../controller/attentionsHandler');
+var BlogsHander = require('../controller/blogsHandler');
 
 /* GET home page. */
 router.get("/",function(req,res){
@@ -28,7 +29,7 @@ router.get('/addTopic/',AttentionsHandler.addTopic);
 router.get('/lookOneFriendStatus/',AttentionsHandler.lookOneFriendStatus);
 
 router.get('/commentStatus/',AttentionsHandler.commentStatus);
-//router.get('/deleteComment/',AttentionsHandler.deleteComment);
+router.get('/deleteComment/:comment_id',BlogsHander.deleteCommentToBlog);//??
 router.get('/likeStatus/',AttentionsHandler.likeStatus);
 router.get('/cancelLike/',AttentionsHandler.cancelLike);
 

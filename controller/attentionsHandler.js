@@ -8,12 +8,23 @@ var Attentions = require('../data/models/user');
 var CommentDao = require("../dao/CommentDao");
 var CommentToBlogDao = require("../dao/CommentToBlogDao");
 var RecipeDao = require("../dao/RecipeDao");
+var BlogDao = require("../dao/BlogDao");
+var TopicDao = require("../dao/TopicDao");
+var TopicUploadCommentDao = require("../dao/TopicUploadCommentDao");
+var BlogLikeDao = require("../dao/BlogLikeDao");
+var TopicUploadLikeDao=require("../dao/TopicUploadLikeDao");
 
 var User = require("./../data").user;
-var Blog = require("./../data").blog;
+var Blog = require("./../data").Blog;
 var Recipe = require("./../data").Recipe;
-var Topic = require("./../data").topic;
+var Topic = require("./../data").Topic;
 var CommentToBlogModel =require("./../data").CommentToBlog;
+var TopicUploadCommentModel =require("./../data").TopicUploadComment;
+var CommentsModel =require("./../data").Comments;
+var BlogLikeModel =require("./../data").BlogLike;
+var TopicUploadLikeModel=require("./../data").TopicUploadLike;
+
+var BlogsHandler = require("../controller/blogsHandler");
 
 var querystring = require('querystring');
 var fs = require('fs');
@@ -90,63 +101,49 @@ AttentionsHandler.addAttentions=function(req,res){
     console.log("关注");
 
     var friends = {};
-    friends._id = "545f8668ac06b99c410813ec";
-    friends.account = "cc";
+    friends._id = "5464a08744ea60084850294a";
+    friends.account = "ZHAIYUAN";
     friends.head = "2.img";
 
     var fans = {};
-    fans._id = "545f7ff054e28bbc3d13df3c";
-    fans.account = "bb";
+    fans._id = "5464a134462eaef3480abb39";
+    fans.account = "ZHAI";
     fans.head = "2.img";
 
-        /*AttentionsDao.getById(fans._id,function(err,users){
-            console.log(fans._id);
-            //var num = users.friends_count + 1;console.log(users.friends_count);console.log(num);console.log(friends);
-            AttentionsDao.addAttentions(fans._id,friends);
-        });
-
-        AttentionsDao.getById(friends._id,function(err,users){
-            //var num = users.fans_count + 1;
-            AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
-                res.writeHead(500, {
-                    "Content-Type": "text/plain;charset=utf-8"
-                });
-                res.end("已关注！");
+    AttentionsDao.addAttentions(fans._id,friends,function(err,users){
+        //res.write(users);
+        AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
+            res.writeHead(500, {
+                "Content-Type": "text/plain;charset=utf-8"
             });
-        });*/
-    AttentionsDao.addAttentions(fans._id,friends);
-    AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
-        res.writeHead(500, {
-            "Content-Type": "text/plain;charset=utf-8"
+            res.end("已关注！");
         });
-        res.end("已关注！");
     });
+
 };
 
 AttentionsHandler.deleteAttentions=function(req,res){
     console.log("取消关注");
 
     var friends = {};
-    friends._id = "545f8668ac06b99c410813ec";
-    friends.account = "cc";
+    friends._id = "5464a08744ea60084850294a";
+    friends.account = "ZHAIYUAN";
     friends.head = "2.img";
 
     var fans = {};
-    fans._id = "545f7ff054e28bbc3d13df3c";
-    fans.account = "bb";
+    fans._id = "5464a134462eaef3480abb39";
+    fans.account = "ZHAI";
     fans.head = "2.img";
 
-    AttentionsDao.getById(fans._id,function(err,users){
-        AttentionsDao.deleteAttentions(fans._id,friends);
-    });
 
-    AttentionsDao.getById(friends._id,function(err,users){
+    AttentionsDao.deleteAttentions(fans._id,friends,function(err,users){
         AttentionsDao.deleteAttentionsFans(friends._id,fans,function (err, users) {
             res.writeHead(500, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("已取消关注！");
         });
+
     });
 
 };
@@ -227,99 +224,260 @@ AttentionsHandler.lookOneFriendStatus=function(req,res) {
 AttentionsHandler.commentStatus=function(req,res) {
     console.log("评论状态");
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var statusId = "5464fcf129b38dda3894efdc";
+    //  blog  5464d32def0a5efc057c384f
+    // topic  5464fcf129b38dda3894efdc
+    // or recipe id   5464f8be636edfe9339fe0b1
 
-    /*Blog.find({_id: statusId}, function (err, blog) {               //interface mc
-     //res.json(blog);
-     CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
-     CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
-     if(error) return callback(error,null);
-     return callback(null, comments);
-     });
-     };
+    Blog.findOne({_id: statusId}, function (err, blog) {
+        if(blog!=null){
+            console.log(blog);
+            var commentToBlog = new CommentToBlogModel({
+                author: {
+                    id: "5464a134462eaef3480abb39",
+                    account: "ZHAI" },
+                content: "1",
+                reply_id: null,
+                blog_id:statusId
+            });
 
-     });*/
+            BlogDao.getOne(statusId, function (err, blog) {
 
+                CommentToBlogDao.create(commentToBlog, function (err, newCommentToBlog) {
+                    if (err) {
+                        console.log(err);
+                        var message = "comment blog failed";
+                        res.json(500, {message: message});
+                        return;
+                    } else {
+                        var message = "comment blog successful";
+                        console.log(message);
+                        var conditions = {_id: statusId}
+                        console.log(blog.comment_count);
+                        var comment_count = blog.comment_count + 1;
+                        var update = {$set: { comment_count: comment_count} }
+                        var options = { upsert: true};
+                        BlogDao.update(conditions, update, options, function (error, docs) {
+                            if (error) {
+                                console.log(error);
+                                var message = "comment blog failed";
+                                res.json(500, {message: message});
+                                return;
+                            } else {
+                                console.log("comment blog successful");
+                                res.json(201, {message: "comment blog successful"});
+                            }
+                        });
 
-    RecipeDao.comment = function (id,comment,callback) {
-        Recipe.findByIdAndUpdate(id,{$push:comment},function(error,recipe){
-            if(error) return callback(error,null);
+                    }
+                })
+            })
+        }
+    });
 
-            return callback(null, recipe);
-        });
-    }
+    Topic.findOne({_id: statusId}, function (err, topic) {
+        if(topic!=null){
+            var TopicUploadComment = new TopicUploadCommentModel({
+                author: {
+                    id: "5464a134462eaef3480abb39",
+                    account: "ZHAI" },
+                content: "1",
+                reply_id: null,
+                topicUpload_id:statusId
+            });
 
-    /*
-     Topic.find({_id: statusId}, function (err, topic) {    //interface mc
-     res.json(topic);
-     });*/
+            TopicDao.getOne(statusId, function (err, topic) {
 
+                TopicUploadCommentDao.create(TopicUploadComment, function (err, newTopicUploadComment) {
+                    if (err) {
+                        console.log(err);
+                        var message = "comment topic failed";
+                        res.json(500, {message: message});
+                        return;
+                    } else {
+                        var message = "comment topic successful";
+                        console.log(message);
+                        res.json(201, {message: message});
+                    }
+                })
+            })
+        }
+    });
+
+    Recipe.findOne({_id: statusId}, function (err, recipe) {//??????probelm
+        if(recipe!=null){
+            var RecipeComment = new CommentsModel({
+                author: {
+                    _id: "5464a134462eaef3480abb39",
+                    account: "ZHAI" ,
+                    head:"2.img"},
+                content: "1",
+                reply_id: statusId,
+                logTime:2014-11-15
+                //recipe_id:statusId
+            });
+
+            Recipe.findOne({_id: statusId}, function (err, recipe) {
+
+                CommentDao.create(RecipeComment, function (err, newRecipeComment) {
+                    if (err) {
+                        console.log(err);
+                        var message = "comment recipe failed";
+                        res.json(500, {message: message});
+                        return;
+                    } else {
+                        var message = "comment recipe successful";
+                        console.log(message);
+                        res.json(201, {message: "comment recipe successful"});
+
+                    }
+                })
+            })
+        }
+    });
 };
 
 
 AttentionsHandler.likeStatus=function(req,res) {
     console.log("点赞");
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var statusId = "5464d32def0a5efc057c384f";
+    //  blog  5464d32def0a5efc057c384f
+    // topic  5464fcf129b38dda3894efdc
+    // or recipe id   5464f8be636edfe9339fe0b1
 
-    /*Blog.find({_id: statusId}, function (err, blog) {                        //interface mc
-     //res.json(blog);
-     CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
-     CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
-     if(error) return callback(error,null);
-     return callback(null, comments);
-     });
-     };
+    Blog.findOne({_id: statusId}, function (err, blog) {
+        if (blog != null) {
+            //BlogsHandler.likeBlog()
+                var blogLike = new BlogLikeModel({
+                    user: {
+                        account: "ZHAI",
+                        head:""
+                    },
+                    blog_id: statusId,
+                    user_id: "5464a134462eaef3480abb39"
+                });
 
-     });*/
+                BlogLikeDao.create(blogLike,function (err,newBlogLike){
+                    if (err) {
+                        var message = "like blog failed";
+                        res.json(500, {message: message});
+                        return;
+                    } else {
+                        var message = "like blog successful";
+                        console.log(message);
+                        var conditions = {_id: statusId}
+                        console.log( blog.like_count);
+                        var like_count =blog.like_count+1;
+                        var update = { $set: { like_count:like_count} }
+                        var options = { upsert: true};
+                        BlogDao.update(conditions, update, options, function (error,docs) {
+                            if (error) {
+                                console.log(error);
+                                var message = "like blog failed";
+                                res.json(500, {message: message});
+                                return;
+                            } else {
+                                console.log("like blog successful");
+                                res.json(201, {message: "like blog successful"});
+                            }
+                        });
 
+                    }
+                })
 
-    /*Recipe.find({_id: statusId}, function (err, recipe) {             //no recipe,only product
-        //res.write(recipe);
-
-        CommentDao.listComment(statusId,function (err, commentList) {
-            res.json(commentList);
-        });
-
+        }
     });
-*/
-    /*
-     Topic.find({_id: statusId}, function (err, topic) {    //interface mc
-     res.json(topic);
-     });*/
 
+    Topic.findOne({_id: statusId}, function (err, topic){
+       if(topic!=null) {
+               var topicUploadLike = new TopicUploadLikeModel({
+                   user: {
+                       account: "ZHAI",
+                       head:""
+                   },
+                   topicUpload_id: statusId,
+                   user_id: "5464a134462eaef3480abb39"
+               });
+
+               TopicUploadLikeDao.create(topicUploadLike,function (err,newTopicUploadLike){
+                   if (err) {
+                       var message = "like topic failed";
+                       res.json(500, {message: message});
+                       return;
+                   } else {
+                       var message = "like topic successful";
+                       console.log(message);
+                       res.json(201, {message: "like topic successful"});
+
+                   }
+               })
+
+       }
+    });
+
+
+    //recipe like? product like
 };
 
 AttentionsHandler.cancelLike=function(req,res) {
     console.log("取消点赞");
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var statusId = "5464d32def0a5efc057c384f";
+    //  blog  5464d32def0a5efc057c384f
+    // topic  5464fcf129b38dda3894efdc
+    // or recipe id   5464f8be636edfe9339fe0b1
 
-    /*Blog.find({_id: statusId}, function (err, blog) {                   //interface mc
-     //res.json(blog);
-     CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
-     CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
-     if(error) return callback(error,null);
-     return callback(null, comments);
-     });
-     };
+    Blog.findOne({_id: statusId}, function (err, blog){
+        if(blog!=null){
+            var like_count = blog.like_count - 1;
+            var update = {$set: { like_count: like_count} }
+            var options = { upsert: true};
+            BlogDao.update({_id: statusId}, update, options, function (error) {
+                if (error) {
+                    var message = "cancel like blog failed";
+                    res.json(500, {message: message});
+                    return;
+                } else {
+                    console.log("cancel like blog successful");
 
-     });*/
+                }
+            });
 
+            var conditions = {blog_id: statusId, user_id: "5464a134462eaef3480abb39"};
+            BlogLikeDao.delete(conditions, function (error) {
+                if (error) {
+                    console.log(error);
+                    res.json(500, {message: error});
+                    return;
+                } else {
+                    console.log('cancel like blog ok!');
+                    var message = "cancel like blog ok!"
 
-    /*Recipe.find({_id: statusId}, function (err, recipe) {
-        //res.write(recipe);
+                    res.json(201, {message: message});
+                }
+            })
+        }
+    });
 
-        CommentDao.listComment(statusId,function (err, commentList) {
-            res.json(commentList);
-        });
+    Topic.findOne({_id: statusId}, function (err, topic){
+        if(topic!=null){
 
-    });*/
+            var conditions = {topicUpload_id: statusId, user_id: "5464a134462eaef3480abb39"};
+            TopicUploadLikeDao.delete(conditions, function (error) {
+                if (error) {
+                    console.log(error);
+                    res.json(500, {message: error});
+                    return;
+                } else {
+                    console.log('cancel like topic ok!');
+                    var message = "cancel like topic ok!"
 
-    /*
-     Topic.find({_id: statusId}, function (err, topic) {    //interface mc
-     res.json(topic);
-     });*/
+                    res.json(201, {message: message});
+                }
+            })
+        }
+    });
 
 };
 
