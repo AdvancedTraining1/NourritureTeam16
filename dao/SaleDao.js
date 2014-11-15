@@ -17,6 +17,14 @@ SaleDao.getAll = function (callback) {
     });
 }
 
+SaleDao.getOne = function (id, callback) {
+    Sale.find({_id:id}).sort({update_at:1}).limit(10).exec(function(err, sale){
+        if(err)
+            return callback(err, null);
+        return callback(null, sale);
+    });
+}
+
 SaleDao.getOwn = function (authorId, callback) {
     Sale.find({"author._id":authorId}, function(err, sale){
        if(err)
@@ -27,7 +35,15 @@ SaleDao.getOwn = function (authorId, callback) {
     });
 }
 
-SaleDao.update = function (id, newSale, callback){
+/*SaleDao.getAllByLast = function (callback) {
+ Sale.find({}).sort({update_at:1}).limit(10).exec(function(err, sale){
+ if(err)
+ return callback(err, null);
+ return callback(null, sale);
+ });
+ }*/
+
+SaleDao.edit = function (id, newSale, callback){
     Sale.findByIdAndUpdate(id, newSale, function(err, sale){
         if(err)
         {
@@ -42,6 +58,17 @@ SaleDao.delete = function (list, callback) {
         if (error)
         {
             return callback(error, null);
+        }
+        return callback(null, sale);
+    });
+}
+
+SaleDao.search = function (keyword, callback) {
+    var query = "" + keyword + ".*";
+    Sale.find({title:{ $regex: query}}).sort({update_at:1}).exec(function(err, sale){
+        if (err)
+        {
+            return callback(err, null);
         }
         return callback(null, sale);
     });
