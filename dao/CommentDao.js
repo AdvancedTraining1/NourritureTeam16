@@ -5,8 +5,7 @@
  */
 
 var DaoBase = require('./DaoBase');
-var commentModel = require('../data').comment;
-var CommentModel = require('../data').Comments;
+var commentModel = require('../data').CommentRecipe;
 
 var CommentDao = new DaoBase(commentModel);
 

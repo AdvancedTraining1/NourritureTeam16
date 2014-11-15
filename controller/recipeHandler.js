@@ -44,7 +44,7 @@ exports.modify = function(req,res){
         var updateStr = modifyRecipe(params);
 
         RecipeDao.update(params.id,updateStr,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("修改菜谱成功！");
@@ -57,7 +57,7 @@ exports.deleteRecipe = function(req,res){
     var idStr = req.params.ids.split(",");
 
     RecipeDao.delete(idStr,function (err, recipe) {
-        res.writeHead(500, {
+        res.writeHead(200, {
             "Content-Type": "text/plain;charset=utf-8"
         });
         res.end("删除菜谱成功！");
@@ -84,7 +84,7 @@ exports.create = function (req, res){
         console.log('recipe数据接收完毕');
 
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
-        console.log(params);
+        //console.log(params);
         params = null;
 
 
@@ -134,7 +134,7 @@ exports.comment = function(req,res){
         var comment = createComment(params);
 
         CommentDao.create(comment,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("评论成功！");
@@ -159,7 +159,7 @@ exports.collect = function (req,res) {
         var collect = createCollect(params);
 
         CollectDao.create(collect,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("评论成功！");
@@ -184,7 +184,7 @@ exports.createProduct = function(req,res){
         var product = createProduct(params);
 
         ProductDao.create(product,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("评论成功！");
@@ -218,7 +218,7 @@ exports.likeProduct = function(req,res){
         ProductDao.getById(params.id,function(err,product){
             var num = product.likeNum + 1;
             ProductDao.likeProduct(params.id,like,num,function (err, recipes) {
-                res.writeHead(500, {
+                res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
                 res.end("评论成功！");
