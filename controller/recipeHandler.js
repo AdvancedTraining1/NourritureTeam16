@@ -17,6 +17,10 @@ var RecipeDao = require("../dao/RecipeDao"),
     fs = require('fs'),
     url = require('url');
 
+exports.a = function(req,res){
+    res.redirect("../views/addRecipe.html");
+}
+
 exports.listOwn = function(req,res){
     RecipeDao.getOwn(req.params.authorId,function (err, recipe) {
         res.json(recipe);
