@@ -4,9 +4,7 @@
 
 var mongoose = require('mongoose');
 
-
-var dbURL = 'mongodb://localhost/nourrituredb';
-
+var dbURL = 'mongodb://localhost/test';
 
 mongoose.connect(dbURL);
 // reference to the database connection 为这个连接创建一个引用
