@@ -2,9 +2,9 @@
  * Created by mengchi on 14-11-14.
  */
 var app = require('../app')
-var assert = require("assert");
+var assert = require("assert")
    // , www = require('../bin/www')
-   // , http = require('http')
+    , http = require('http')
 var request = require('request')
     ,webServer="http://localhost:3000";
 
@@ -19,35 +19,47 @@ describe('Blog API',function(){
     });
 
     describe('/blog', function () {
-        it('should return html content', function (done) {
+        it('Get /blog should return 200', function (done) {
             request(webServer+"/blog/", function (error, response,body) {
                 if (error) throw error;
 
                 var status = response.statusCode;
                 assert.equal(200, status);
-                ///response.should.status(200).html;
-
                 done();
             });
         });
     });
 
+    describe('/createBlog', function () {
+        it('Get /createBlog should return 200', function (done) {
+            request(webServer+"/blog/createBlog", function (error, response,body) {
+                if (error) throw error;
 
-
-    /*it('GET /blog/ should return 200',function(done){
-        done;
-    });*/
-    /*it('GET /blog/ should return 200',function(done){
-        var requset = request(webServer+"/blog/")
-        requset.get('/blog')
-        requset.expect(200,done);
+                var status = response.statusCode;
+                assert.equal(200, status);
+                done();
+            });
+        });
     });
 
-   /* it('POST /users should return 200',function(done){
-        request()
-            .post('/users')
-            .set('Content-Type','application/json')
-            .write(JSON.stringify({ username: 'test', password: 'pass' }))
-            .expect(200,done);
-    });*/
+    describe('/publishBlog', function () {
+        it('Post /publishBlog should return 200', function (done) {
+            var options = {
+                host: 'localhost',
+                port: 3000,
+                path: '/blog/publishBlog',
+                method: 'POST'
+            };
+            var data=require("querystring").stringify({title:"hello",content:"world"})
+            var req=http.request(options, function(res) {
+             //   if (error) throw error;
+                console.log("Got response: " + res.statusCode);
+                assert.equal(200, res.statusCode);
+            });
+            req.write(data);
+            req.end();
+            done();
+        });
+    });
+
 });
