@@ -42,7 +42,7 @@ exports.modify = function(req,res){
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
         var updateStr = modifyRecipe(params);
-        console.log(updateStr);
+
         RecipeDao.update(params.id,updateStr,function (err, recipes) {
             res.writeHead(500, {
                 "Content-Type": "text/plain;charset=utf-8"
@@ -283,7 +283,7 @@ function createRecipe(){
     recipe.commentNum=0;
     recipe.productNum=0;
     recipe.flag = true;
-    recipe.author={id:"001",head:"headPath",account:"user1"};
+    recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
 }
@@ -308,25 +308,26 @@ function modifyRecipe(recipes,params){
     recipe.commentNum=2;
     recipe.productNum=2;
     recipe.flag = true;
-    recipe.author={id:"001",head:"headPath",account:"user1"};
+    recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
 }
 
 function createComment(params,user){
     var comment = new CommentModel();
-    comment.author.id = "001";
+    comment.author._id = "001";
     comment.author.head = "head1";
     comment.author.account = "account";
     comment.logTime = new Date();
     comment.content = "content1";
     comment.replyId = "01";
+    comment.replyUserId = "02";
     return comment;
 }
 
 function createCollect(params){
     var collect = new CollectModel();
-    collect.user.id = "001";
+    collect.user._id = "001";
     collect.user.account = "account1";
     collect.user.head = "head1";
     collect.logTime = new Date();

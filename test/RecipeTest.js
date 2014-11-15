@@ -31,7 +31,7 @@ describe('Recipe API',function(){
     });
 
     describe('/recipe/create', function () {
-        it('should return html content, status should be 200',function(done){
+        it('should return 发布菜谱成功 as a html body',function(done){
             request.post(webServer+"/recipe/create", function (error, response,body) {
                 if (error) throw error;
 
