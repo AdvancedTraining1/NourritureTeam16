@@ -5,7 +5,7 @@
  */
 
 var DaoBase = require('./DaoBase'),
-    CollectModel = require('./../data').Collect;
+    CollectModel = require('./../data').CollectRecipe;
 
 var CollectDao = new DaoBase(CollectModel);
 

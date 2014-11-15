@@ -15,8 +15,10 @@ CommentHandler.delete = function(req,res)
 {
     req.on('data',function(data)
     {
-        var conditions ={author : {account:"amount111"}};
-        var obj = JSON.parse(data.toString());
+        //var conditions ={author : {account:"amount111"}};
+        //var obj = JSON.parse(data.toString());
+
+        var conditions = {author : {account : "3"}};
         CommentDao.delete(conditions,function (err, data)
         {
             if(err)
@@ -30,7 +32,7 @@ CommentHandler.delete = function(req,res)
             }
 
         });
-        res.send(obj.userid);
+        res.send("comment/delete");
 
     });
 

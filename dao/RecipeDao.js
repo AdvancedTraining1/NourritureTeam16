@@ -36,7 +36,7 @@ RecipeDao.delete = function (list,callback) {
 }
 
 RecipeDao.getAll = function (callback) {
-    Recipe.find({flag:true}).sort({'logTime':-1}).limit(1).exec(function(error,recipe){
+    Recipe.find({flag:true}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
         if(error) return callback(error,null);
 
         return callback(null, recipe);
