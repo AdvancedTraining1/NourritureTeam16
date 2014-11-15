@@ -5,7 +5,7 @@
 var mongoose = require('mongoose');
 
 
-var dbURL = 'mongodb://localhost/nourrituredatabase';
+var dbURL = 'mongodb://123.57.38.31/test';
 
 
 mongoose.connect(dbURL);

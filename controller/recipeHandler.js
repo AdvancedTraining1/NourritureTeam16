@@ -302,7 +302,7 @@ function modifyRecipe(recipes,params){
     recipe.productNum=2;
     recipe.flag = true;
     recipe.author={id:"001",head:"headPath",account:"user1"};
-    
+
     return recipe;
 }
 
