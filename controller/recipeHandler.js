@@ -37,7 +37,7 @@ exports.modify = function(req,res){
 
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
-        console.log('recipe数据接收完毕');
+        console.log('recipe-modify数据接收完毕');
 
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
@@ -162,7 +162,7 @@ exports.collect = function (req,res) {
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("评论成功！");
+            res.end("collect成功！");
         });
     });
 }
@@ -187,7 +187,7 @@ exports.createProduct = function(req,res){
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("评论成功！");
+            res.end("product成功！");
         });
     });
 }
@@ -221,7 +221,7 @@ exports.likeProduct = function(req,res){
                 res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
-                res.end("评论成功！");
+                res.end("like成功！");
             });
         });
 
