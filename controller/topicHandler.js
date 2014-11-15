@@ -301,8 +301,8 @@ TopicHandler.add = function(req, res)
 {
     req.on('data',function(data)
     {
-        var obj = JSON.parse(data.toString());
-        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        //var obj = JSON.parse(data.toString());
+        //var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
 
         var topic = createTopic();
         TopicDao.save(topic,function (err, data)
@@ -319,8 +319,8 @@ TopicHandler.add = function(req, res)
             }
 
         });
-        res.send(str);
-
+        //res.send("topic/add");
+        res.json(200, {message: "topic/add"});
 
 
     });
@@ -330,8 +330,8 @@ TopicHandler.update = function(req, res)
 {
     req.on('data',function(data)
     {
-        var obj = JSON.parse(data.toString());
-        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        //var obj = JSON.parse(data.toString());
+        //var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
 
         var conditions = {author : {id:111,account:"amount111"}};
         var update = {$set : {content : "www.qq.com"}};
@@ -350,8 +350,8 @@ TopicHandler.update = function(req, res)
             }
 
         });
-        res.send(str);
-
+        //res.send(str);
+        res.json(200, {message: "topic/update"});
 
     });
 };
@@ -371,9 +371,10 @@ TopicHandler.getAll = function(req,res)
 
         }
 
-
-
     });
+
+    //res.send("topic/getAll");
+    res.json(200, {message: "topic/getAll"});
 }
 
 //AdvertiseHandler.getUserById = function(req,res)
@@ -405,8 +406,8 @@ TopicHandler.delete = function(req,res)
 {
     req.on('data',function(data)
     {
-        var conditions ={author : {id:111 , account:"amount111"}};
-        var obj = JSON.parse(data.toString());
+        var conditions ={author : {id:111 , account:"111"}};
+        //var obj = JSON.parse(data.toString());
         TopicDao.delete(conditions,function (err, data)
         {
             if(err)
@@ -420,8 +421,8 @@ TopicHandler.delete = function(req,res)
             }
 
         });
-        res.send(obj.userid);
-
+        //res.send(obj.userid);
+        res.json(200, {message: "topic/delete"});
     });
 
 }
@@ -431,9 +432,9 @@ TopicHandler.searchTopic = function(req,res)
     req.on('data',function(data)
     {
         //先这么写吧
-        var obj = JSON.parse(data.toString());
-        var search = "search";
-        TopicDao.searchTopic(search,function (err, data)
+        //var obj = JSON.parse(data.toString());
+        var keyword = "search";
+        TopicDao.searchTopic(keyword,function (err, data)
         {
             if(err)
             {
@@ -446,21 +447,21 @@ TopicHandler.searchTopic = function(req,res)
             }
 
         });
-        res.send(obj.userid);
-
+        //res.send("topic/search");
+        res.json(200, {message: "topic/search"});
     });
 }
 
 function createTopic()
 {
     var topic = new topicModel();
-    topic.name = "topicname";
-    topic.content = "topiccontent";
+    topic.name = "1";
+    topic.content = "1";
     var author = [];
-    author[0] = {id:120,account:"amount111"};
+    author[0] = {id:120,account:"120"};
     topic.author = author;
     topic.time = new Date();
-    var upload = [];
+    //var upload = [];
     var uploadtime = new Date();
     upload[0] = {author:{id:120,account: "don't no"}, picture : "123123",upload_time : uploadtime,like_count : 1};
     topic.upload_count = 1;
