@@ -62,6 +62,7 @@ exports.deleteRecipe = function(req,res){
 
 exports.listAll = function (req, res) {
     RecipeDao.getAll(function (err, recipe) {
+        //res.writeHead(200);
         res.json(recipe);
     });
 };
@@ -79,12 +80,14 @@ exports.create = function (req, res){
         console.log('recipe数据接收完毕');
 
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        console.log(params);
         params = null;
+
 
         var recipe = createRecipe();
 
         RecipeDao.create(recipe,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("发布菜谱成功！");
