@@ -1,0 +1,40 @@
+
+[0m[0m
+[0m  Recipe API[0m
+[0m    /recipe/listAll[0m
+Express server listening on port 3000
+connect!!!
+[0mGET /recipe/listAll [32m200 [0m48.796 ms - 6621[0m
+    [32m  ✓[0m[90m should return html content, status should be 200 [0m[33m(65ms)[0m
+[0m    /recipe/listOwn[0m
+[0mGET /recipe/listOwn/01 [32m200 [0m5.112 ms - 2[0m
+    [32m  ✓[0m[90m should return html content, status should be 200 [0m
+[0m    /recipe/search[0m
+[0mGET /recipe/search/r [32m200 [0m15.012 ms - 6621[0m
+    [32m  ✓[0m[90m should return html content, status should be 200 [0m
+[0m    /recipe/listComment[0m
+[0mGET /recipe/listComment/01 [32m200 [0m26.932 ms - 1931[0m
+    [32m  ✓[0m[90m should return html content, status should be 200 [0m
+[0m    /recipe/listProduct[0m
+[0mGET /recipe/listProduct/11 [32m200 [0m14.902 ms - 2231[0m
+    [32m  ✓[0m[90m should return html content, status should be 200 [0m
+[0m    /recipe/create[0m
+recipe数据接收完毕
+[0mPOST /recipe/create [32m200 [0m15.677 ms - -[0m
+    [32m  ✓[0m[90m should return 发布菜谱成功 as a html body [0m
+[0m    /recipe/comment[0m
+recipe数据接收完毕
+[0mPOST /recipe/comment [32m200 [0m3.368 ms - -[0m
+    [32m  ✓[0m[90m should return 评论成功！ as a html body [0m
+[0m    /recipe/collect[0m
+recipe数据接收完毕
+[0mPOST /recipe/collect [32m200 [0m2.881 ms - -[0m
+    [32m  ✓[0m[90m should return collect成功！ as a html body [0m
+[0m    /recipe/createProduct[0m
+recipe数据接收完毕
+[0mPOST /recipe/createProduct [32m200 [0m4.347 ms - -[0m
+    [32m  ✓[0m[90m should return product成功！ as a html body [0m
+
+
+[92m [0m[32m 9 passing[0m[90m (184ms)[0m
+

@@ -1,0 +1,3 @@
+#!/bin/sh
+mocha RecipeTest > testResult/recipe
+mocha AttentionTest > testResult/attention

@@ -17,6 +17,10 @@ var RecipeDao = require("../dao/RecipeDao"),
     fs = require('fs'),
     url = require('url');
 
+exports.a = function(req,res){
+    res.redirect("../views/addRecipe.html");
+}
+
 exports.listOwn = function(req,res){
     RecipeDao.getOwn(req.params.authorId,function (err, recipe) {
         res.json(recipe);
@@ -33,14 +37,14 @@ exports.modify = function(req,res){
 
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
-        console.log('recipe数据接收完毕');
+        console.log('recipe-modify数据接收完毕');
 
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
         var updateStr = modifyRecipe(params);
-        console.log(updateStr);
+
         RecipeDao.update(params.id,updateStr,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("修改菜谱成功！");
@@ -53,7 +57,7 @@ exports.deleteRecipe = function(req,res){
     var idStr = req.params.ids.split(",");
 
     RecipeDao.delete(idStr,function (err, recipe) {
-        res.writeHead(500, {
+        res.writeHead(200, {
             "Content-Type": "text/plain;charset=utf-8"
         });
         res.end("删除菜谱成功！");
@@ -62,6 +66,7 @@ exports.deleteRecipe = function(req,res){
 
 exports.listAll = function (req, res) {
     RecipeDao.getAll(function (err, recipe) {
+        //res.writeHead(200);
         res.json(recipe);
     });
 };
@@ -79,12 +84,14 @@ exports.create = function (req, res){
         console.log('recipe数据接收完毕');
 
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        //console.log(params);
         params = null;
+
 
         var recipe = createRecipe();
 
         RecipeDao.create(recipe,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("发布菜谱成功！");
@@ -127,7 +134,7 @@ exports.comment = function(req,res){
         var comment = createComment(params);
 
         CommentDao.create(comment,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("评论成功！");
@@ -152,10 +159,10 @@ exports.collect = function (req,res) {
         var collect = createCollect(params);
 
         CollectDao.create(collect,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("评论成功！");
+            res.end("collect成功！");
         });
     });
 }
@@ -177,10 +184,10 @@ exports.createProduct = function(req,res){
         var product = createProduct(params);
 
         ProductDao.create(product,function (err, recipes) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("评论成功！");
+            res.end("product成功！");
         });
     });
 }
@@ -211,10 +218,10 @@ exports.likeProduct = function(req,res){
         ProductDao.getById(params.id,function(err,product){
             var num = product.likeNum + 1;
             ProductDao.likeProduct(params.id,like,num,function (err, recipes) {
-                res.writeHead(500, {
+                res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
-                res.end("评论成功！");
+                res.end("like成功！");
             });
         });
 
@@ -276,7 +283,7 @@ function createRecipe(){
     recipe.commentNum=0;
     recipe.productNum=0;
     recipe.flag = true;
-    recipe.author={id:"001",head:"headPath",account:"user1"};
+    recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
 }
@@ -301,25 +308,26 @@ function modifyRecipe(recipes,params){
     recipe.commentNum=2;
     recipe.productNum=2;
     recipe.flag = true;
-    recipe.author={id:"001",head:"headPath",account:"user1"};
-    
+    recipe.author={_id:"001",head:"headPath",account:"user1"};
+
     return recipe;
 }
 
 function createComment(params,user){
     var comment = new CommentModel();
-    comment.author.id = "001";
+    comment.author._id = "001";
     comment.author.head = "head1";
     comment.author.account = "account";
     comment.logTime = new Date();
     comment.content = "content1";
     comment.replyId = "01";
+    comment.replyUserId = "02";
     return comment;
 }
 
 function createCollect(params){
     var collect = new CollectModel();
-    collect.user.id = "001";
+    collect.user._id = "001";
     collect.user.account = "account1";
     collect.user.head = "head1";
     collect.logTime = new Date();

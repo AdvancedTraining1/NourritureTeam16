@@ -15,11 +15,11 @@ AdvertiseHandler.addAd = function(req, res)
 {
     req.on('data',function(data)
     {
-        var obj = JSON.parse(data.toString());
-        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        //var obj = JSON.parse(data.toString());
+        //var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
 
-        var user = createAd();
-        AdvertiseDao.save(user,function (err, data)
+        var ad = createAd();
+        AdvertiseDao.save(ad,function (err, data)
         {
             if(err)
             {
@@ -33,9 +33,8 @@ AdvertiseHandler.addAd = function(req, res)
             }
 
         });
-        res.send(str);
-
-
+        //res.send(str);
+        res.send("advertise/add");
 
     });
 };
@@ -44,8 +43,8 @@ AdvertiseHandler.updateAd = function(req, res)
 {
     req.on('data',function(data)
     {
-        var obj = JSON.parse(data.toString());
-        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        //var obj = JSON.parse(data.toString());
+       // var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
 
         var conditions = {author : {id:111,account:"amount111"}};
         var update = {$set : {link : "www.qq.com"}};
@@ -64,7 +63,7 @@ AdvertiseHandler.updateAd = function(req, res)
             }
 
         });
-        res.send(str);
+        res.send("advertise/add");
 
 
     });
@@ -88,6 +87,8 @@ AdvertiseHandler.getAllAds = function(req,res)
 
 
     });
+
+    res.send("advertise/getAllAds");
 }
 
 //AdvertiseHandler.getUserById = function(req,res)
@@ -119,8 +120,8 @@ AdvertiseHandler.deleteAd = function(req,res)
 {
     req.on('data',function(data)
     {
-        var conditions ={author : {account:"amount111"}};
-        var obj = JSON.parse(data.toString());
+        var conditions ={author : {account:"111"}};
+        //var obj = JSON.parse(data.toString());
         AdvertiseDao.delete(conditions,function (err, data)
         {
             if(err)
@@ -134,7 +135,7 @@ AdvertiseHandler.deleteAd = function(req,res)
             }
 
         });
-        res.send(obj.userid);
+        res.send("advertise/delete");
 
     });
 

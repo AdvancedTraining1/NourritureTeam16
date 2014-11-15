@@ -12,7 +12,8 @@ var CommentSchema = new mongoose.Schema({
         head: String},
     logTime: Date,
     content: String,
-    replyId: String
+    replyId: String,
+    replyUserId: String
 
 });
 

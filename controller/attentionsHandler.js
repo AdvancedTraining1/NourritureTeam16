@@ -113,7 +113,7 @@ AttentionsHandler.addAttentions=function(req,res){
     AttentionsDao.addAttentions(fans._id,friends,function(err,users){
         //res.write(users);
         AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("已关注！");
@@ -138,7 +138,7 @@ AttentionsHandler.deleteAttentions=function(req,res){
 
     AttentionsDao.deleteAttentions(fans._id,friends,function(err,users){
         AttentionsDao.deleteAttentionsFans(friends._id,fans,function (err, users) {
-            res.writeHead(500, {
+            res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("已取消关注！");
@@ -179,7 +179,7 @@ AttentionsHandler.lookFriendStatus=function(req,res){
             Topic.find({"author.id":friendId},function(err,topic){
                 list3=list3+topic;
                 //if(i+1==len)
-                res.write(list3);
+                res.end(list3);
             });
         }
 
@@ -265,7 +265,7 @@ AttentionsHandler.commentStatus=function(req,res) {
                                 return;
                             } else {
                                 console.log("comment blog successful");
-                                res.json(201, {message: "comment blog successful"});
+                                res.json(200, {message: "comment blog successful"});
                             }
                         });
 
@@ -297,7 +297,7 @@ AttentionsHandler.commentStatus=function(req,res) {
                     } else {
                         var message = "comment topic successful";
                         console.log(message);
-                        res.json(201, {message: message});
+                        res.json(200, {message: message});
                     }
                 })
             })
@@ -328,7 +328,7 @@ AttentionsHandler.commentStatus=function(req,res) {
                     } else {
                         var message = "comment recipe successful";
                         console.log(message);
-                        res.json(201, {message: "comment recipe successful"});
+                        res.json(200, {message: "comment recipe successful"});
 
                     }
                 })
@@ -379,7 +379,7 @@ AttentionsHandler.likeStatus=function(req,res) {
                                 return;
                             } else {
                                 console.log("like blog successful");
-                                res.json(201, {message: "like blog successful"});
+                                res.json(200, {message: "like blog successful"});
                             }
                         });
 
@@ -408,7 +408,7 @@ AttentionsHandler.likeStatus=function(req,res) {
                    } else {
                        var message = "like topic successful";
                        console.log(message);
-                       res.json(201, {message: "like topic successful"});
+                       res.json(200, {message: "like topic successful"});
 
                    }
                })
@@ -454,7 +454,7 @@ AttentionsHandler.cancelLike=function(req,res) {
                     console.log('cancel like blog ok!');
                     var message = "cancel like blog ok!"
 
-                    res.json(201, {message: message});
+                    res.json(200, {message: message});
                 }
             })
         }
@@ -473,7 +473,7 @@ AttentionsHandler.cancelLike=function(req,res) {
                     console.log('cancel like topic ok!');
                     var message = "cancel like topic ok!"
 
-                    res.json(201, {message: message});
+                    res.json(200, {message: message});
                 }
             })
         }
