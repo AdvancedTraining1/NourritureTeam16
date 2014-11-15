@@ -7,6 +7,7 @@ var UserDao = require("../dao/UserDao");
 var UserModel = require("./../data").user;
 
 var querystring = require('querystring');
+var formidable = require('formidable');
 var fs = require('fs');
 var url = require('url');
 
@@ -15,9 +16,17 @@ function UserinfoHandler(){
 
 }
 UserinfoHandler.register=function(req,res){
-    var username = req.param('username');
-    var password = req.param('password');
-    console.log("注册"+username+"密码"+password);
+    req.setEncoding('utf-8');
+    var postData = "";
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+    });
+
+    var params = querystring.parse(postData);
+    var username = params.username;
+    var password = params.password;
+    console.log("注册---username:"+username+"-----密码:"+password);
 
     var user = new UserModel({
         username: username,
@@ -34,6 +43,10 @@ UserinfoHandler.register=function(req,res){
         friends_count: 3,
         fans_count: 3
     });
+    for(var i1=0;i1++;i1<10){
+        var username=username+i1.toString();
+    }
+
     UserDao.save(user,function (err, data)
     {
         if(err)
@@ -51,10 +64,18 @@ UserinfoHandler.register=function(req,res){
     res.send("已注册用户的用户名："+username);
 };
 UserinfoHandler.login=function(req,res){
-    var username = req.param('username');
-    var password = req.param('password');
-    console.log("登陆handler");
-    UserDao.getUserByAccountAndPass(username,password, function (err, user)
+    //var username = req.param('username');
+    //var password = req.param('password');
+    req.setEncoding('utf-8');
+    var postData = "";
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+    });
+
+    var params = querystring.parse(postData);
+    console.log("登陆handler------params:"+params);
+    UserDao.getUserByAccountAndPass(params.username,params.password, function (err, user)
     {
         if(err)
             console.log(err);
@@ -68,8 +89,17 @@ UserinfoHandler.login=function(req,res){
 };
 
 UserinfoHandler.modifypass=function(req,res){
-    var oldpass = req.param('passwordold');
-    var newpass = req.param('passwordnew');
+    req.setEncoding('utf-8');
+    var postData = "";
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+    });
+
+    var params = querystring.parse(postData);
+    var oldpass = params.passwordold;
+    var newpass = params.passwordnew;
+
     console.log("修改密码handler");
 
     var conditions = {_id:req.session.user_id};
@@ -92,8 +122,17 @@ UserinfoHandler.modifypass=function(req,res){
 };
 
 UserinfoHandler.modifyinfo=function(req,res){
-    var username = req.param('username');
-    var head = req.param('head');
+    req.setEncoding('utf-8');
+    var postData = "";
+
+    req.addListener("data", function (postDataChunk) {
+        postData += postDataChunk;
+    });
+
+    var params = querystring.parse(postData);
+
+    var username = params.username;
+    var head = params.head;
     console.log("修改个人信息handler");
 
     var conditions = {_id:req.session.user_id};

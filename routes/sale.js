@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var saleHandler = require('../controller/saleHandler');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -14,5 +15,12 @@ router.post('/',function(req, res){
 	});
 });
 
+router.get('/getAll',saleHandler.getAll);
+router.get('/getOne',saleHandler.getOne);
+router.get('/getOwn',saleHandler.getOwn);
+router.get('/delete',saleHandler.delete);
+router.get('/create',saleHandler.create);
+router.get('/edit',saleHandler.edit);
+router.get('/search',saleHandler.search);
 
 module.exports = router;

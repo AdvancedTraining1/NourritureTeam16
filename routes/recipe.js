@@ -9,6 +9,9 @@ var recipe = require('./../controller/recipeHandler');
 //查询方法全都需要分页
 
 module.exports = function (app) {
+
+    app.get('/recipe', recipe.a);
+
     app.get('/recipe/delete/:ids', recipe.deleteRecipe);
     app.get('/recipe/showOne/:id', recipe.showOne);
 

@@ -15,8 +15,8 @@ SeasonHandler.add = function(req, res)
 {
     req.on('data',function(data)
     {
-        var obj = JSON.parse(data.toString());
-        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        //var obj = JSON.parse(data.toString());
+        //var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
 
         var season = createSeason();
         SeasonDao.save(season,function (err, data)
@@ -33,10 +33,8 @@ SeasonHandler.add = function(req, res)
             }
 
         });
-        res.send(str);
-
-
-
+        //res.send("season/add");
+        res.json(200, {message: "season/add"});
     });
 };
 
@@ -44,8 +42,8 @@ SeasonHandler.update = function(req, res)
 {
     req.on('data',function(data)
     {
-        var obj = JSON.parse(data.toString());
-        var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        //var obj = JSON.parse(data.toString());
+        //var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
 
         var conditions = {name : "seasonname"};
         var update = {$set : {picture : "www.qq.com"}};
@@ -64,8 +62,8 @@ SeasonHandler.update = function(req, res)
             }
 
         });
-        res.send(str);
-
+       // res.send("season/update");
+        res.json(200, {message: "season/update"});
 
     });
 };
@@ -88,6 +86,9 @@ SeasonHandler.getAll = function(req,res)
 
 
     });
+
+    //res.send("season/getAll");
+    res.json(200, {message: "season/getAll"});
 }
 
 //AdvertiseHandler.getUserById = function(req,res)
@@ -120,7 +121,7 @@ SeasonHandler.delete = function(req,res)
     req.on('data',function(data)
     {
         var conditions ={name : "seasonname"};
-        var obj = JSON.parse(data.toString());
+        //var obj = JSON.parse(data.toString());
         SeasonDao.delete(conditions,function (err, data)
         {
             if(err)
@@ -134,8 +135,8 @@ SeasonHandler.delete = function(req,res)
             }
 
         });
-        res.send(obj.userid);
-
+        //res.send("season/delete");
+        res.json(200, {message: "season/delete"});
     });
 
 }
@@ -145,9 +146,9 @@ SeasonHandler.searchSeasonFood = function(req,res)
     req.on('data',function(data)
     {
         //先这么写吧
-        var obj = JSON.parse(data.toString());
-        var search = "search";
-        SeasonDao.searchSeasonFood(search,function (err, data)
+        //var obj = JSON.parse(data.toString());
+        var keyword = "search";
+        SeasonDao.searchSeasonFood(keyword,function (err, data)
         {
             if(err)
             {
@@ -160,8 +161,8 @@ SeasonHandler.searchSeasonFood = function(req,res)
             }
 
         });
-        res.send(obj.userid);
-
+        //res.send("season/search");
+        res.json(200, {message: "season/search"});
     });
 }
 

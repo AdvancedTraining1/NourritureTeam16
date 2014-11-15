@@ -1,6 +1,6 @@
 extends layout
 block content
-    form(class="form-horizontal" method="post" action="/userinfo/register")
+    form(method="post",action="/userinfo/register")
         p 用户注册
         label(for="username") 用户名
         div.controls
@@ -15,7 +15,7 @@ block content
         input(type="password" id="password-repeat" name="password-repeat")
         div.controls
         button(type="submit") 注册
-    form(class="form-horizontal" method="post" action="/userinfo/login")
+    form(method="post", action="/userinfo/login")
         p 用户登录
         label(for="username") 用户名
         div.controls
@@ -26,7 +26,7 @@ block content
         input(type="password" id="password" name="password")
         div.controls
         button(type="submit") 登录
-    form(class="form-horizontal" method="post" action="/userinfo/modifypass")
+    form( method="post" ,action="/userinfo/modifypass")
         p 修改密码
         label(for="username") 原密码
         div.controls
@@ -37,7 +37,7 @@ block content
         input(type="password" id="password" name="passwordnew")
         div.controls
         button(type="submit") 修改
-    form(class="form-horizontal" method="post" action="/userinfo/modifyinfo")
+    form(method="post", action="/userinfo/modifyinfo")
         p 修改密码
         label(for="username") 姓名
         div.controls
