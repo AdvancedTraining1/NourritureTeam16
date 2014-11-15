@@ -37,7 +37,9 @@ BlogHander.getAllBlogs = function (req, res) {
 BlogHander.getABlogs = function (req, res) {
     console.log("查询一条博客...");
     var blog_id = req.params.blog_id;
+    console.log(blog_id);
     BlogDao.getOne(blog_id,function(err,blog){
+        console.log(blog);
         if (err) {
             res.json(500, {message: err.toString()});
             return;
@@ -87,8 +89,9 @@ BlogHander.publishABlog = function (req, res) {
             } else {
                 message = "publish successful";
                 console.log(newblog._id);
-                var id = newblog._id
-                res.render('showBlog', {title: title, content: content, message: message, _id:id})
+                var id = newblog._id;
+                res.json(200, {message:message});
+               // res.render('showBlog', {title: title, content: content, message: message, _id:id})
             }
 
 
@@ -207,7 +210,7 @@ BlogHander.deleteBlog = function (req, res) {
             console.log(error);
         } else {
             console.log('delete ok!');
-            res.json(201, {message: "delete ok!"});
+            res.json(200, {message: "delete ok!"});
         }
     });
 
@@ -256,7 +259,7 @@ BlogHander.collectionBlog = function (req, res) {
                         return;
                     } else {
                         console.log("collection successful");
-                        res.json(201, {message: "collection successful"});
+                        res.json(200, {message: "collection successful"});
                     }
                 });
 
@@ -308,7 +311,7 @@ BlogHander.cancellationBlog = function (req, res) {
             console.log('delete ok!');
             var message = "delete ok!"
 
-            res.json(201, {message: message});
+            res.json(200, {message: message});
         }
     })
 }
@@ -356,7 +359,7 @@ BlogHander.likeBlog = function (req, res) {
                         return;
                     } else {
                         console.log("like successful");
-                        res.json(201, {message: "like successful"});
+                        res.json(200, {message: "like successful"});
                     }
                 });
 
@@ -408,7 +411,7 @@ BlogHander.cancelLikeBlog = function (req, res) {
             console.log('delete ok!');
             var message = "delete ok!"
 
-            res.json(201, {message: message});
+            res.json(200, {message: message});
         }
     })
 }
@@ -438,6 +441,8 @@ BlogHander.addCommentToBlog=function(req, res){
         var account = req.session.account;
         var blog_id = params._id;
         var reply_id = params.comment_id;
+
+        console.log(user_id);
         var commentToBlog = new CommentToBlogModel({
             author: {
                 id: user_id,
@@ -471,7 +476,7 @@ BlogHander.addCommentToBlog=function(req, res){
                             return;
                         } else {
                             console.log("comment successful");
-                            res.json(201, {message: "comment successful"});
+                            res.json(200, {message: "comment successful"});
                         }
                     });
 
@@ -507,7 +512,7 @@ BlogHander.deleteCommentToBlog = function (req, res) {
             console.log(error);
         } else {
             console.log('delete ok!');
-            res.json(201, {message: "delete ok!"});
+            res.json(200, {message: "delete ok!"});
         }
     });
 

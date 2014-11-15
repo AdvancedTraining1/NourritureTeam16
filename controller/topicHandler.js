@@ -2,7 +2,7 @@
  * Created by huhao on 14-11-06.
  */
 
-var TopicModel = require('../data').Topic;
+var TopicModel = require('./../data').Topic;
 var TopicDao = require("../dao/TopicDao");
 var TopicUploadModel = require('./../data').TopicUpload;
 var TopicUploadDao = require("../dao/TopicUploadDao");
@@ -32,6 +32,7 @@ TopicHandler.publishTopic = function(req,res){
     });
 
     req.addListener("end", function () {
+
         var params = querystring.parse(postData);
 
         var topicName = params.topicName;
@@ -46,14 +47,18 @@ TopicHandler.publishTopic = function(req,res){
 
         });
         var message = ""
+        console.log("++++++++++");
+        console.log(topic);
         TopicDao.create(topic,function (err, newtopic) {
+            console.log("========");
             if (err) {
                 message = "publish failed";
             } else {
                 message = "publish successful";
             }
-            var topic_id = newtopic._id;
-            res.render('showtopic', {topicName: topicName, content: content, message: message, topic_id:topic_id})
+           // var topic_id = newtopic._id;
+            console.log("handler"+newtopic);
+            res.render('showtopic', {topicName: topicName, content: content, message: message})
 
         });
 
@@ -95,10 +100,10 @@ TopicHandler.getATopic = function (req, res) {
                 return;
             }
            // if(!uploads){
-        res.render('showTopicUpload', {title: topic.topicName, picture: topic.content, topic_id:topic._id});
+       // res.render('showTopicUpload', {title: topic.topicName, picture: topic.content, topic_id:topic._id});
             //}
 
-           // res.json(201, {topic: topic, uploads: uploads});
+            res.json(200, {topic: topic, uploads: uploads});
 
         })
 
@@ -210,7 +215,7 @@ TopicHandler.addCommentToTopicUpload=function(req, res){
                             return;
                         } else {
                             console.log("comment successful");
-                            res.json(201, {message: "comment successful"});
+                            res.json(200, {message: "comment successful"});
                         }
                     });
 
@@ -224,7 +229,7 @@ TopicHandler.addCommentToTopicUpload=function(req, res){
 }
 
 TopicHandler.getAllCommentToTopicUpload = function (req, res) {
-    var topicUpload_id = req.params.topicUpload_id;
+    var topicUpload_id = req.params.Upload_id;
     TopicUploadCommentDao.getAllCommentToTopicUpload(topicUpload_id,function(err,comments){
         if (err) {
             res.json(500, {message: err.toString()});
@@ -248,14 +253,15 @@ TopicHandler.deleteCommentToTopicUpload = function (req, res) {
             console.log(error);
         } else {
             console.log('delete ok!');
-            res.json(201, {message: "delete ok!"});
+            res.json(200, {message: "delete ok!"});
         }
     });
 
 }
 
 TopicHandler.likeTopicUpload = function (req, res) {
-    var topicUpload_id = req.params.topicUpload_id;
+    var topicUpload_id = req.params.Upload_id;
+    console.log(topicUpload_id);
     var user_id = req.session.user_id;
     TopicUploadDao.getOne(topicUpload_id,function (err, topicUpload){
         if (err) {
@@ -297,7 +303,7 @@ TopicHandler.likeTopicUpload = function (req, res) {
                         return;
                     } else {
                         console.log("like successful");
-                        res.json(201, {message: "like successful"});
+                        res.json(200, {message: "like successful"});
                     }
                 });
 
@@ -309,7 +315,7 @@ TopicHandler.likeTopicUpload = function (req, res) {
 
 
 TopicHandler.cancelLikeTopicUpload = function (req, res) {
-    var topicUpload_id = req.params.topicUpload_id;
+    var topicUpload_id = req.params.Upload_id;
     var user_id = req.session.user_id;
     var message = ""
     TopicUploadDao.getOne(topicUpload_id, function (err, topicUpload) {
@@ -349,7 +355,7 @@ TopicHandler.cancelLikeTopicUpload = function (req, res) {
             console.log('delete ok!');
             var message = "delete ok!"
 
-            res.json(201, {message: message});
+            res.json(200, {message: message});
         }
     })
 }

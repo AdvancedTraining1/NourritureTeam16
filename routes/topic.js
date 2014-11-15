@@ -40,10 +40,10 @@ router.get('/showTopicDetail/:topic_id',topicHander.getATopic)
 router.get('/showTopicList',topicHander.getAlltopics);
 router.post('/publishTopic',topicHander.publishTopic);
 router.post('/joinTopic',topicHander.uploadProduct);
-router.get('/likeTopicUpload/:topicUpload_id',topicHander.likeTopicUpload);
-router.get('/cancelLikeTopicUpload/:topicUpload_id',topicHander.cancelLikeTopicUpload);
+router.get('/likeTopicUpload/:Upload_id',topicHander.likeTopicUpload);
+router.get('/cancelLikeTopicUpload/:Upload_id',topicHander.cancelLikeTopicUpload);
 router.post('/addCommentToTopicUpload',topicHander.addCommentToTopicUpload);
-router.get('/getAllCommentToTopicUpload/:topicUpload_id',topicHander.getAllCommentToTopicUpload);
+router.get('/getAllCommentToTopicUpload/:Upload_id',topicHander.getAllCommentToTopicUpload);
 router.get('/deleteCommentToTopicUpload/:comment_id',topicHander.deleteCommentToTopicUpload);
 
 
