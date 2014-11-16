@@ -14,7 +14,6 @@ module.exports = TopicDao;
 
 TopicDao.create = function(topic,callback){
     topic.save(function (error, newtopic){
-        console.log("dao" + topic);
         if(error) return callback(error,null);
 
         return callback(null, newtopic);
