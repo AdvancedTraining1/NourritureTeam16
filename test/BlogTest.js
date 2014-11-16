@@ -11,13 +11,13 @@ var request = require('request')
 
 describe('Blog API',function(){
 
-    before(function(){
+    /*before(function(){
         app.set('port', process.env.PORT || 3000);
 
         var server = app.listen(app.get('port'), function() {
             console.log('Express server listening on port ' + server.address().port);
         });
-    });
+    });*/
 
     describe('/blog', function () {
         it('Get /blog should return 200', function (done) {
@@ -45,7 +45,7 @@ describe('Blog API',function(){
 
     describe('/showBlogDetail', function () {
         it('Get /showBlogDetail/:blog_id should return 200', function (done) {
-            request(webServer+"/blog/showBlogDetail/5467065ba97474a6177176dd", function (error, response,body) {
+            request(webServer+"/blog/showBlogDetail/54684574a41aa6224bec8147", function (error, response,body) {
                 if (error) throw error;
 
                 var status = response.statusCode;
@@ -105,7 +105,7 @@ describe('Blog API',function(){
 
     describe('/modifyBlog', function () {
         it('Get /modifyBlog/:blog_id should return 200', function (done) {
-            request(webServer+"/blog/modifyBlog/5467065ba97474a6177176dd", function (error, response,body) {
+            request(webServer+"/blog/modifyBlog/54684574a41aa6224bec8147", function (error, response,body) {
                 if (error) throw error;
 
                 var status = response.statusCode;
@@ -133,9 +133,9 @@ describe('Blog API',function(){
         });
     });
 
-    /*describe('/deleteBlog', function () {
+    describe('/deleteBlog', function () {
         it('Get /deleteBlog/:blog_id should return 200', function (done) {
-            request(webServer+"/blog/deleteBlog/54670038cde44a7d14d6572f", function (error, response,body) {
+            request(webServer+"/blog/deleteBlog/54684574a41aa6224bec8148", function (error, response,body) {
                 if (error) throw error;
 
                 var status = response.statusCode;
@@ -143,7 +143,7 @@ describe('Blog API',function(){
                 done();
             });
         });
-    });*/
+    });
 
     describe('/collectionBlog', function () {
         it('Get /collectionBlog/:blog_id should return 200', function (done) {
@@ -225,7 +225,7 @@ describe('Blog API',function(){
 
     describe('/deleteCommentToBlog', function () {
         it('Get /deleteCommentToBlog/:blog_id should return 200', function (done) {
-            request(webServer+"/blog/deleteCommentToBlog/5466ff4acde44a7d14d6572e", function (error, response,body) {
+            request(webServer+"/blog/deleteCommentToBlog/54684574a41aa6224bec814b", function (error, response,body) {
                 if (error) throw error;
 
                 var status = response.statusCode;
