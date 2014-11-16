@@ -69,5 +69,27 @@ The user can search topics,
 search season foods and search recipes.
 
 ==========topic==========
+Publish a topic
+Show topic list
+Join a topic
+Add Like to a upload production of a topic
+Cancel Like to a upload production of a topic
+Add comment to a upload production
+Delete comment to a upload production
+Show comment list to a upload production
 
 ==========blog==========
+Dietitian create a blog
+Publish a blog
+Save a blog to draft box
+Modify a blog
+Delete a blog
+Show blog list
+Show blog detail
+Add a blog to collection
+Cancellation a blog
+Add comment to a blog
+Delete comment to a blog 
+Show comment list to a blog
+Like a blog
+Cancel like a blog
