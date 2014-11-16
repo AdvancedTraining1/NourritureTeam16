@@ -11,7 +11,6 @@ var CommentToBlogModel = require('./../data').CommentToBlog;
 var BlogLikeModel = require('./../data').BlogLike;
 var BlogLikeDao = require('../dao/BlogLikeDao');
 var querystring=require('querystring');
-var db = require('../util/database');
 
 function BlogHander() {
 
