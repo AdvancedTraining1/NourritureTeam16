@@ -47,17 +47,16 @@ TopicHandler.publishTopic = function(req,res){
 
         });
         var message = ""
-        console.log("++++++++++");
-        console.log(topic);
+
         TopicDao.create(topic,function (err, newtopic) {
-            console.log("========");
+
             if (err) {
                 message = "publish failed";
             } else {
                 message = "publish successful";
             }
-           // var topic_id = newtopic._id;
-            console.log("handler"+newtopic);
+
+
             res.render('showtopic', {topicName: topicName, content: content, message: message})
 
         });
