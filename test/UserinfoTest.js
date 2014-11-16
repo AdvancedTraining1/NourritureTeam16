@@ -10,13 +10,13 @@ var webServer="http://localhost:3000";
 
 describe('测试Userinfo',function(){
 
-    before(function(){
+    /*before(function(){
         app.set('port', process.env.PORT || 3000);
 
         var server = app.listen(app.get('port'), function() {
             console.log('Express server listening on port ' + server.address().port);
         });
-    });
+    });*/
 
     describe('测试testuserinfo.jade', function () {
         it('should return html content', function (done) {
