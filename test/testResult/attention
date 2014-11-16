@@ -1,33 +1,0 @@
-
-[0m[0m
-[0m  Attention API[0m
-[0m    /attentions/getAllAttentions/:queryStr[0m
-Express server listening on port 3000
-搜索所有用户（目的添加好友）...
-connect!!!
-[0mGET /attentions/getAllAttentions/:queryStr [32m200 [0m36.418 ms - 2[0m
-    [32m  ✓[0m[90m should return html content [0m[33m(53ms)[0m
-[0m    /attentions/addAttentions[0m
-关注
-[0mGET /attentions/addAttentions [32m200 [0m9.812 ms - -[0m
-    [32m  ✓[0m[90m should return html content [0m
-[0m    /attentions/deleteAttentions[0m
-取消关注
-[0mGET /attentions/deleteAttentions [32m200 [0m3.386 ms - -[0m
-    [32m  ✓[0m[90m should return html content [0m
-[0m    /attentions/lookFriendStatus[0m
-查看好友动态
-    [31m  1) should return html content[0m
-[0m    /attentions/commentStatus[0m
-评论状态
-    [31m  2) should return html content[0m
-[0m    /attentions/likeStatus[0m
-点赞
-    [31m  3) should return html content[0m
-[0m    /attentions/cancelLike[0m
-取消点赞
-    [31m  4) should return html content[0m
-
-
-[92m [0m[32m 3 passing[0m[90m (6s)[0m
-
