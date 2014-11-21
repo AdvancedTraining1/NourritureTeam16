@@ -24,215 +24,123 @@ connect!!!
 [0m  Blog API[0m
 [0m    /blog[0m
 Express server listening on port 3000
-yes
-54578976af75277b630cc379
-[0mGET /blog/ [32m200 [0m283.181 ms - 170[0m
-    [32m  ✓[0m[90m Get /blog should return 200 [0m[31m(291ms)[0m
+    [32m  ✓[0m[90m Get /blog should return 200 [0m[33m(40ms)[0m
 [0m    /createBlog[0m
-[0mGET /blog/createBlog [32m200 [0m45.774 ms - 387[0m
-    [32m  ✓[0m[90m Get /createBlog should return 200 [0m[33m(49ms)[0m
+    [32m  ✓[0m[90m Get /createBlog should return 200 [0m
 [0m    /showBlogDetail[0m
-查询一条博客...
-5467065ba97474a6177176dd
-{ _id: 5467065ba97474a6177176dd,
-  content: 'world',
-  title: 'hello',
-  comment_count: 2,
-  collect_count: 0,
-  like_count: 0,
-  author: {},
-  update_at: Sun Nov 16 2014 13:04:06 GMT+0800 (CST),
-  create_at: Sun Nov 16 2014 13:09:57 GMT+0800 (CST) }
-[0mGET /blog/showBlogDetail/5467065ba97474a6177176dd [32m200 [0m38.610 ms - 396[0m
-    [32m  ✓[0m[90m Get /showBlogDetail/:blog_id should return 200 [0m[33m(40ms)[0m
+    [32m  ✓[0m[90m Get /showBlogDetail/:blog_id should return 200 [0m[33m(39ms)[0m
 [0m    /showBlogList[0m
-查询全部博客...
-[0mGET /blog/showBlogList [32m200 [0m7.673 ms - 1067[0m
     [32m  ✓[0m[90m Get /showBlogList should return 200 [0m
 [0m    /publishBlog[0m
     [32m  ✓[0m[90m Post /publishBlog should return 200 [0m
-ok
-title=hello&content=world
-hello
-546831a56c9fb9b30d05f588
 [0m    /saveBlog[0m
-[0mPOST /blog/publishBlog [32m200 [0m11.941 ms - 32[0m
     [32m  ✓[0m[90m Post /saveBlog should return 200 [0m
-ok
-title=hello&content=world
-3newBlog{ __v: 0,
-  title: 'hello',
-  content: 'world',
-  type: '2',
-  _id: 546831a56c9fb9b30d05f589,
-  comment_count: 0,
-  collect_count: 0,
-  like_count: 0,
-  author: {},
-  update_at: Sun Nov 16 2014 13:09:57 GMT+0800 (CST),
-  create_at: Sun Nov 16 2014 13:09:57 GMT+0800 (CST) }
 [0m    /modifyBlog[0m
-[0mPOST /blog/saveBlog [32m200 [0m38.736 ms - 396[0m
-[0mGET /blog/modifyBlog/5467065ba97474a6177176dd [32m200 [0m18.548 ms - 458[0m
-    [32m  ✓[0m[90m Get /modifyBlog/:blog_id should return 200 [0m
+    [32m  ✓[0m[90m Get /modifyBlog/:blog_id should return 200 [0m[33m(40ms)[0m
 [0m    /saveModifyBlog[0m
     [32m  ✓[0m[90m Post /saveModifyBlog should return 200 [0m
-title=hello&content=world&_id=5467065ba97474a6177176dd
+[0m    /deleteBlog[0m
+    [32m  ✓[0m[90m Get /deleteBlog/:blog_id should return 200 [0m
 [0m    /collectionBlog[0m
-1
-[0mPOST /blog/saveModifyBlog [32m200 [0m23.695 ms - 398[0m
-find one
-save successful
-0
-collection successful
-[0mGET /blog/collectionBlog/5467065ba97474a6177176dd [32m200 [0m6.374 ms - 35[0m
     [32m  ✓[0m[90m Get /collectionBlog/:blog_id should return 200 [0m
 [0m    /cancellationBlog[0m
-{ blog_id: '5467065ba97474a6177176dd', user_id: undefined }
-find one
-delete ok!
-[0mGET /blog/cancellationBlog/5467065ba97474a6177176dd [32m200 [0m5.526 ms - 24[0m
-    [32m  ✓[0m[90m Get /cancellationBlog/:blog_id should return 200 [0m
-update successful
+    [32m  ✓[0m[90m Get /cancellationBlog/:blog_id should return 200 [0m[33m(48ms)[0m
 [0m    /likeBlog[0m
-find one
-save successful
-0
-like successful
-[0mGET /blog/likeBlog/5467065ba97474a6177176dd [32m200 [0m5.216 ms - 29[0m
     [32m  ✓[0m[90m Get /likeBlog/:blog_id should return 200 [0m
 [0m    /cancelLikeBlog[0m
-{ blog_id: '5467065ba97474a6177176dd', user_id: undefined }
-find one
-delete ok!
-update successful
-[0mGET /blog/cancelLikeBlog/5467065ba97474a6177176dd [32m200 [0m3.921 ms - 24[0m
     [32m  ✓[0m[90m Get /cancelLikeBlog/:blog_id should return 200 [0m
 [0m    /addCommentToBlog[0m
     [32m  ✓[0m[90m Post /addCommentToBlog should return 200 [0m
-ok
-comment=comment123&_id=5467065ba97474a6177176dd
-undefined
 [0m    /showCommentListToBlog[0m
-save successful
-2
-comment successful
-[0mPOST /blog/addCommentToBlog [32m200 [0m5.600 ms - 32[0m
-[0mGET /blog/showCommentListToBlog/5467065ba97474a6177176dd [32m200 [0m6.189 ms - 412[0m
     [32m  ✓[0m[90m Get /showCommentListToBlog/:blog_id should return 200 [0m
 [0m    /deleteCommentToBlog[0m
-{ _id: '5466ff4acde44a7d14d6572e' }
-delete ok!
-[0mGET /blog/deleteCommentToBlog/5466ff4acde44a7d14d6572e [32m200 [0m3.989 ms - 24[0m
     [32m  ✓[0m[90m Get /deleteCommentToBlog/:blog_id should return 200 [0m
 
 [0m  Recipe API[0m
 [0m    /recipe/listAll[0m
-[0mGET /recipe/listAll [32m200 [0m14.567 ms - 6621[0m
-    [32m  ✓[0m[90m should return html content, status should be 200 [0m
+[0mGET /recipe/listAll [32m200 [0m29.539 ms - 6621[0m
+    [32m  ✓[0m[90m should return html content, status should be 200 [0m[33m(39ms)[0m
 [0m    /recipe/listOwn[0m
-[0mGET /recipe/listOwn/01 [32m200 [0m3.319 ms - 2[0m
+[0mGET /recipe/listOwn/01 [32m200 [0m4.507 ms - 2[0m
     [32m  ✓[0m[90m should return html content, status should be 200 [0m
 [0m    /recipe/search[0m
-[0mGET /recipe/search/r [32m200 [0m13.063 ms - 6621[0m
+[0mGET /recipe/search/r [32m200 [0m14.332 ms - 6621[0m
     [32m  ✓[0m[90m should return html content, status should be 200 [0m
 [0m    /recipe/listComment[0m
-[0mGET /recipe/listComment/01 [32m200 [0m7.713 ms - 1931[0m
+[0mGET /recipe/listComment/01 [32m200 [0m13.822 ms - 1931[0m
     [32m  ✓[0m[90m should return html content, status should be 200 [0m
 [0m    /recipe/listProduct[0m
-[0mGET /recipe/listProduct/11 [32m200 [0m9.286 ms - 2231[0m
+[0mGET /recipe/listProduct/11 [32m200 [0m11.274 ms - 2231[0m
     [32m  ✓[0m[90m should return html content, status should be 200 [0m
 [0m    /recipe/create[0m
 recipe数据接收完毕
-[0mPOST /recipe/create [32m200 [0m6.636 ms - -[0m
+[0mPOST /recipe/create [32m200 [0m17.764 ms - -[0m
     [32m  ✓[0m[90m should return 发布菜谱成功 as a html body [0m
 [0m    /recipe/comment[0m
 recipe数据接收完毕
-[0mPOST /recipe/comment [32m200 [0m2.984 ms - -[0m
+[0mPOST /recipe/comment [32m200 [0m3.654 ms - -[0m
     [32m  ✓[0m[90m should return 评论成功！ as a html body [0m
 [0m    /recipe/collect[0m
 recipe数据接收完毕
-[0mPOST /recipe/collect [32m200 [0m2.846 ms - -[0m
+[0mPOST /recipe/collect [32m200 [0m2.829 ms - -[0m
     [32m  ✓[0m[90m should return collect成功！ as a html body [0m
 [0m    /recipe/createProduct[0m
 recipe数据接收完毕
-[0mPOST /recipe/createProduct [32m200 [0m4.314 ms - -[0m
+[0mPOST /recipe/createProduct [32m200 [0m4.611 ms - -[0m
     [32m  ✓[0m[90m should return product成功！ as a html body [0m
 
 [0m  Sale API[0m
 [0m    /sale[0m
-[0mGET /sale/ [32m200 [0m27.848 ms - 715[0m
-    [32m  ✓[0m[90m should return html content [0m
+[0mGET /sale/ [32m200 [0m338.845 ms - 715[0m
+    [32m  ✓[0m[90m should return html content [0m[31m(341ms)[0m
 [0m    /sale/getAll[0m
-[0mGET /sale/getAll [32m200 [0m3.621 ms - 266[0m
+[0mGET /sale/getAll [32m200 [0m5.452 ms - 1591[0m
     [32m  ✓[0m[90m should return html content [0m
 [0m    /sale/getOne[0m
-[0mGET /sale/getOne [32m200 [0m2.574 ms - 2[0m
+[0mGET /sale/getOne [32m200 [0m2.856 ms - 2[0m
     [32m  ✓[0m[90m should return html content [0m
 [0m    /sale/getOwn[0m
-[0mGET /sale/getOwn [32m200 [0m1.887 ms - 2[0m
+[0mGET /sale/getOwn [32m200 [0m2.223 ms - 2[0m
     [32m  ✓[0m[90m should return html content [0m
 [0m    /sale/create[0m
 数据接收完毕
-[0mGET /sale/create [32m200 [0m2.935 ms - -[0m
+[0mGET /sale/create [32m200 [0m4.099 ms - -[0m
     [32m  ✓[0m[90m should return html content [0m
 [0m    /sale/delete[0m
-[0mGET /sale/delete [32m200 [0m2.595 ms - -[0m
+[0mGET /sale/delete [32m200 [0m3.324 ms - -[0m
     [32m  ✓[0m[90m should return html content [0m
 [0m    /sale/edit[0m
 数据接收完毕
 { title: 'A little change on SellingThings',
   author: { _id: '03', head: 'headPath', account: 'noob' },
   content: 'There`s no content' }
-[0mGET /sale/edit [32m200 [0m3.615 ms - -[0m
+[0mGET /sale/edit [32m200 [0m7.713 ms - -[0m
     [32m  ✓[0m[90m should return html content [0m
 [0m    /sale/search[0m
-[0mGET /sale/search [32m200 [0m4.409 ms - 2[0m
+[0mGET /sale/search [32m200 [0m3.583 ms - 2[0m
     [32m  ✓[0m[90m should return html content [0m
 
 [0m  Topic API[0m
 [0m    /topic[0m
-yes
-5457938cdde4219d2ff330c3
-[0mGET /topic/ [32m200 [0m8.613 ms - 170[0m
     [32m  ✓[0m[90m Get /topic should return 200 [0m
 [0m    /createTopic[0m
-[0mGET /topic/createTopic [32m200 [0m15.701 ms - 376[0m
     [32m  ✓[0m[90m Get /createTopic should return 200 [0m
 [0m    /showTopicDetail[0m
-查询一个话题...
-5464d48ae4cba45620c676bc
-[0mGET /topic/showTopicDetail/5464d48ae4cba45620c676bc [33m404 [0m3.384 ms - 24[0m
-    [31m  9) Get /showTopicDetail/:topic_id should return 200[0m
+    [32m  ✓[0m[90m Get /showTopicDetail/:topic_id should return 200 [0m
 [0m    /showTopicList[0m
-查询全部话题...
-[0mGET /topic/showTopicList [32m200 [0m2.582 ms - 2[0m
     [32m  ✓[0m[90m Get /showTopicList should return 200 [0m
 [0m    /likeTopicUpload[0m
-5464ee4caae0ec19272d59e9
-[0mGET /topic/likeTopicUpload/5464ee4caae0ec19272d59e9 [33m404 [0m2.620 ms - 24[0m
-    [31m  10) Get /likeTopicUpload/:Upload_id should return 200[0m
+    [32m  ✓[0m[90m Get /likeTopicUpload/:Upload_id should return 200 [0m
 [0m    /cancelLikeTopicUpload[0m
-{ topicUpload_id: '5464ee4caae0ec19272d59e9',
-  user_id: undefined }
-delete ok!
-    [31m  11) Get /cancelLikeTopicUpload/:Upload_id should return 200[0m
-[0mGET /topic/cancelLikeTopicUpload/5464ee4caae0ec19272d59e9 [32m200 [0m3.710 ms - 24[0m
-    [31m  12) Get /cancelLikeTopicUpload/:Upload_id should return 200[0m
+    [32m  ✓[0m[90m Get /cancelLikeTopicUpload/:Upload_id should return 200 [0m
 [0m    /getAllCommentToTopicUpload[0m
-[0mGET /topic/getAllCommentToTopicUpload/5467065ba97474a6177176dd [32m200 [0m3.399 ms - 2[0m
     [32m  ✓[0m[90m Get /getAllCommentToTopicUpload/:Upload_id should return 200 [0m
-[0m    /deleteCommentToTopicUpload[0m
-{ _id: '5464f5ba7ce21f062986dad8' }
-delete ok!
-[0mGET /topic/deleteCommentToTopicUpload/5464f5ba7ce21f062986dad8 [32m200 [0m2.969 ms - 24[0m
-    [32m  ✓[0m[90m Get /deleteCommentToTopicUpload/:comment_id should return 200 [0m
 
 [0m  测试Userinfo[0m
 [0m    测试testuserinfo.jade[0m
-[0mGET /userinfo/testinterface [32m200 [0m57.384 ms - 1886[0m
-    [32m  ✓[0m[90m should return html content [0m[33m(58ms)[0m
+[0mGET /userinfo/testinterface [32m200 [0m70.830 ms - 1886[0m
+    [32m  ✓[0m[90m should return html content [0m[31m(87ms)[0m
 
 
-[92m [0m[32m 38 passing[0m[90m (873ms)[0m
+[92m [0m[32m 41 passing[0m[90m (1s)[0m
 
