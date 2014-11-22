@@ -1,0 +1,27 @@
+html
+  head
+    // Basic Meta Tags
+    meta(charset='utf-8')
+    title topFrame   
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    
+    // Styles
+    link(href='css/styles.css', rel='stylesheet')
+ 
+  body
+    // Header
+    header#header
+      .container
+        .row.t-container
+          // Logo
+          .span3
+            .logo(style='margin-top:5px')
+              a(href='index',target='_top')
+                img(src='img/logo-header.png', alt='', style='height:50px')       
+          .span9
+            nav.navbar(style='margin-bottom:0px;margin-top:10px;margin-right:10px;height:60px')
+              // Menu
+              ul.nav
+                a(href='index-2.html', title='', target='main', style='color:#000;') 登录 |&nbsp;
+                a(href='about-us.html', title='', target='main', style='color:#000;') 注册
+    // Header End

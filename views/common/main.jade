@@ -1,0 +1,59 @@
+doctype html
+html
+  head
+    // Basic Meta Tags
+    meta(charset='utf-8') 
+    title mainFrame
+    meta(name='description', content='mainFrame')
+    meta(name='keywords', content='mainFrame')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    
+    // Styles
+    link(href='css/styles.css', rel='stylesheet')
+    link(href='css/bootstrap-override.css', rel='stylesheet')
+    
+    // Font Avesome Styles
+    link(href='css/font-awesome/font-awesome.css', rel='stylesheet')
+  
+  body
+    // Header
+    header#header(style='height:80px')
+      .container
+        .row.t-container
+          .span6(style='width:600px')
+            nav.navbar
+              // Menu
+              ul.nav
+                li.active
+                  a(href='main', title='') 首页
+                li
+                  a(href='about-us.html', title='') 菜谱
+                li
+                  a(href='gallery.html', title='') 博客
+                li
+                  a(href='services.html', title='') 话题
+                li
+                  a(href='components.html', title='') 个人中心
+                li
+                  a(href='components.html', title='') 推广
+                li
+                  a(href='components.html', title='') + 发布
+                  // Submenu
+                  ul
+                    li
+                      a(href='components.html', title='') 发布菜谱
+                    li
+                      a(href='pricing.html', title='') 发布博客
+                    li
+                      a(href='blog-detail.html', title='') 发布话题
+                    li
+                      a(href='grid.html', title='') 发布推广
+                  // End Submenu
+    // Header End
+    div(style='height:1000px') 啊啊啊
+    // JavaScripts
+    script(type='text/javascript', src='javascript/jquery-1.8.3.min.js')
+    script(type='text/javascript', src='javascript/bootstrap.min.js')
+    script(type='text/javascript', src='javascript/functions.js')
+    script(type='text/javascript', src='javascript/jquery.isotope.min.js')
+    script(type='text/javascript', defer='', src='javascript/jquery.flexslider.js')
