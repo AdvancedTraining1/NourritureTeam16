@@ -10,24 +10,26 @@ var recipe = require('./../controller/recipeHandler');
 
 module.exports = function (app) {
 
-    app.get('/recipe', recipe.a);
+    app.get('/recipe/create', function(req,res){
+        res.render("recipe/create");
+    });
 
-    app.get('/recipe/delete/:ids', recipe.deleteRecipe);
-    app.get('/recipe/showOne/:id', recipe.showOne);
+    app.get('/service/recipe/delete/:ids', recipe.deleteRecipe);
+    app.get('/service/recipe/showOne/:id', recipe.showOne);
 
-    app.get('/recipe/listOwn/:authorId', recipe.listOwn);
-    app.get('/recipe/listAll', recipe.listAll);
-    app.get('/recipe/search/:queryStr', recipe.searchRecipe);
-    app.get('/recipe/listComment/:recipeId', recipe.listComment);
-    app.get('/recipe/listProduct/:recipeId',recipe.listProduct);
+    app.get('/service/recipe/listOwn/:authorId', recipe.listOwn);
+    app.get('/service/recipe/listAll', recipe.listAll);
+    app.get('/service/recipe/search/:queryStr', recipe.searchRecipe);
+    app.get('/service/recipe/listComment/:recipeId', recipe.listComment);
+    app.get('/service/recipe/listProduct/:recipeId',recipe.listProduct);
 
-    app.post('/recipe/create', recipe.create);
-    app.post('/recipe/comment', recipe.comment);
-    app.post('/recipe/modify', recipe.modify);
-    app.post('/recipe/collect', recipe.collect);
-    app.post('/recipe/createProduct', recipe.createProduct);
-    app.post('/recipe/likeProduct', recipe.likeProduct);
-    app.post('/recipe/upload', recipe.upload);
+    app.post('/service/recipe/create', recipe.create);
+    app.post('/service/recipe/comment', recipe.comment);
+    app.post('/service/recipe/modify', recipe.modify);
+    app.post('/service/recipe/collect', recipe.collect);
+    app.post('/service/recipe/createProduct', recipe.createProduct);
+    app.post('/service/recipe/likeProduct', recipe.likeProduct);
+    app.post('/service/recipe/upload', recipe.upload);
 
     //app.post('/recipe/share', recipe.share);
     //app.get('/recipe/showByStep/:id/:step', recipe.showByStep);

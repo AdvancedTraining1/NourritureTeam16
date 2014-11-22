@@ -244,7 +244,7 @@ img {
 header {
   position:relative;
   color:#979797;
-  min-height:396px;
+  /*min-height:396px;   modify.chenmm.14/11/21*/
   display:block;
 }
 
