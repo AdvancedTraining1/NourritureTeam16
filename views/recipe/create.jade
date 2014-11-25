@@ -29,62 +29,77 @@ block team
                            .span4
                               | Recipe name
                               br
-                              input(type='text', value='')
+                              input(type='text', value='' name='recipeName')
                            .span4
                               | Your story with it
                               br
-                              input(type='text', value='')
+                              input(type='text', value='' name='description')
 
                         .row
                            .span4
-                              | Difficulity
-                              select(style='background: #1b3057;width: 93.4%;margin-top:10px;border: 0px;color: #fff;height:34px')
+                              | Difficulty
+                              select(style='background: #1b3057;width: 93.4%;margin-top:10px;border: 0px;color: #fff;height:34px' name='difficulty')
                                  option junior level
                                  option middle level
                                  option senior level
                            .span4
                               | Time
                               br
-                              select(style='background: #1b3057;width: 93.4%;margin-top:10px;border: 0px;color: #fff;height:34px')
+                              select(style='background: #1b3057;width: 93.4%;margin-top:10px;border: 0px;color: #fff;height:34px' name='cookTime')
                                  option about 10 minutes
                                  option 10-30 minutes
                                  option 30-60 minutes
                                  option more than 1 hour
-                        .row
+                        .row(name="material")
                            .span4
-                              | Metrial Name
+                              | Material Name
                            .span4
-                              | Metrial Amount
-                        .row
-                           .span4
-                              input(type='text', value='')
-                           .span4
-                              input(type='text', value='')
+                              | Material Amount
+
+                        table#materialTable(style='width:100%')
+                           tr(id='aa')
+                              td(style='border:0 !important;padding:0px 0px !important;background:#365eab')
+                                 input(type='text', value='')
+                              td(style='width:4%;border:0 !important;padding:0px 0px !important;background:#365eab')
+                              td(style='border:0 !important;padding:0px 0px !important;background:#365eab')
+                                 input(type='text', value='')
+
                         div
+                           .span4
+                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', type="button" onclick='javascript:moreMaterial()')  + Add one more material
                            .span3
-                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', onclick='javascript:void(0)')  + Add one more metrial
+                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', type="button" onclick='javascript:lessMaterial()')  - Remove one more material
                         .row
                            .span8
                               | Cook step
                         .row
                            .span4
                               | Step1 Description
-                              br
-                              input(type='text', value='')
                            .span4
                               | Picture
-                              br
-                              input(type='file')
+                        table#stepTable(style='width:100%')
+                           form(name="stepForm" method="post" ENCTYPE="multipart/form-data" action="/services/recipe/upload")
+                              tr
+                                 td(style='border:0 !important;padding:0px 0px !important;background:#365eab;width:48%')
+                                    input(type='text', value='' name='stepExplain')
+                                 td(style='border:0 !important;padding:0px 0px !important;background:#365eab;width:30%')
+                                    input(type='file', value='' style='margin-top: 0px;margin-left:20px' name='image')
+                                 td(style='border:0 !important; padding:0px 0px !important; background:#365eab')
+                                    button.btn(style='height:34px;margin-top:8px;line-height:0px;margin-left:20px', type="button" onclick='javascript:upload(this.form)')  Upload Image
+                                    input(type='hidden' name='stepPhoto')
+                                    input(type='hidden' name='stepNum' value="1")
                         div
+                           .span4
+                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', onclick='javascript:moreStep();return false')  + Add one more step
                            .span3
-                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', onclick='void(0)')  + Add one more step
+                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', onclick='javascript:lessStep();return false')  - Remove one more step
                         .row.space20
                         .row
                            .span4.thank
                               | Thank You for Your Recipe!
 
                            .span4
-                              button.btn.f-right(onclick='alert(1)')
+                              button.btn.f-right(onclick='alert(1)' type="button")
                                  i.icon-ok
                                  | Create Recipe
                      // Blog Form End
@@ -97,3 +112,48 @@ block team
                      i.icon-search
                   input.search(name='', value='Search')
       // Content End
+
+   script(type='text/javascript').
+      function moreMaterial(){
+         $("#materialTable").append('<tr><td style="border:0 !important;padding:0px 0px !important;background:#365eab"><input type="text" value=""></td><td style="width:4%;border:0 !important;padding:0px 0px !important;background:#365eab"></td><td style="border:0 !important;padding:0px 0px !important;background:#365eab"><input type="text" value=""></td></tr>');
+         return false;
+      }
+
+      function lessMaterial(){
+         var length = $('#materialTable tr').length;
+         if(length == 1){
+            alert("At least one kind of material");
+            return;
+         }
+         $("#materialTable tr:last").remove();
+      }
+
+      function moreStep(){
+         var length = $('#stepTable tr').length;
+         //append de nei rong zhi hou hui xiu gai zhu yi hidden de zhi
+         $("#stepTable").append('<tr><td style="border:0 !important;padding:0px 0px !important;background:#365eab;width:48%"><input type="text" value=""></td><td style="border:0 !important;padding:0px 0px !important;background:#365eab;width:30%"><input type="file" value="" style="margin-top: 0px;margin-left:20px"></td><td style="border:0 !important;padding:0px 0px !important;background:#365eab"><button style="height:34px;margin-top:8px;line-height:0px;margin-left:20px" onclick="javascript:upload();return false" class="btn"> Upload Image</button></td></tr>');
+         return false;
+      }
+
+      function lessStep(){
+         var length = $('#stepTable tr').length;
+         if(length == 1){
+            alert("At least one step");
+            return;
+         }
+         $("#stepTable tr:last").remove();
+      }
+
+      function upload(a) {
+         alert(a);
+         alert(a.stepExplain.value);
+         var picPath = a.getElementById("stepPhoto").value;
+         alert(picPath);
+         var type = picPath.substring(picPath.lastIndexOf(".") + 1, picPath.length).toLowerCase();
+         if (type != "jpg" && type != "bmp" && type != "gif" && type != "png") {
+            alert("请上传正确的图片格式");
+            return false;
+         }
+         return false;
+      }
+
