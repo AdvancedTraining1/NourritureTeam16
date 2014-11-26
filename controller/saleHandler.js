@@ -5,6 +5,10 @@
 var mongoose = require('mongoose');
 var SaleModel = require('../data').sale;
 var SaleDao = require("../dao/SaleDao");
+var SaleCommentModel = require('../data').CommentToBlog;
+var SaleCommentDao = require("../dao/SaleCommentDao");
+var SaleCollectModel = require('../data').CollectBlog;
+var SaleCollectDao = require("../dao/SaleCollectDao");
 
 function SaleHandler(){
 
@@ -141,7 +145,100 @@ SaleHandler.search = function(req, res){
     })
 }
 
+SaleHandler.createSaleComment = function(req, res){
+    req.setEncoding("utf-8");
+     var postData = "";
+     req.addListener("data", function(postDataChunk){
+         postData += postDataChunk;
+     });
 
+    req.addListener("end",function(){
+        var params = querystring.parse(postData);//GET & POST
+        var content = params.comment;
+        var user_id = req.session.user_id;
+        var account = req.session.account;
+        var sale_id = params._id;
+        var reply_id = params.comment_id;
+
+        console.log('数据接收完毕');
+        //var sale = createSale()
+
+        var saleComment = new SaleCommentModel({
+            author: {
+                id: user_id,
+                account: account },
+            content: content,
+            reply_id: reply_id,
+            blog_id: sale_id
+        });
+
+        SaleDao.getOne(sale_id, function(err, sale){
+            SaleCommentDao.create(saleComment, function(err, newSaleComment){
+                if(err)
+                {
+                    res.json(500, {message: err.toString()});
+                    return;
+                }
+                else
+                {
+                    SaleDao.addComment(sale_id, function(err, sale){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("评论成功！");
+                    });
+                }
+            });
+        });
+    });
+}
+
+SaleHandler.getAllSaleComment = function(res, req){
+    var sale_id = req.params.sale_id;
+    SaleCommentDao.getAll(sale_id, function(err,comments){
+        if(err)
+        {
+            res.json(500, {message: err.toString()});
+            return;
+        }
+        res.json(200, comments);
+
+    });
+}
+
+SaleHandler.createSaleCollect = function(req, res){
+    var sale_id = req.params.sale_id;
+    var user_id = req.session.user_id;
+
+    var saleCollect = new SaleCollectModel({
+        user: {
+            account: req.session.account,
+            head:""
+        },
+        blog_id: sale_id,
+        user_id: user_id
+    });
+
+    SaleDao.getOne(sale_id, function(err, sale){
+        SaleCollectDao.create(saleCollect, function(err, newSaleCollect){
+            if(err)
+            {
+                res.json(500, {message: err.toString()});
+                return;
+            }
+            else
+            {
+                SaleDao.addCollect(sale_id, function(err, sale){
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    });
+                    res.end("收藏成功！");
+                });
+            }
+        });
+    });
+
+}
 
 function createSale(){
     var sale = new SaleModel();

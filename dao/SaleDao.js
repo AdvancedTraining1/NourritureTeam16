@@ -73,3 +73,23 @@ SaleDao.search = function (keyword, callback) {
         return callback(null, sale);
     });
 }
+
+SaleDao.addComment = function (id, callback){
+    Sale.findByIdAndUpdate(id, {$inc:{commentNum:1}}, function(err, sale){
+        if(err)
+        {
+            return callback(err, null);
+        }
+        return callback(null, sale);
+    });
+}
+
+SaleDao.addCollect = function (id, callback){
+    Sale.findByIdAndUpdate(id, {$inc:{collectNum:1}}, function(err, sale){
+        if(err)
+        {
+            return callback(err, null);
+        }
+        return callback(null, sale);
+    });
+}
