@@ -6,7 +6,15 @@
 
 module.exports = function (app) {
 
-    app.get('/index', function(req,res){
+    app.get('/testIndex', function(req,res){
         res.render("common/totalIndex");
+    });
+
+    app.get('/index', function(req,res){
+        res.render("common/index");
+    });
+
+    app.get('/indexPart', function(req,res){
+        res.render("common/indexPart");
     });
 };

@@ -1,0 +1,10 @@
+//Created by cmm on 11/26/14.
+
+
+h1 Create a recipe {{message}}
+
+form
+	input(type='text' ng-model="step")
+	br
+	input(type='file' ng-model='files' ng-file-select="onFileSelect($files)" multiple accept="image/*")
+	| {{succ}}
