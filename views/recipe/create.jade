@@ -1,99 +1,10 @@
-//Created by cmm on 11/22/14.
-//Recipe-createRecipe
+//Created by cmm on 11/26/14.
 
-extends ../common/totalLayout
 
-block teamStyle
-   style(type='text/css').
-      option {color:#fff;height:34px}
+h1 Create a recipe {{message}}
 
-block team
-   // Content
-   #content
-      .container
-         .row
-            .span12
-               h2 Create a recipe
-            .span9
-               // Blog Detail Content
-               .row
-                  .span1
-                     .blog-icon
-                        i.icon-camera
-                        br
-                        h5 Share with people
-                  .span8
-                     // Blog Form
-                     form.form-comment(method='post', action='/service/recipe/create')
-                        .row
-                           .span4
-                              | Recipe name
-                              br
-                              input(type='text', value='')
-                           .span4
-                              | Your story with it
-                              br
-                              input(type='text', value='')
-
-                        .row
-                           .span4
-                              | Difficulity
-                              select(style='background: #1b3057;width: 93.4%;margin-top:10px;border: 0px;color: #fff;height:34px')
-                                 option junior level
-                                 option middle level
-                                 option senior level
-                           .span4
-                              | Time
-                              br
-                              select(style='background: #1b3057;width: 93.4%;margin-top:10px;border: 0px;color: #fff;height:34px')
-                                 option about 10 minutes
-                                 option 10-30 minutes
-                                 option 30-60 minutes
-                                 option more than 1 hour
-                        .row
-                           .span4
-                              | Metrial Name
-                           .span4
-                              | Metrial Amount
-                        .row
-                           .span4
-                              input(type='text', value='')
-                           .span4
-                              input(type='text', value='')
-                        div
-                           .span3
-                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', onclick='javascript:void(0)')  + Add one more metrial
-                        .row
-                           .span8
-                              | Cook step
-                        .row
-                           .span4
-                              | Step1 Description
-                              br
-                              input(type='text', value='')
-                           .span4
-                              | Picture
-                              br
-                              input(type='file')
-                        div
-                           .span3
-                              button.btn(style='height:40px;margin-left:-30px;line-height:0px', onclick='void(0)')  + Add one more step
-                        .row.space20
-                        .row
-                           .span4.thank
-                              | Thank You for Your Recipe!
-
-                           .span4
-                              button.btn.f-right(onclick='alert(1)')
-                                 i.icon-ok
-                                 | Create Recipe
-                     // Blog Form End
-               // Blog Detail Content End
-            // Side Bar
-            .span3
-               h3.p-t-0 Side Bar For Directions!
-               .search-box
-                  a.search-icon(href='#')
-                     i.icon-search
-                  input.search(name='', value='Search')
-      // Content End
+form
+	input(type='text' ng-model="step")
+	br
+	input(type='file' ng-model='files' ng-file-select="onFileSelect($files)" multiple accept="image/*")
+	| {{succ}}

@@ -6,23 +6,15 @@
 
 module.exports = function (app) {
 
-    //app.get('/top', function(req,res){
-    //    res.render("common/top");
-    //});
-    //
-    //app.get('/index', function(req,res){
-    //    res.render("common/index");
-    //});
-    //
-    //app.get('/main', function(req,res){
-    //    res.render("common/main");
-    //});
-    //
-    //app.get('/bottom', function(req,res){
-    //    res.render("common/bottom");
-    //});
+    app.get('/testIndex', function(req,res){
+        res.render("common/totalIndex");
+    });
 
     app.get('/index', function(req,res){
-        res.render("common/main");
+        res.render("common/index");
+    });
+
+    app.get('/indexPart', function(req,res){
+        res.render("common/indexPart");
     });
 };

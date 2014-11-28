@@ -15,7 +15,8 @@ var RecipeDao = require("../dao/RecipeDao"),
     querystring = require('querystring'),
     formidable = require('formidable'),
     fs = require('fs'),
-    url = require('url');
+    url = require('url'),
+    config=require("../util/config");
 
 exports.a = function(req,res){
     res.redirect("../views/addRecipe.html");
@@ -231,7 +232,7 @@ exports.likeProduct = function(req,res){
 exports.upload = function(req,res){
 
     var form = new formidable.IncomingForm();
-    form.uploadDir = "./public/upload/temp/";//改变临时目录
+    form.uploadDir = "./../upload/temp/";//改变临时目录
     form.parse(req, function(error, fields, files){
         for(var key in files){
             var file = files[key];
@@ -250,15 +251,13 @@ exports.upload = function(req,res){
                     break;
             }
             console.log(file.size);
-            var uploadDir = "./public/upload/" + fName;
+            var uploadDir = "./../public/" + fName;
             fs.rename(file.path, uploadDir, function(err) {
                 if (err) {
                     res.write(err+"\n");
                     res.end();
                 }
-                res.write("upload image:<br/>");
-                res.write("<img src='localhost:3000/recipe/imgShow?id=" + fName + "' />");
-                res.end();
+                res.end(config.host+"/"+fName);
             });
         }
     });

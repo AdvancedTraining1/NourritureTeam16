@@ -1,87 +1,11 @@
-//
-   Created by cmm on 11/22/14.
+//Created by cmm on 11/25/14.
 
-html
+doctype
+html(ng-app="myApp")
    head
-      // Basic Meta Tags
-      meta(charset='utf-8')
-      title NourritureTeam16
-      meta(name='description', content='NourritureTeam16 AdvancedTraining1')
-      meta(name='keywords', content='Nourriture, Team16, Advanced Training1')
-      meta(name='viewport', content='width=device-width, initial-scale=1.0')
-
-      link(href='img/favicon.png', rel='icon', type='image/png')
-
-      // Styles
-      link(href='../css/styles.css', rel='stylesheet')
-      link(href='../css/bootstrap-override.css', rel='stylesheet')
-
-      // Font Avesome Styles
-      link(href='../css/font-awesome/font-awesome.css', rel='stylesheet')
-
-      block teamStyle
-
-      //JavaScripts
-      script(type='text/javascript', src='../javascript/jquery-1.8.3.min.js')
-      script(type='text/javascript', src='../javascript/bootstrap.min.js')
-      script(type='text/javascript', src='../javascript/functions.js')
-      script(type='text/javascript', src='../javascript/jquery.isotope.min.js')
-      script(type='text/javascript', defer='', src='../javascript/jquery.flexslider.js')
-
-   body(style='overflow-x:hidden')
-      // Header
-      header#header(style="height:60px")
-         .container
-            .row.t-container
-               // Logo
-               .span3
-                  .logo(style='margin-top:5px')
-                     a(href='index',target='_top')
-                        img(src='img/logo-header.png', alt='', style='height:50px')
-               .span9
-                  nav.navbar(style='margin-bottom:0px;margin-top:10px;margin-right:10px;height:60px')
-                     // Menu
-                     ul.nav
-                        a(href='index-2.html', title='', target='main', style='color:#000;') Log In &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                        a(href='about-us.html', title='', target='main', style='color:#000;') Register
-      // Header End
-
-      .container(style="height:48px;background:#fff;width:100%")
-         .row.t-container
-            .span8(style='margin-left:70px;')
-               nav.navbar
-                  // Menu
-                  ul.nav
-                     li.active
-                        a(href='main', title='') Home
-                     li
-                        a(href='about-us.html', title='') Recipe
-                     li
-                        a(href='gallery.html', title='') Blog
-                     li
-                        a(href='services.html', title='') Topic
-                     li
-                        a(href='components.html', title='') Personal Center
-                     li
-                        a(href='components.html', title='') Advertisement
-                     li
-                        a(href='components.html', title='') + Publish
-                        // Submenu
-                        ul
-                           li
-                              a(href='/recipe/create', title='') Public Recipe
-                           li
-                              a(href='pricing.html', title='') Public Blog
-                           li
-                              a(href='blog-detail.html', title='') Public Topic
-                           li
-                              a(href='grid.html', title='') Public Advertisement
-
-
-
-      block team
-
-      footer#footer(style='bottom:0;position:relative;height:40px;padding:0 10px;width:99%;text-align:center;')
-         p(style='margin-top:-5px;text-align:center;')
-         | &copy Advance Traning Team 16
-
+      meta(charset='utf8')
+      base(href='/')
+      title Angular Express Seed App
+      //link(rel='stylesheet', href='/css/app.css')
+   body
+      block body

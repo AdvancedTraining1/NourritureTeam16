@@ -14,6 +14,14 @@ module.exports = function (app) {
         res.render("recipe/create");
     });
 
+    app.get('/recipe/test', function(req,res){
+        res.render("recipe/testRecipe");
+    });
+
+    app.get('/recipe/index', function(req,res){
+        res.render("recipe/testRecipe2");
+    });
+
     app.get('/service/recipe/delete/:ids', recipe.deleteRecipe);
     app.get('/service/recipe/showOne/:id', recipe.showOne);
 

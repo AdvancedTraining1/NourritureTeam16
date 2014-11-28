@@ -1,0 +1,39 @@
+//Created by cmm on 11/26/14.
+
+doctype
+html(ng-app="nourtiture")
+	head
+		meta(charset='utf8')
+		base(href='/')
+		title Nourtiture
+		//link(rel='stylesheet', href='/css/app.css')
+	body
+		header#header
+			//logo
+			a(href='#') Sign In |
+			a(href='#') Register
+		#menu
+			ul
+				li
+					a(href='/index') Home
+				li
+					a(href='#') Recipe
+				li
+					a(href='#') Blog
+				li
+					a(href='#') Topic
+				li
+					a(href='#') Personal Center
+				li
+					a(href='#') Adversitement
+				li
+					a(href='#') Publish
+					li
+						a(href='/recipe/create') Publish Recipe
+					li
+						a(href='#') Publish Blog
+					li
+						a(href='#') Publish Topic
+					li
+						a(href='#') Publish Advertisement
+		block team
