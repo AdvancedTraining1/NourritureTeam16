@@ -4,7 +4,68 @@
 h1 Create a recipe {{message}}
 
 form
-	input(type='text' ng-model="step")
-	br
-	input(type='file' ng-model='files' ng-file-select="onFileSelect($files)" multiple accept="image/*")
-	| {{succ}}
+	table(border='1')
+		tr
+			td
+				| RecipeName
+			td(colspan='3')
+				input(type='text' ng-model='recipe.recipeName')
+		tr
+			td
+				| Your story with it
+			td(colspan='3')
+				input(type='text' ng-model='recipe.description')
+		tr
+			td
+				| Difficultity
+			td
+				input(type='text' ng-model='recipe.difficult')
+			td
+				| Cook Time
+			td
+				input(type='text' ng-model='recipe.cookTime')
+		tr
+			td
+				| Material
+			td(colspan='3' align='center')
+				button(ng-click='moreMaterial()') +
+				button(ng-click='lessMaterial()') -
+		tr
+			td(colspan='4')
+				table#materialTable
+					tr(id='m1')
+						td
+							| Material Name
+						td
+							input(type='text' name='materialName')
+						td
+							| Material Amount
+						td
+							input(type='text' name='amount')
+		tr
+			td
+				| Step
+			td(colspan='3' align='center')
+				button(ng-click='moreStep()') +
+				button(ng-click='lessStep()') -
+		tr
+			td(colspan='4')
+				table#stepTable
+					tr
+						td
+							| Step Description
+						td
+							input(type='text' name="step")
+						td
+							| Upload Photo
+						td
+							input(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*")
+							| {{succ}}
+		tr
+			td(colspan='4' align='right')
+				button(ng-click='createRecipe()') + Create your recipe
+div()
+	input(type='text' name='m' ng-model='m1')
+	input(type='text' name='m' ng-model='m2')
+	input(type='text' name='m' ng-model='m3')
+	button(ng-click='ff()') mm

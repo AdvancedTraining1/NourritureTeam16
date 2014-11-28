@@ -1,5 +1,5 @@
 /**
- * Created by cmm on 11/25/14.
+ * Created by liuhanxu on 14-11-28.
  */
 
 'use strict';
@@ -31,7 +31,7 @@ angular.module('nourtiture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/indexPart',
                 controller: IndexPage
             }).
-            when('/recipe/create', {
+            when('/userinfo/show', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
             }).

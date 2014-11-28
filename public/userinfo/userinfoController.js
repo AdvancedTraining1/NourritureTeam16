@@ -1,10 +1,13 @@
 /**
- * Created by cmm on 11/25/14.
+ * Created by liuhanxu on 14-11-28.
  */
 
 'use strict';
 
 /* Controllers */
+function showuser($scope, $http, $location){
+    $scope.message
+}
 
 function TestCtrl($scope, $http, $location) {
     $scope.message = "This is a test message";
