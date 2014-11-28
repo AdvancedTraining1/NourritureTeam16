@@ -63,6 +63,7 @@ UserinfoHandler.register=function(req,res){
     });
     res.send("已注册用户的用户名："+username);
 };
+
 UserinfoHandler.login=function(req,res){
     //var username = req.param('username');
     //var password = req.param('password');
@@ -156,13 +157,11 @@ UserinfoHandler.modifyinfo=function(req,res){
 
 UserinfoHandler.viewUserinfo=function(req,res){
 
-    var user_id =req.session.user_id;
+    //var user_id =req.session.user_id;
+    var user_id = ObjectId("5464c9a35328dae40a98c61e");
     console.log("查看个人信息handler---user_id："+user_id);
 
-    var conditions = {_id:req.session.user_id};
-    var update={username:username,head:head};
-
-    var user =UserDao.update(conditions,update,null,function (err, message)
+    var user =UserDao.getUserById(user_id,function (err, user)
     {
         if(err)
         {
@@ -171,7 +170,7 @@ UserinfoHandler.viewUserinfo=function(req,res){
         }else
         {
 
-            res.json(message);
+            res.json(user);
 
         }
     });

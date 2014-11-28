@@ -55,7 +55,7 @@ UserDao.update = function (conditions,update,options,callback) {
 }
 
 UserDao.getUserById = function (userId,callback) {
-    UsersModel.find({account:userId}).exec(function(error,user){
+    UsersModel.find({_id:userId}).exec(function(error,user){
         if(error) return callback(error,null);
         return callback(null, user);
     });
