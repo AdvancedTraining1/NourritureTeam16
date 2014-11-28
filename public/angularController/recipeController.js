@@ -9,10 +9,8 @@ function IndexPage($scope, $http, $location){
 }
 
 function ToCreateRecipe($scope, $http, $location, $upload) {
-    //, $upload, $fileUpload
-    alert(0);
     $scope.message = "Create a recipe!";
-    $scope.form = {};
+    $scope.step = [];
 
     $scope.onFileSelect = function ($files) {
         if($files != null){
@@ -32,49 +30,58 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
             }).success(function (data, status, headers, config) {        // file is uploaded successfully
                 console.log(data);
                 $scope.succ="image upload success!";
-                //$location.path('/recipe/create');
+                $scope.step.push(data);
             });
         }
     };
 
-    $scope.createRecipe = function () {
-        //$http.post('/api/post', $scope.form).
-        //    success(function(data) {
-        //        $location.path('/');
-        //    });
-        alert("post" + $scope.form.title + ',' + $scope.form.text);
-        $location.path('/recipe/create');
-    };
-
-    $scope.ff = function () {
-        var els =document.getElementsByName("m");
-        for (var i = 0, j = els.length; i < j; i++){
-            alert(els[i].value);
-        }
-
-        //alert("post" + $scope.form.title + ',' + $scope.form.text);
-        //$location.path('/recipe/create');
-    };
-
-    $scope.moreMaterial = function () {
+    $scope.moreMaterial = function (index) {
         $("#materialTable").append("<tr><td>Material Name</td><td><input type=\"text\" name=\"materialName\"></td><td>Material Amount</td><td><input type=\"text\" name=\"amount\"></td></tr>");
     };
 
     $scope.lessMaterial = function () {
-        if($("#materialTable").find(tr).length == 1)
+        if($("#materialTable").find("tr").length == 1)
             alert("More than one material !");
         else
             $("#materialTable tr:last").remove();
     };
 
-    $scope.moreMaterial = function () {
-        $("#materialTable").append("<tr><td>Material Name</td><td><input type=\"text\" name=\"materialName\"></td><td>Material Amount</td><td><input type=\"text\" name=\"amount\"></td></tr>");
+    $scope.moreStep = function () {
+        $("#stepTable").append("<tr><td>Material Name</td><td><input type=\"text\" name=\"materialName\"></td><td>Material Amount</td><td><input type=\"text\" name=\"amount\"></td></tr>");
     };
 
-    $scope.lessMaterial = function () {
+    $scope.lessStep = function () {
         if($("#stepTable").find("tr").length == 1)
             alert("More than one step !");
         else
             $("#stepTable tr:last").remove();
+    };
+
+    $scope.createRecipePage = function () {
+        $scope.recipe.material = [];
+        $scope.recipe.step = [];
+        var m_name = document.getElementsByName("materialName");
+        var m_amount = document.getElementsByName("amount");
+        var s_explain = document.getElementsByName("stepExplain");
+
+        for (var i = 0, j = m_name.length; i < j; i++) {
+            $scope.recipe.material.push({materialName:m_name[i].value,amount:m_amount[i].value});
+        }
+        for (var i = 0, j = s_explain.length; i < j; i++) {
+            $scope.recipe.step.push({stepExplain:s_explain[i].value,stepPhoto:$scope.step[i]});
+        }
+        $scope.recipe.mNum = m_name.length
+        $scope.recipe.sNum = s_explain.length;
+        /*alert($scope.recipe.toString());
+        alert(JSON.stringify($scope.recipe));*/
+        $scope.recipe.authorId = 11;
+
+        $.post('/service/recipe/create',$scope.recipe,function(data){
+            alert(data);
+        });
+        /*$http.post('service/recipe/create', $scope.recipe).
+            success(function(data) {
+                alert(11);
+            });*/
     };
 }

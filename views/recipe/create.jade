@@ -19,11 +19,18 @@ form
 			td
 				| Difficultity
 			td
-				input(type='text' ng-model='recipe.difficult')
+				select(ng-model='recipe.difficult')
+					option Junior Level
+					option Middle Level
+					option Senior Level
 			td
 				| Cook Time
 			td
-				input(type='text' ng-model='recipe.cookTime')
+				select(ng-model='recipe.cookTime')
+					option About 10 minutes
+					option 10 - 30 minutes
+					option 30 - 60 minutes
+					option More than 60 minutes
 		tr
 			td
 				| Material
@@ -33,7 +40,7 @@ form
 		tr
 			td(colspan='4')
 				table#materialTable
-					tr(id='m1')
+					tr
 						td
 							| Material Name
 						td
@@ -55,7 +62,7 @@ form
 						td
 							| Step Description
 						td
-							input(type='text' name="step")
+							input(type='text' name="stepExplain")
 						td
 							| Upload Photo
 						td
@@ -63,9 +70,4 @@ form
 							| {{succ}}
 		tr
 			td(colspan='4' align='right')
-				button(ng-click='createRecipe()') + Create your recipe
-div()
-	input(type='text' name='m' ng-model='m1')
-	input(type='text' name='m' ng-model='m2')
-	input(type='text' name='m' ng-model='m3')
-	button(ng-click='ff()') mm
+				button(ng-click='createRecipePage()') + Create your recipe
