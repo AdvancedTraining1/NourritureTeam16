@@ -15,6 +15,10 @@ router.post('/',function(req, res){
 	});
 });
 
+router.get('/createTradePost',function(req,res){
+    res.render('sale/createTradePost');
+});
+
 router.get('/getAll',saleHandler.getAll);
 router.get('/getOne',saleHandler.getOne);
 router.get('/getOwn',saleHandler.getOwn);

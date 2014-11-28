@@ -20,6 +20,10 @@ angular.module('nourtiture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/userinfo/show',
                 controller:showuser
             }).
+            when('/sale/createTradePost',{
+                templateUrl:'/sale/createTradePost',
+                controller:CreateTradePost
+            }).
             otherwise({
                 redirectTo: '/'
             });
