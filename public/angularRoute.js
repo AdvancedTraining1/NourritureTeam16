@@ -6,6 +6,7 @@
 
 angular.module('nourtiture', ['ngRoute','angularFileUpload']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+        alert(9);
         $routeProvider.
             when('/index', {
                 templateUrl: '/indexPart',
@@ -14,6 +15,10 @@ angular.module('nourtiture', ['ngRoute','angularFileUpload']).
             when('/recipe/create', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
+            }).
+            when('/userinfo/show123',{
+                templateUrl:'/userinfo/show',
+                controller:showuser
             }).
             otherwise({
                 redirectTo: '/'
