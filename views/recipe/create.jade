@@ -1,8 +1,4 @@
 //Created by cmm on 11/26/14.
-
-
-h1 Create a recipe {{message}}
-
 form
 	table(border='1')
 		tr
@@ -36,6 +32,7 @@ form
 				| Material
 			td(colspan='3' align='center')
 				button(ng-click='moreMaterial()') +
+				| &nbsp; &nbsp; &nbsp;
 				button(ng-click='lessMaterial()') -
 		tr
 			td(colspan='4')
@@ -54,6 +51,7 @@ form
 				| Step
 			td(colspan='3' align='center')
 				button(ng-click='moreStep()') +
+				| &nbsp; &nbsp; &nbsp;
 				button(ng-click='lessStep()') -
 		tr
 			td(colspan='4')
