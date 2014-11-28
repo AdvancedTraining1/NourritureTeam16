@@ -154,4 +154,29 @@ UserinfoHandler.modifyinfo=function(req,res){
 
 };
 
+UserinfoHandler.viewUserinfo=function(req,res){
+
+    var user_id =req.session.user_id;
+    console.log("查看个人信息handler---user_id："+user_id);
+
+    var conditions = {_id:req.session.user_id};
+    var update={username:username,head:head};
+
+    var user =UserDao.update(conditions,update,null,function (err, message)
+    {
+        if(err)
+        {
+            console.log(err);
+
+        }else
+        {
+
+            res.json(message);
+
+        }
+    });
+
+};
+
+
 module.exports = UserinfoHandler;
