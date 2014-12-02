@@ -1,3 +1,12 @@
 //Created by cmm on 11/28/14.
 
+script(src='../javascript/jquery.simplePagination.js', type='text/javascript')
+link(type='text/css' rel='stylesheet' href='css/simplePagination.css')
+
 h1 显示所有的菜谱，带分页
+| pageNo : {{pageNo}}
+
+div(data-ng-init='init()')
+	ul
+		li(ng-repeat="recipe in recipes") a {{recipe.recipeName}},{{recipe.description}}
+

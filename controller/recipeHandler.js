@@ -67,9 +67,15 @@ exports.deleteRecipe = function(req,res){
 }
 
 exports.listAll = function (req, res) {
-    RecipeDao.getAll(function (err, recipe) {
-        //res.writeHead(200);
-        res.json(recipe);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    RecipeDao.getAll(pageNo,pageSize,function (err1, recipe) {
+        RecipeDao.getAllNum(function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:recipe,total:num});
+            }
+        });
     });
 };
 

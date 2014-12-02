@@ -1,40 +1,70 @@
 //Created by cmm on 11/26/14.
 
 doctype
-html(ng-app="nourtiture")
+html(ng-app="nourriture")
 	head
 		meta(charset='utf8')
+		//Advanced Training Team 16
+		meta(name="author" content="ATT16")
+		meta(name="keywords" content="Advanced Training One Nourriture")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+
 		base(href='/')
 		title Nourtiture
-		//link(rel='stylesheet', href='/css/app.css')
+		//link(rel='stylesheet', href='css/bootstrap.css')
+		//link(rel='stylesheet', href='css/bootstrap-responsive.css')
+		link(rel='stylesheet', href='css/animate.css')
+		link(rel='stylesheet', href='css/style.css')
+		link(rel='stylesheet', href='css/font-awesome/font-awesome.min.css' media="screen")
+		link(href="img/favicon.png" rel="icon" type="image/png")
+
 	body
-		header#header
-			//logo
-			a(href='#') Sign In
-			| |
-			a(href='#') Register
-		#menu
-			ul
-				li
-					a(href='/index') Home
-				li
-					a(href='#') Recipe
-				li
-					a(href='#') Blog
-				li
-					a(href='#') Topic
-				li
-					a(href='#') Personal Center
-				li
-					a(href='#') Adversitement
-				li
-					a(href='#') Publish
-					li
-						a(href='/recipe/create') Publish Recipe
-					li
-						a(href='#') Publish Blog
-					li
-						a(href='#') Publish Topic
-					li
-						a(href='#') Publish Advertisement
+		//# id; . class
+		header
+			.container
+				.navbar
+					.navbar-inner
+						a.brand(href='index.html')
+							img(src="images/restart_logo.png" width="90" height="90" alt="Logo")
+							span.logo_title
+								strong Nourriture
+							span.logo_subtitle Advanced Training Team 16
+						a.btn.btn-navbar(data-toggle="collapse" data-target=".nav-collapse")
+							span.nb_left.pull-left
+								span.icon-bar
+								span.icon-bar
+								span.icon-bar
+							span.nb_right.pull-right menu
+						.nav-collapse.collapse
+							ul.nav.pull-right
+								li.active
+									a(href="/index") Home
+								li
+									a(href='/recipe/list') Recipe
+								li
+									a(href='#') Blog
+								li
+									a(href='#') Topic
+								li
+									a(href='#') Personal Center
+								li
+									a(href='#') Adversitement
+								li.dropdown
+									a.dropdown-toggle(data-toggle="dropdown" href="#") Publish
+										span.caret
+									ul.dropdown-menu
+										li
+											a(href='/recipe/create') Publish Recipe
+										li
+											a(href='#') Publish Blog
+										li
+											a(href='#') Publish Topic
+										li
+											a(href='#') Publish Advertisement
+
+				#sign
+					a(href='#')
+						//i.icon.icon-user
+						| Register/Sign in
 		block team

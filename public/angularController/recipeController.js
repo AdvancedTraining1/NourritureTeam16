@@ -85,3 +85,89 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
             });*/
     };
 }
+
+function ToListRecipe($scope, $http, $location){
+    $scope.pageNo = 1;
+    $scope.pageSize = 5;
+
+    /*$scope.init = function(){
+        alert("init");
+        var api = "/service/recipe/listAll";
+        var params = {};
+        params.pageNo = 1;
+        params.pageSize = 5;
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + 1 + '&pageSize=5'
+        }).success(function(data, status) {
+            $scope.recipes = data.root;
+            //dividePage(data.total);
+        }).error(function(data, status) {
+
+        });
+    };*/
+
+    $(function(){
+        alert("function");
+        var api = "/service/recipe/listAll";
+        var params = {};
+        params.pageNo = 1;
+        params.pageSize = 5;
+
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + 1 + '&pageSize=5'
+        }).success(function(data, status) {
+            $scope.recipes = data.root;
+            dividePage(data.total);
+        }).error(function(data, status) {
+
+        });
+    });
+
+    function dividePage(totalItems){
+        var pager;
+        var items = totalItems;
+        var itemsOnPage = $scope.pageSize;
+        var pageCount = items/itemsOnPage;
+
+        $('<div id="pager" class="pager"></div>').appendTo('body').pagination({
+            items: items,
+            itemsOnPage: itemsOnPage,
+            currentPage:0
+        });
+
+        pager = $('#pager');
+
+        //addMatchers可能会在页面报错，undefined，暂时看来对显示没有影响
+        this.addMatchers({
+            toBePaged: function() {
+                return ( this.actual.hasClass('simple-pagination') &&
+                this.actual.find('li').length > 0 );
+            },
+            toBeOnPage: function(expected_page) {
+                actual_page = this.actual.find('li.active span').not('.prev').not('.next').html();
+                return actual_page == expected_page;
+            },
+            toBeDisabled: function() {
+                return this.actual.find('li').length == this.actual.find('li.disabled').length;
+            },
+            toBeSameTextValues:function(expected_pages){
+                var pages = this.actual.find('li >').map(function(){ return $(this).text()}).get();
+                return expected_pages.join(',') === pages.join(',');
+            }
+        });
+        //alert(2);
+    }
+
+    $scope.dodo = function(index){
+        alert("dodo");
+    };
+
+    $(function(){
+        $.fn.dodo = function(ii) {
+            alert("dodoF");
+        };
+    });
+
+}
