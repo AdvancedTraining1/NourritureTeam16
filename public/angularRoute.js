@@ -8,8 +8,8 @@ angular.module('nourtiture', ['ngRoute','angularFileUpload']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/index', {
-                templateUrl: '/indexPart',
-                controller: IndexPage
+                templateUrl: '/indexPart'
+		        //,controller: IndexPage
             }).
             when('/recipe/create', {
                 templateUrl: '/recipe/create',

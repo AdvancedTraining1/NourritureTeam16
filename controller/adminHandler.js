@@ -16,31 +16,26 @@ AdminHandler.addUser = function(req, res)
 {
     req.on('data',function(data)
     {
-        //var obj = JSON.parse(data.toString());
-        //var str = '信息为:' + obj.name + obj.tel + obj.account + obj.type;
+        var obj = JSON.parse(data.toString());
+        var str = '信息为:' + obj.name + ':' + obj.tel + ':' + obj.account + ':' + obj.type + ':' + obj.sex + ':' + obj.password;
+	    //(name,account,cellphone,password,type,sex)
+	    var user = createUser(obj.name,obj.account,obj.tel,obj.password,obj.type,obj.sex);
+	    UserDao.save(user,function (err, data)
+	    {
+		    if(err)
+		    {
+			    console.log(err);
 
-        for(var i = 0; i < 10; ++i)
-        {
-            var user = createUser(i);
-            UserDao.save(user,function (err, data)
-            {
-                if(err)
-                {
-                    console.log(err);
+		    }else
+		    {
 
-                }else
-                {
+			    console.log(data);
 
-                    console.log(data);
+		    }
 
-                }
-
-            });
-        }
-
-
-        //res.send("admin/add");
-        res.json(200, {message: "admin/add"});
+	    });
+        res.send(str);
+        //res.json(200, {message: "admin/add"});
     });
 };
 
@@ -94,13 +89,14 @@ AdminHandler.getAllUsers = function(req,res)
     res.json(200, {message: "admin/getAllUsers"});
 }
 
-AdminHandler.getUserById = function(req,res)
+AdminHandler.getUserByAccount = function(req,res)
 {
     req.on('data',function(data)
     {
-        //var obj = JSON.parse(data.toString());
-        //var id = obj.userid;
-        UserDao.getUserById("5",function (err, data)
+        var obj = JSON.parse(data.toString());
+	    //var str = '信息为:' + obj.name + ':'
+	    var user = new userModel();
+        UserDao.getUserById(obj.account,function (err, data)
         {
             if(err)
             {
@@ -108,13 +104,14 @@ AdminHandler.getUserById = function(req,res)
 
             }else
             {
-                //console.log('3432');
+	            user = data;
                 console.log(data);
             }
 
         });
-        //res.send("admin/getUserById");
-        res.json(200, {message: "admin/getUserById"});
+	    var str = '信息为:' + user.name + ':' + user.tel + ':' + user.account + ':' + user.type + ':' + user.sex + ':' + user.password;
+        res.send(str);
+        //res.json(200, {message: "admin/getUserById"});
     });
 }
 
@@ -147,18 +144,17 @@ AdminHandler.deleteUser = function(req,res)
 
 }
 
-function createUser(num)
+function createUser(name,account,cellphone,password,type,sex)
 {
 
     var user = new userModel();
-    var temp = num;
-    user.username = num;
-    user.account= num;
-    user.password= num;
-    user.type = 1;
-    user.phone = num;
-    user.sex = 1;
-    user.head = "headIconPath";
+    user.username = name;
+    user.account= account;
+    user.password= password;
+    user.type = type;
+    user.phone = cellphone;
+    user.sex = sex;
+//    user.head = "headIconPath";
 //    var friends0 =[];
 //    friends0[0] = {id:120,account:"amount1"};
 //    friends0[1] = {id:121,account:"amount2"};
@@ -167,12 +163,12 @@ function createUser(num)
 //    fan0[0] = {id:120,account:"amount1"};
 //    fan0[1] = {id:121,account:"amount2"};
 //    user.fans = fan0;
-    user.recipe_count = 0;
-    user.topic_count = 0;
-    user.blog_count = 0;
-    user.comment_count = 0;
-    user.friends_count = 0;
-    user.fans_count = 0;
+//    user.recipe_count = 0;
+//    user.topic_count = 0;
+//    user.blog_count = 0;
+//   user.comment_count = 0;
+//    user.friends_count = 0;
+//    user.fans_count = 0;
 
     return user;
 };

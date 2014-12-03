@@ -12,11 +12,15 @@ var seasonHandler = require('../controller/seasonHandler');
 
 /* GET admin page. */
 router.get('/', function(req, res) {
-  res.render('admin', { title: '管理员' });
+  res.render('admin/admin');
 });
 
-router.get('/add', function(req, res) {
-  res.render('adduser', { title: '管理员' });
+router.get('/addUser', function(req, res) {
+  res.render('admin/adduser');
+});
+
+router.get('/getUser', function(req, res) {
+  res.render('admin/getuser');
 });
 
 /*
@@ -25,7 +29,7 @@ user
 router.post('/add',adminHandler.addUser);
 router.get('/getAllUsers',adminHandler.getAllUsers);
 router.post('/delete',adminHandler.deleteUser);
-router.post('/getUserById',adminHandler.getUserById);
+router.post('/getUserByAccount',adminHandler.getUserByAccount);
 router.post('/updateUser',adminHandler.updateUser);
 
 /*
