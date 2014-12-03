@@ -773,3 +773,68 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .glyphicon-tree-deciduous:before {
   content: "\e200";
 }
+
+.space5 {
+  height:5px;
+  clear:both;
+}
+
+.space10 {
+  height:10px;
+  clear:both;
+}
+
+.space15 {
+  height:15px;
+  clear:both;
+}
+
+.space20 {
+  height:20px;
+  clear:both;
+}
+
+.space25 {
+  height:25px;
+  clear:both;
+}
+
+.space30 {
+  height:30px;
+  clear:both;
+}
+
+.space40 {
+  height:40px;
+  clear:both;
+}
+
+.space50 {
+  height:50px;
+  clear:both;
+}
+
+.space60 {
+  height:60px;
+  clear:both;
+}
+
+.space70 {
+  height:70px;
+  clear:both;
+}
+
+.space80 {
+  height:80px;
+  clear:both;
+}
+
+.space90 {
+  height:90px;
+  clear:both;
+}
+
+.space100 {
+  height:100px;
+  clear:both;
+}

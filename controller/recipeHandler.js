@@ -105,7 +105,7 @@ exports.create = function (req, res){
         for (var i = 0; i < sNum; i++) {
             var sPhote = "step[" + i + "][stepPhoto]";
             var sExplain = "step[" + i + "][stepExplain]";
-            step0[i] = {stepNum: i + 1, stepExplain: params[sExplain].value, stepPhoto: params[sPhote]};
+            step0[i] = {stepNum: i + 1, stepExplain: params[sExplain], stepPhoto: params[sPhote]};
         }
         recipe.material = material0;
         recipe.step = step0;
@@ -113,8 +113,8 @@ exports.create = function (req, res){
         //几个默认值设置
         recipe.logTime = new Date();
         recipe.collectNum = 0;
-        recipe.commentNum = 1;
-        recipe.productNum = 1;
+        recipe.commentNum = 0;
+        recipe.productNum = 0;
         recipe.flag = true;
 
         //设置用户信息
