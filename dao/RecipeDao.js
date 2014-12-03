@@ -35,11 +35,19 @@ RecipeDao.delete = function (list,callback) {
     });
 }
 
-RecipeDao.getAll = function (callback) {
-    Recipe.find({flag:true}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
-        if(error) return callback(error,null);
-
+RecipeDao.getAll = function (pageNo,pageSize,callback) {
+    Recipe.find({flag:true}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,recipe){
+        if(error)
+            return callback(error,null);
         return callback(null, recipe);
+    });
+};
+
+RecipeDao.getAllNum = function (callback) {
+    Recipe.count({flag:true}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
     });
 };
 

@@ -11,15 +11,10 @@ var recipe = require('./../controller/recipeHandler');
 module.exports = function (app) {
 
     app.get('/recipe/create', function(req,res){
-        res.render("recipe/create");
+        res.render("recipe/createRecipe");
     });
-
-    app.get('/recipe/test', function(req,res){
-        res.render("recipe/testRecipe");
-    });
-
-    app.get('/recipe/index', function(req,res){
-        res.render("recipe/testRecipe2");
+    app.get('/recipe/list', function(req,res){
+        res.render("recipe/listRecipe");
     });
 
     app.get('/service/recipe/delete/:ids', recipe.deleteRecipe);

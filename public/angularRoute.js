@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('nourtiture', ['ngRoute','angularFileUpload']).
+angular.module('nourriture', ['ngRoute','angularFileUpload']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/index', {
@@ -14,6 +14,18 @@ angular.module('nourtiture', ['ngRoute','angularFileUpload']).
             when('/recipe/create', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
+            }).
+            when('/recipe/list', {
+                templateUrl: '/recipe/list',
+                controller: ToListRecipe
+            }).
+            when('/userinfo/show123',{
+                templateUrl:'/userinfo/show',
+                controller:showuser
+            }).
+            when('/sale/createTradePost',{
+                templateUrl:'/sale/createTradePost',
+                controller:CreateTradePost
             }).
             otherwise({
                 redirectTo: '/'

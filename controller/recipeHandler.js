@@ -8,6 +8,7 @@ var RecipeDao = require("../dao/RecipeDao"),
     CommentDao = require("../dao/CommentDao"),
     CollectDao = require("../dao/CollectDao"),
     ProductDao = require("../dao/ProductDao"),
+    UserDao = require("../dao/UserDao"),
     RecipeModel = require("./../data").Recipe,
     CommentModel = require("./../data").CommentRecipe,
     ProductModel = require("./../data").Product,
@@ -66,36 +67,75 @@ exports.deleteRecipe = function(req,res){
 }
 
 exports.listAll = function (req, res) {
-    RecipeDao.getAll(function (err, recipe) {
-        //res.writeHead(200);
-        res.json(recipe);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    RecipeDao.getAll(pageNo,pageSize,function (err1, recipe) {
+        RecipeDao.getAllNum(function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:recipe,total:num});
+            }
+        });
     });
 };
 
 exports.create = function (req, res){
     req.setEncoding('utf-8');
     var postData = "";
-
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
         console.log('recipe数据接收完毕');
-
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
-        //console.log(params);
-        params = null;
+        console.log(params);
+        var recipe = params;
 
+        //特殊参数，数组形式，特殊处理，步骤和食材
+        var mNum = params['mNum'];
+        var sNum = params['sNum'];
+        var material0 = [];
+        var step0 = [];
+        for (var i = 0; i < mNum; i++) {
+            var mName = "material[" + i + "][materialName]";
+            var mAmount = "material[" + i + "][amount]";
+            material0[i] = {materialName: params[mName], amount: params[mAmount]};
+        }
+        for (var i = 0; i < sNum; i++) {
+            var sPhote = "step[" + i + "][stepPhoto]";
+            var sExplain = "step[" + i + "][stepExplain]";
+            step0[i] = {stepNum: i + 1, stepExplain: params[sExplain].value, stepPhoto: params[sPhote]};
+        }
+        recipe.material = material0;
+        recipe.step = step0;
 
-        var recipe = createRecipe();
+        //几个默认值设置
+        recipe.logTime = new Date();
+        recipe.collectNum = 0;
+        recipe.commentNum = 1;
+        recipe.productNum = 1;
+        recipe.flag = true;
+
+        //设置用户信息
+        /*var user = UserDao.getUserById(params['authorId']);
+        recipe.author = {};
+        recipe.author._id = params.authorId;
+        recipe.author.account = user.account;
+        recipe.author.head = user.head;*/
 
         RecipeDao.create(recipe,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("发布菜谱成功！");
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("发布菜谱出现内部错误！");
+            }else {
+                res.writeHead(200, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("发布菜谱成功！");
+            }
         });
     });
 };
@@ -251,7 +291,7 @@ exports.upload = function(req,res){
                     break;
             }
             console.log(file.size);
-            var uploadDir = "./../public/" + fName;
+            var uploadDir = "./../public/upload/" + fName;
             fs.rename(file.path, uploadDir, function(err) {
                 if (err) {
                     res.write(err+"\n");
