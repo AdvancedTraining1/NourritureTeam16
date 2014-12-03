@@ -14,6 +14,8 @@
 			#leftcol.span8
 				.new_recipe
 					h4 Publish a new recipe
+						br
+						br
 						form
 							.row
 								.span3
@@ -56,11 +58,11 @@
 								.span4
 									.input-group
 										span.input-group-addon Material Name
-										input.form-control(type='text' ng-model='materialName' placeholder="Material Name")
+										input.form-control(type='text' name='materialName' placeholder="Material Name")
 								.span4
 									.input-group
 										span.input-group-addon Material Amount
-										input.form-control(type='text' ng-model='amount' placeholder="Material Amount")
+										input.form-control(type='text' name='amount' placeholder="Material Amount")
 							br
 							.row
 								.span3
@@ -80,32 +82,18 @@
 									p(style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;') Upload Photo
 								.span4
 									input.form-control(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
-
-
-
-							.row
-								table#stepTable
-									tr.span8
-										td
-											.span8
-												.input-group
-													span.input-group-addon Step Description
-													input.form-control(type='text' name='stepExplain' placeholder="Step Description")
-									tr.span8
-										td
-											.span3
-												p(style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;') Upload Photo
-										td
-											.span4
-												.input-group
-													span.input-group-addon Upload Photo
-													input.form-control(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='padding: 5px 0px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+								.span8
+									.input-group
+										span.input-group-addon Step Description
+										input.form-control(type='text' name='stepExplain' placeholder="Step Description")
+								.span3
+									p(style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;') Upload Photo
+								.span5
+									input.form-control(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+							.row.space50
 							.row
 								.span8
 									button.btn.btn-primary.btn-large.pull-right(ng-click='createRecipePage()')
 										span.glyphicon.glyphicon-ok &nbsp;Create your recipe
-							.row
-								| aaa:
-								| {{step}}
 			#sidebar.span4
 

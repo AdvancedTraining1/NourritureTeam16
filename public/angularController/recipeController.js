@@ -59,7 +59,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
             $("#stepList .span4:last").remove();
             $("#stepList .span3:last").remove();
             $("#stepList .span8:last").remove();
-            $scope.step.pop();
+            //$scope.step.pop();
         }
     };
 
