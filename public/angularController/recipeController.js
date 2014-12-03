@@ -29,32 +29,38 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function (data, status, headers, config) {        // file is uploaded successfully
                 console.log(data);
-                $scope.succ="image upload success!";
+                alert("Image upload success!");
                 $scope.step.push(data);
             });
         }
     };
 
     $scope.moreMaterial = function (index) {
-        $("#materialTable").append("<tr><td>Material Name</td><td><input type=\"text\" name=\"materialName\"></td><td>Material Amount</td><td><input type=\"text\" name=\"amount\"></td></tr>");
+        $("#materialList").append("<div class='span4'><div class='input-group'><span class='input-group-addon'>Material Name</span><input type='text' name='materialName' placeholder='Material Name' class='form-control ng-pristine ng-valid'></div></div><div class='span4'><div class='input-group'><span class='input-group-addon'>Material Amount</span><input type='text' name='amount' placeholder='Material Amount' class='form-control ng-pristine ng-valid'></div></div>");
     };
 
     $scope.lessMaterial = function () {
-        if($("#materialTable").find("tr").length == 1)
+        if($("#materialList").find(".span4").length == 2)
             alert("More than one material !");
-        else
-            $("#materialTable tr:last").remove();
+        else{
+            $("#materialList .span4 :last").remove();
+            $("#materialList .span4 :last").remove();
+        }
     };
 
     $scope.moreStep = function () {
-        $("#stepTable").append("<tr><td>Material Name</td><td><input type=\"text\" name=\"materialName\"></td><td>Material Amount</td><td><input type=\"text\" name=\"amount\"></td></tr>");
+        $("#stepList").append("<div class='span8'><div class='input-group'><span class='input-group-addon'>Step Description</span><input type='text' name='stepExplain' placeholder='Step Description' class='form-control'></div></div><div class='span3'><p style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;'>Upload Photo</p></div><div class='span4'><input type='file' name='files' ng-file-select='onFileSelect($files)' multiple='multiple' accept='image/*' style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;' class='form-control'></div>");
     };
 
     $scope.lessStep = function () {
-        if($("#stepTable").find("tr").length == 1)
+        if($("#stepList").find(".span8").length == 1)
             alert("More than one step !");
-        else
-            $("#stepTable tr:last").remove();
+        else{
+            $("#stepList .span4:last").remove();
+            $("#stepList .span3:last").remove();
+            $("#stepList .span8:last").remove();
+            $scope.step.pop();
+        }
     };
 
     $scope.createRecipePage = function () {
