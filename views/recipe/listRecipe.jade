@@ -1,12 +1,51 @@
 //Created by cmm on 11/28/14.
+#main(style='min-height:500px')
+	.container
+		section#listRecipe
+			.hgroup
+				h1 All the recipes here !
+				h2 You can get all the recipes you want from this page, or search the ones you want from the right bar.
+				ul.breadcrumb.pull-right
+					li
+						a(href='/index') Home
+						span.divider /
+					li.active Recipes
+		.row
+			#leftcol.span8
+				article.post(ng-repeat="recipe in recipes")
+					.post_header
+						h3.post_title
+							//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
+							a(href='/recipe/single/{{recipe._id}}') {{recipe.recipeName}}
+						.post_sub
+							span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
+								a(href='/recipe/single#post_comments')
+									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
+					.post_content
+						figure
+							a(href='/recipe/single')
+								img(alt='0' src='{{recipe.photo}}')
+						p {{recipe.description}}
+						a.btn.btn-primary(href='/recipe/single') Read More
 
-script(src='../javascript/jquery.simplePagination.js', type='text/javascript')
-link(type='text/css' rel='stylesheet' href='css/simplePagination.css')
-
-h1 显示所有的菜谱，带分页
-| pageNo : {{pageNo}}
-
-div(data-ng-init='init()')
-	ul
-		li(ng-repeat="recipe in recipes") a {{recipe.recipeName}},{{recipe.description}}
+				.pagination.pagination-centered(paging page-object="pageing" click-function="list")
+			#sidebar.span4
+				aside.widget
+					h4 Search
+				aside.widget
+					.search-box
+						a.search-icon(ng-click='searchRecipe()')
+							span.glyphicon.glyphicon-search(style='top:4px')
+						input.search(ng-model='search' placeholder='search')
+				aside.widget
+					h4 xu wan shan. e.g. hou tai ke yi gei suo you de shi wu hua fen lie bie. ze zai ci chu. ke yi lie chu ge zhong lie bie de dong xi. dian ji , ran hou zuo ce bian hua.
+				aside.widget
+					h4 Recipe Categories
+					ul.nav.nav-tabs.nav-stacked(id='myTab')
+						li.active
+							a(data-toggle="tab" href="#all") All
+						li
+							a(data-toggle="tab" href="#seafood") Seafood
+						li
+							a(data-toggle="tab" href="#meat") Meat
 

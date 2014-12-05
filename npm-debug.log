@@ -1,440 +1,159 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/home/cmm/local/node/bin/node',
 1 verbose cli   '/home/cmm/local/node/bin/npm',
-1 verbose cli   'install' ]
+1 verbose cli   'install',
+1 verbose cli   'debug',
+1 verbose cli   '-g' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
-4 verbose readDependencies using package.json deps
-5 verbose install where, deps [ '/home/cmm/Documents/exercise1/NourritureTeam16',
-5 verbose install   [ 'body-parser',
-5 verbose install     'colors',
-5 verbose install     'cookie-parser',
-5 verbose install     'debug',
-5 verbose install     'express',
-5 verbose install     'express-session',
-5 verbose install     'favicon',
-5 verbose install     'formidable',
-5 verbose install     'jade',
-5 verbose install     'mongoose',
-5 verbose install     'morgan',
-5 verbose install     'serve-favicon',
-5 verbose install     'mocha',
-5 verbose install     'request' ] ]
-6 info preinstall NourritureTeam16@0.0.0
-7 verbose readDependencies using package.json deps
-8 verbose already installed skipping body-parser@~1.8.1 /home/cmm/Documents/exercise1/NourritureTeam16
-9 verbose already installed skipping colors@^1.0.3 /home/cmm/Documents/exercise1/NourritureTeam16
-10 verbose already installed skipping cookie-parser@~1.3.3 /home/cmm/Documents/exercise1/NourritureTeam16
-11 verbose already installed skipping debug@~2.0.0 /home/cmm/Documents/exercise1/NourritureTeam16
-12 verbose already installed skipping express@~4.9.0 /home/cmm/Documents/exercise1/NourritureTeam16
-13 verbose already installed skipping express-session@^1.9.1 /home/cmm/Documents/exercise1/NourritureTeam16
-14 verbose cache add [ 'favicon@0.0.2', null ]
-15 verbose cache add name=undefined spec="favicon@0.0.2" args=["favicon@0.0.2",null]
-16 verbose parsed url { protocol: null,
-16 verbose parsed url   slashes: null,
-16 verbose parsed url   auth: null,
-16 verbose parsed url   host: null,
-16 verbose parsed url   port: null,
-16 verbose parsed url   hostname: null,
-16 verbose parsed url   hash: null,
-16 verbose parsed url   search: null,
-16 verbose parsed url   query: null,
-16 verbose parsed url   pathname: 'favicon@0.0.2',
-16 verbose parsed url   path: 'favicon@0.0.2',
-16 verbose parsed url   href: 'favicon@0.0.2' }
-17 verbose already installed skipping formidable@^1.0.15 /home/cmm/Documents/exercise1/NourritureTeam16
-18 verbose already installed skipping jade@~1.6.0 /home/cmm/Documents/exercise1/NourritureTeam16
-19 verbose already installed skipping mongoose@^3.8.18 /home/cmm/Documents/exercise1/NourritureTeam16
-20 verbose cache add name="favicon" spec="0.0.2" args=["favicon","0.0.2"]
-21 verbose parsed url { protocol: null,
-21 verbose parsed url   slashes: null,
-21 verbose parsed url   auth: null,
-21 verbose parsed url   host: null,
-21 verbose parsed url   port: null,
-21 verbose parsed url   hostname: null,
-21 verbose parsed url   hash: null,
-21 verbose parsed url   search: null,
-21 verbose parsed url   query: null,
-21 verbose parsed url   pathname: '0.0.2',
-21 verbose parsed url   path: '0.0.2',
-21 verbose parsed url   href: '0.0.2' }
-22 verbose addNamed [ 'favicon', '0.0.2' ]
-23 verbose addNamed [ '0.0.2', '0.0.2' ]
-24 verbose already installed skipping morgan@~1.3.0 /home/cmm/Documents/exercise1/NourritureTeam16
-25 silly lockFile b63220bd-favicon-0-0-2 favicon@0.0.2
-26 verbose lock favicon@0.0.2 /home/cmm/.npm/b63220bd-favicon-0-0-2.lock
-27 verbose already installed skipping serve-favicon@~2.1.3 /home/cmm/Documents/exercise1/NourritureTeam16
-28 verbose cache add [ 'mocha@~2.0.1', null ]
-29 verbose cache add name=undefined spec="mocha@~2.0.1" args=["mocha@~2.0.1",null]
-30 verbose parsed url { protocol: null,
-30 verbose parsed url   slashes: null,
-30 verbose parsed url   auth: null,
-30 verbose parsed url   host: null,
-30 verbose parsed url   port: null,
-30 verbose parsed url   hostname: null,
-30 verbose parsed url   hash: null,
-30 verbose parsed url   search: null,
-30 verbose parsed url   query: null,
-30 verbose parsed url   pathname: 'mocha@~2.0.1',
-30 verbose parsed url   path: 'mocha@~2.0.1',
-30 verbose parsed url   href: 'mocha@~2.0.1' }
-31 verbose cache add name="mocha" spec="~2.0.1" args=["mocha","~2.0.1"]
-32 verbose parsed url { protocol: null,
-32 verbose parsed url   slashes: null,
-32 verbose parsed url   auth: null,
-32 verbose parsed url   host: null,
-32 verbose parsed url   port: null,
-32 verbose parsed url   hostname: null,
-32 verbose parsed url   hash: null,
-32 verbose parsed url   search: null,
-32 verbose parsed url   query: null,
-32 verbose parsed url   pathname: '~2.0.1',
-32 verbose parsed url   path: '~2.0.1',
-32 verbose parsed url   href: '~2.0.1' }
-33 verbose addNamed [ 'mocha', '~2.0.1' ]
-34 verbose addNamed [ null, '>=2.0.1-0 <2.1.0-0' ]
-35 silly lockFile a4ebeaf9-mocha-2-0-1 mocha@~2.0.1
-36 verbose lock mocha@~2.0.1 /home/cmm/.npm/a4ebeaf9-mocha-2-0-1.lock
-37 verbose cache add [ 'request@~2.48.0', null ]
-38 verbose cache add name=undefined spec="request@~2.48.0" args=["request@~2.48.0",null]
-39 verbose parsed url { protocol: null,
-39 verbose parsed url   slashes: null,
-39 verbose parsed url   auth: null,
-39 verbose parsed url   host: null,
-39 verbose parsed url   port: null,
-39 verbose parsed url   hostname: null,
-39 verbose parsed url   hash: null,
-39 verbose parsed url   search: null,
-39 verbose parsed url   query: null,
-39 verbose parsed url   pathname: 'request@~2.48.0',
-39 verbose parsed url   path: 'request@~2.48.0',
-39 verbose parsed url   href: 'request@~2.48.0' }
-40 verbose cache add name="request" spec="~2.48.0" args=["request","~2.48.0"]
-41 verbose parsed url { protocol: null,
-41 verbose parsed url   slashes: null,
-41 verbose parsed url   auth: null,
-41 verbose parsed url   host: null,
-41 verbose parsed url   port: null,
-41 verbose parsed url   hostname: null,
-41 verbose parsed url   hash: null,
-41 verbose parsed url   search: null,
-41 verbose parsed url   query: null,
-41 verbose parsed url   pathname: '~2.48.0',
-41 verbose parsed url   path: '~2.48.0',
-41 verbose parsed url   href: '~2.48.0' }
-42 verbose addNamed [ 'request', '~2.48.0' ]
-43 verbose addNamed [ null, '>=2.48.0-0 <2.49.0-0' ]
-44 silly lockFile d056344e-request-2-48-0 request@~2.48.0
-45 verbose lock request@~2.48.0 /home/cmm/.npm/d056344e-request-2-48-0.lock
-46 silly addNameRange { name: 'mocha', range: '>=2.0.1-0 <2.1.0-0', hasData: false }
-47 silly addNameRange { name: 'request',
-47 silly addNameRange   range: '>=2.48.0-0 <2.49.0-0',
-47 silly addNameRange   hasData: false }
-48 verbose request where is /favicon
-49 verbose request registry https://registry.npmjs.org/
-50 verbose request id cbd6dd8904c328bf
-51 verbose url raw /favicon
-52 verbose url resolving [ 'https://registry.npmjs.org/', './favicon' ]
-53 verbose url resolved https://registry.npmjs.org/favicon
-54 verbose request where is https://registry.npmjs.org/favicon
-55 info trying registry request attempt 1 at 17:08:57
-56 verbose etag "13COHRXCNR552SOGGA2HSSLGR"
-57 http GET https://registry.npmjs.org/favicon
-58 verbose request where is /mocha
-59 verbose request registry https://registry.npmjs.org/
-60 verbose url raw /mocha
-61 verbose url resolving [ 'https://registry.npmjs.org/', './mocha' ]
-62 verbose url resolved https://registry.npmjs.org/mocha
-63 verbose request where is https://registry.npmjs.org/mocha
-64 info trying registry request attempt 1 at 17:08:57
-65 verbose etag "78XWBSCHNN4P85E666EY3PLTR"
-66 http GET https://registry.npmjs.org/mocha
-67 verbose request where is /request
-68 verbose request registry https://registry.npmjs.org/
-69 verbose url raw /request
-70 verbose url resolving [ 'https://registry.npmjs.org/', './request' ]
-71 verbose url resolved https://registry.npmjs.org/request
-72 verbose request where is https://registry.npmjs.org/request
-73 info trying registry request attempt 1 at 17:08:57
-74 verbose etag "5FJ3NPPLJ9KSVHG9P7SV08EWX"
-75 http GET https://registry.npmjs.org/request
-76 http 304 https://registry.npmjs.org/favicon
-77 silly registry.get cb [ 304,
-77 silly registry.get   { date: 'Sat, 15 Nov 2014 09:08:58 GMT',
-77 silly registry.get     server: 'Apache',
-77 silly registry.get     via: '1.1 varnish',
-77 silly registry.get     'last-modified': 'Sat, 15 Nov 2014 09:08:59 GMT',
-77 silly registry.get     'cache-control': 'max-age=60',
-77 silly registry.get     etag: '"13COHRXCNR552SOGGA2HSSLGR"',
-77 silly registry.get     age: '0',
-77 silly registry.get     'x-served-by': 'cache-ty68-TYO',
-77 silly registry.get     'x-cache': 'MISS',
-77 silly registry.get     'x-cache-hits': '0',
-77 silly registry.get     'x-timer': 'S1416042538.634838,VS0,VE847',
-77 silly registry.get     vary: 'Accept',
-77 silly registry.get     'content-length': '0',
-77 silly registry.get     'keep-alive': 'timeout=10, max=50',
-77 silly registry.get     connection: 'Keep-Alive' } ]
-78 verbose etag https://registry.npmjs.org/favicon from cache
-79 http 200 https://registry.npmjs.org/mocha
-80 silly registry.get cb [ 200,
-80 silly registry.get   { date: 'Sat, 15 Nov 2014 09:08:58 GMT',
-80 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-80 silly registry.get     etag: '"BJYH9NQ4M9Z3B0LBF1Y1G1XJ2"',
-80 silly registry.get     'content-type': 'application/json',
-80 silly registry.get     'cache-control': 'max-age=60',
-80 silly registry.get     'content-length': '107721',
-80 silly registry.get     'accept-ranges': 'bytes',
-80 silly registry.get     via: '1.1 varnish',
-80 silly registry.get     age: '0',
-80 silly registry.get     'x-served-by': 'cache-ty68-TYO',
-80 silly registry.get     'x-cache': 'HIT',
-80 silly registry.get     'x-cache-hits': '1',
-80 silly registry.get     'x-timer': 'S1416042538.625707,VS0,VE114',
-80 silly registry.get     vary: 'Accept',
-80 silly registry.get     'keep-alive': 'timeout=10, max=50',
-80 silly registry.get     connection: 'Keep-Alive' } ]
-81 silly addNameRange number 2 { name: 'mocha', range: '>=2.0.1-0 <2.1.0-0', hasData: true }
-82 silly addNameRange versions [ 'mocha',
-82 silly addNameRange   [ '0.0.1-alpha1',
-82 silly addNameRange     '0.0.1-alpha2',
-82 silly addNameRange     '0.0.1-alpha3',
-82 silly addNameRange     '0.0.1-alpha4',
-82 silly addNameRange     '0.0.1-alpha5',
-82 silly addNameRange     '0.0.1-alpha6',
-82 silly addNameRange     '0.0.1',
-82 silly addNameRange     '0.0.2',
-82 silly addNameRange     '0.0.3',
-82 silly addNameRange     '0.0.4',
-82 silly addNameRange     '0.0.5',
-82 silly addNameRange     '0.0.6',
-82 silly addNameRange     '0.0.7',
-82 silly addNameRange     '0.0.8',
-82 silly addNameRange     '0.1.0',
-82 silly addNameRange     '0.2.0',
-82 silly addNameRange     '0.3.0',
-82 silly addNameRange     '0.3.1',
-82 silly addNameRange     '0.3.2',
-82 silly addNameRange     '0.3.3',
-82 silly addNameRange     '0.3.4',
-82 silly addNameRange     '0.3.6',
-82 silly addNameRange     '0.4.0',
-82 silly addNameRange     '0.5.0',
-82 silly addNameRange     '0.6.0',
-82 silly addNameRange     '0.7.0',
-82 silly addNameRange     '0.7.1',
-82 silly addNameRange     '0.8.0',
-82 silly addNameRange     '0.8.1',
-82 silly addNameRange     '0.9.0',
-82 silly addNameRange     '0.10.0',
-82 silly addNameRange     '0.10.1',
-82 silly addNameRange     '0.10.2',
-82 silly addNameRange     '0.11.0',
-82 silly addNameRange     '0.12.0',
-82 silly addNameRange     '0.12.1',
-82 silly addNameRange     '0.13.0',
-82 silly addNameRange     '0.14.0',
-82 silly addNameRange     '0.14.1',
-82 silly addNameRange     '1.0.0',
-82 silly addNameRange     '1.0.1',
-82 silly addNameRange     '1.0.2',
-82 silly addNameRange     '1.0.3',
-82 silly addNameRange     '1.1.0',
-82 silly addNameRange     '1.2.0',
-82 silly addNameRange     '1.2.1',
-82 silly addNameRange     '1.2.2',
-82 silly addNameRange     '1.3.0',
-82 silly addNameRange     '1.3.1',
-82 silly addNameRange     '1.3.2',
-82 silly addNameRange     '1.4.0',
-82 silly addNameRange     '1.4.1',
-82 silly addNameRange     '1.4.2',
-82 silly addNameRange     '1.4.3',
-82 silly addNameRange     '1.5.0',
-82 silly addNameRange     '1.6.0',
-82 silly addNameRange     '1.7.0',
-82 silly addNameRange     '1.7.1',
-82 silly addNameRange     '1.7.2',
-82 silly addNameRange     '1.7.3',
-82 silly addNameRange     '1.7.4',
-82 silly addNameRange     '1.8.0',
-82 silly addNameRange     '1.8.1',
-82 silly addNameRange     '1.8.2',
-82 silly addNameRange     '1.9.0',
-82 silly addNameRange     '1.10.0',
-82 silly addNameRange     '1.11.0',
-82 silly addNameRange     '1.12.0',
-82 silly addNameRange     '1.12.1',
-82 silly addNameRange     '1.13.0',
-82 silly addNameRange     '1.14.0',
-82 silly addNameRange     '1.15.0',
-82 silly addNameRange     '1.15.1',
-82 silly addNameRange     '1.16.0',
-82 silly addNameRange     '1.16.1',
-82 silly addNameRange     '1.16.2',
-82 silly addNameRange     '1.17.0',
-82 silly addNameRange     '1.17.1',
-82 silly addNameRange     '1.18.0',
-82 silly addNameRange     '1.18.1',
-82 silly addNameRange     '1.18.2',
-82 silly addNameRange     '1.19.0',
-82 silly addNameRange     '1.20.0',
-82 silly addNameRange     '1.20.1',
-82 silly addNameRange     '1.21.0',
-82 silly addNameRange     '1.21.1',
-82 silly addNameRange     '1.21.2',
-82 silly addNameRange     '1.21.3',
-82 silly addNameRange     '1.21.4',
-82 silly addNameRange     '1.21.5',
-82 silly addNameRange     '2.0.0',
-82 silly addNameRange     '2.0.1' ] ]
-83 verbose addNamed [ 'mocha', '2.0.1' ]
-84 verbose addNamed [ '2.0.1', '2.0.1' ]
-85 silly lockFile 5f39746a-mocha-2-0-1 mocha@2.0.1
-86 verbose lock mocha@2.0.1 /home/cmm/.npm/5f39746a-mocha-2-0-1.lock
-87 http 200 https://registry.npmjs.org/request
-88 silly registry.get cb [ 200,
-88 silly registry.get   { date: 'Sat, 15 Nov 2014 09:08:58 GMT',
-88 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
-88 silly registry.get     etag: '"105LQ7ENIM18VZSLKORRYO7Z3"',
-88 silly registry.get     'content-type': 'application/json',
-88 silly registry.get     'cache-control': 'max-age=60',
-88 silly registry.get     'content-length': '126564',
-88 silly registry.get     'accept-ranges': 'bytes',
-88 silly registry.get     via: '1.1 varnish',
-88 silly registry.get     age: '54',
-88 silly registry.get     'x-served-by': 'cache-ty68-TYO',
-88 silly registry.get     'x-cache': 'HIT',
-88 silly registry.get     'x-cache-hits': '6',
-88 silly registry.get     'x-timer': 'S1416042538.624832,VS0,VE0',
-88 silly registry.get     vary: 'Accept',
-88 silly registry.get     'keep-alive': 'timeout=10, max=50',
-88 silly registry.get     connection: 'Keep-Alive' } ]
-89 silly lockFile b63220bd-favicon-0-0-2 favicon@0.0.2
-90 silly lockFile b63220bd-favicon-0-0-2 favicon@0.0.2
-91 silly addNameRange number 2 { name: 'request', range: '>=2.48.0-0 <2.49.0-0', hasData: true }
-92 silly addNameRange versions [ 'request',
-92 silly addNameRange   [ '0.10.0',
-92 silly addNameRange     '0.8.3',
-92 silly addNameRange     '0.9.0',
-92 silly addNameRange     '0.9.1',
-92 silly addNameRange     '0.9.5',
-92 silly addNameRange     '1.0.0',
-92 silly addNameRange     '1.1.0',
-92 silly addNameRange     '1.1.1',
-92 silly addNameRange     '1.2.0',
-92 silly addNameRange     '1.9.0',
-92 silly addNameRange     '1.9.1',
-92 silly addNameRange     '1.9.2',
-92 silly addNameRange     '1.9.3',
-92 silly addNameRange     '1.9.5',
-92 silly addNameRange     '1.9.7',
-92 silly addNameRange     '1.9.8',
-92 silly addNameRange     '1.9.9',
-92 silly addNameRange     '2.0.0',
-92 silly addNameRange     '2.0.1',
-92 silly addNameRange     '2.0.2',
-92 silly addNameRange     '2.0.3',
-92 silly addNameRange     '2.0.4',
-92 silly addNameRange     '2.0.5',
-92 silly addNameRange     '2.1.0',
-92 silly addNameRange     '2.1.1',
-92 silly addNameRange     '2.2.0',
-92 silly addNameRange     '2.2.5',
-92 silly addNameRange     '2.2.6',
-92 silly addNameRange     '2.2.9',
-92 silly addNameRange     '2.9.0',
-92 silly addNameRange     '2.9.1',
-92 silly addNameRange     '2.9.2',
-92 silly addNameRange     '2.9.3',
-92 silly addNameRange     '2.9.100',
-92 silly addNameRange     '2.9.150',
-92 silly addNameRange     '2.9.151',
-92 silly addNameRange     '2.9.152',
-92 silly addNameRange     '2.9.153',
-92 silly addNameRange     '2.9.200',
-92 silly addNameRange     '2.9.201',
-92 silly addNameRange     '2.9.202',
-92 silly addNameRange     '2.9.203',
-92 silly addNameRange     '2.10.0',
-92 silly addNameRange     '2.11.0',
-92 silly addNameRange     '2.11.1',
-92 silly addNameRange     '2.11.2',
-92 silly addNameRange     '2.11.3',
-92 silly addNameRange     '2.11.4',
-92 silly addNameRange     '2.12.0',
-92 silly addNameRange     '2.14.0',
-92 silly addNameRange     '2.16.0',
-92 silly addNameRange     '2.16.2',
-92 silly addNameRange     '2.16.4',
-92 silly addNameRange     '2.16.6',
-92 silly addNameRange     '2.18.0',
-92 silly addNameRange     '2.19.0',
-92 silly addNameRange     '2.20.0',
-92 silly addNameRange     '2.21.0',
-92 silly addNameRange     '2.22.0',
-92 silly addNameRange     '2.23.0',
-92 silly addNameRange     '2.24.0',
-92 silly addNameRange     '2.25.0',
-92 silly addNameRange     '2.26.0',
-92 silly addNameRange     '2.27.0',
-92 silly addNameRange     '2.28.0',
-92 silly addNameRange     '2.29.0',
-92 silly addNameRange     '2.30.0',
-92 silly addNameRange     '2.31.0',
-92 silly addNameRange     '2.32.0',
-92 silly addNameRange     '2.33.0',
-92 silly addNameRange     '2.34.0',
-92 silly addNameRange     '2.35.0',
-92 silly addNameRange     '2.36.0',
-92 silly addNameRange     '2.37.0',
-92 silly addNameRange     '2.38.0',
-92 silly addNameRange     '2.39.0',
-92 silly addNameRange     '2.40.0',
-92 silly addNameRange     '2.41.0',
-92 silly addNameRange     '2.42.0',
-92 silly addNameRange     '2.43.0',
-92 silly addNameRange     '2.44.0',
-92 silly addNameRange     '2.45.0',
-92 silly addNameRange     '2.46.0',
-92 silly addNameRange     '2.47.0',
-92 silly addNameRange     '2.48.0' ] ]
-93 verbose addNamed [ 'request', '2.48.0' ]
-94 verbose addNamed [ '2.48.0', '2.48.0' ]
-95 silly lockFile af3f4873-request-2-48-0 request@2.48.0
-96 verbose lock request@2.48.0 /home/cmm/.npm/af3f4873-request-2-48-0.lock
-97 silly lockFile 7dca017d-s-org-request-request-2-48-0-tgz https://registry.npmjs.org/request/-/request-2.48.0.tgz
-98 verbose lock https://registry.npmjs.org/request/-/request-2.48.0.tgz /home/cmm/.npm/7dca017d-s-org-request-request-2-48-0-tgz.lock
-99 verbose addRemoteTarball [ 'https://registry.npmjs.org/request/-/request-2.48.0.tgz',
-99 verbose addRemoteTarball   '3ae2e091c9698282d58a0e6989ece2638f0f1f28' ]
-100 info retry fetch attempt 1 at 17:08:59
-101 verbose fetch to= /tmp/npm-13946-GFa36O_E/registry.npmjs.org/request/-/request-2.48.0.tgz
-102 http GET https://registry.npmjs.org/request/-/request-2.48.0.tgz
-103 silly lockFile 5f39746a-mocha-2-0-1 mocha@2.0.1
-104 silly lockFile 5f39746a-mocha-2-0-1 mocha@2.0.1
-105 silly lockFile a4ebeaf9-mocha-2-0-1 mocha@~2.0.1
-106 silly lockFile a4ebeaf9-mocha-2-0-1 mocha@~2.0.1
-107 http 200 https://registry.npmjs.org/request/-/request-2.48.0.tgz
-108 silly lockFile 7dca017d-s-org-request-request-2-48-0-tgz https://registry.npmjs.org/request/-/request-2.48.0.tgz
-109 silly lockFile 7dca017d-s-org-request-request-2-48-0-tgz https://registry.npmjs.org/request/-/request-2.48.0.tgz
-110 silly lockFile af3f4873-request-2-48-0 request@2.48.0
-111 silly lockFile af3f4873-request-2-48-0 request@2.48.0
-112 silly lockFile d056344e-request-2-48-0 request@~2.48.0
-113 silly lockFile d056344e-request-2-48-0 request@~2.48.0
-114 error Error: EACCES, mkdir '/home/cmm/.npm/request/2.48.0'
-114 error  { [Error: EACCES, mkdir '/home/cmm/.npm/request/2.48.0']
-114 error   errno: 3,
-114 error   code: 'EACCES',
-114 error   path: '/home/cmm/.npm/request/2.48.0',
-114 error   parent: 'NourritureTeam16' }
-115 error Please try running this command again as root/Administrator.
-116 error System Linux 3.2.0-70-generic-pae
-117 error command "/home/cmm/local/node/bin/node" "/home/cmm/local/node/bin/npm" "install"
-118 error cwd /home/cmm/Documents/exercise1/NourritureTeam16
-119 error node -v v0.10.32
-120 error npm -v 1.4.28
-121 error path /home/cmm/.npm/request/2.48.0
-122 error code EACCES
-123 error errno 3
-124 error stack Error: EACCES, mkdir '/home/cmm/.npm/request/2.48.0'
-125 verbose exit [ 3, true ]
+4 verbose cache add [ 'debug', null ]
+5 verbose cache add name=undefined spec="debug" args=["debug",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'debug',
+6 verbose parsed url   path: 'debug',
+6 verbose parsed url   href: 'debug' }
+7 silly lockFile 32faaeca-debug debug
+8 verbose lock debug /home/cmm/.npm/32faaeca-debug.lock
+9 silly lockFile 32faaeca-debug debug
+10 silly lockFile 32faaeca-debug debug
+11 verbose addNamed [ 'debug', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile a36d5671-debug debug@
+14 verbose lock debug@ /home/cmm/.npm/a36d5671-debug.lock
+15 silly addNameRange { name: 'debug', range: '*', hasData: false }
+16 verbose request where is /debug
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id be70eca3ed7fb73a
+19 verbose url raw /debug
+20 verbose url resolving [ 'https://registry.npmjs.org/', './debug' ]
+21 verbose url resolved https://registry.npmjs.org/debug
+22 verbose request where is https://registry.npmjs.org/debug
+23 info trying registry request attempt 1 at 12:07:33
+24 verbose etag "6PC9ACU94MMFRFIDRJZ0Y3J6A"
+25 http GET https://registry.npmjs.org/debug
+26 http 200 https://registry.npmjs.org/debug
+27 silly registry.get cb [ 200,
+27 silly registry.get   { date: 'Thu, 04 Dec 2014 04:07:32 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     etag: '"57WL6BOFFHV27PP9K311DRHD1"',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     'content-length': '28294',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '34',
+27 silly registry.get     'x-served-by': 'cache-ty68-TYO',
+27 silly registry.get     'x-cache': 'HIT',
+27 silly registry.get     'x-cache-hits': '53',
+27 silly registry.get     'x-timer': 'S1417666052.753806,VS0,VE0',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly addNameRange number 2 { name: 'debug', range: '*', hasData: true }
+29 silly addNameRange versions [ 'debug',
+29 silly addNameRange   [ '0.0.1',
+29 silly addNameRange     '0.1.0',
+29 silly addNameRange     '0.2.0',
+29 silly addNameRange     '0.3.0',
+29 silly addNameRange     '0.4.0',
+29 silly addNameRange     '0.4.1',
+29 silly addNameRange     '0.5.0',
+29 silly addNameRange     '0.6.0',
+29 silly addNameRange     '0.7.0',
+29 silly addNameRange     '0.7.1',
+29 silly addNameRange     '0.7.2',
+29 silly addNameRange     '0.7.3',
+29 silly addNameRange     '0.7.4',
+29 silly addNameRange     '0.8.0',
+29 silly addNameRange     '0.8.1',
+29 silly addNameRange     '1.0.0',
+29 silly addNameRange     '1.0.1',
+29 silly addNameRange     '1.0.2',
+29 silly addNameRange     '1.0.3',
+29 silly addNameRange     '1.0.4',
+29 silly addNameRange     '2.0.0',
+29 silly addNameRange     '2.1.0' ] ]
+30 verbose addNamed [ 'debug', '2.1.0' ]
+31 verbose addNamed [ '2.1.0', '2.1.0' ]
+32 silly lockFile ecfe62ac-debug-2-1-0 debug@2.1.0
+33 verbose lock debug@2.1.0 /home/cmm/.npm/ecfe62ac-debug-2-1-0.lock
+34 silly lockFile ecfe62ac-debug-2-1-0 debug@2.1.0
+35 silly lockFile ecfe62ac-debug-2-1-0 debug@2.1.0
+36 silly lockFile a36d5671-debug debug@
+37 silly lockFile a36d5671-debug debug@
+38 silly resolved [ { name: 'debug',
+38 silly resolved     version: '2.1.0',
+38 silly resolved     repository: { type: 'git', url: 'git://github.com/visionmedia/debug.git' },
+38 silly resolved     description: 'small debugging utility',
+38 silly resolved     keywords: [ 'debug', 'log', 'debugger' ],
+38 silly resolved     author: { name: 'TJ Holowaychuk', email: 'tj@vision-media.ca' },
+38 silly resolved     contributors: [ [Object] ],
+38 silly resolved     license: 'MIT',
+38 silly resolved     dependencies: { ms: '0.6.2' },
+38 silly resolved     devDependencies: { browserify: '6.1.0', mocha: '*' },
+38 silly resolved     main: './node.js',
+38 silly resolved     browser: './browser.js',
+38 silly resolved     component: { scripts: [Object] },
+38 silly resolved     gitHead: '953162b4fa8849268d147f4bac91c737baee55bb',
+38 silly resolved     bugs: { url: 'https://github.com/visionmedia/debug/issues' },
+38 silly resolved     homepage: 'https://github.com/visionmedia/debug',
+38 silly resolved     _id: 'debug@2.1.0',
+38 silly resolved     scripts: {},
+38 silly resolved     _shasum: '33ab915659d8c2cc8a41443d94d6ebd37697ed21',
+38 silly resolved     _from: 'debug@',
+38 silly resolved     _npmVersion: '2.1.3',
+38 silly resolved     _nodeVersion: '0.10.32',
+38 silly resolved     _npmUser: { name: 'tootallnate', email: 'nathan@tootallnate.net' },
+38 silly resolved     maintainers: [ [Object], [Object] ],
+38 silly resolved     dist:
+38 silly resolved      { shasum: '33ab915659d8c2cc8a41443d94d6ebd37697ed21',
+38 silly resolved        tarball: 'http://registry.npmjs.org/debug/-/debug-2.1.0.tgz' },
+38 silly resolved     directories: {},
+38 silly resolved     _resolved: 'https://registry.npmjs.org/debug/-/debug-2.1.0.tgz',
+38 silly resolved     readme: 'ERROR: No README data found!' } ]
+39 info install debug@2.1.0 into /home/cmm/local/node/lib
+40 info installOne debug@2.1.0
+41 verbose lib/node_modules/debug unbuild
+42 verbose tar unpack /home/cmm/.npm/debug/2.1.0/package.tgz
+43 silly lockFile 3e0600c2-ocal-node-lib-node-modules-debug tar:///home/cmm/local/node/lib/node_modules/debug
+44 verbose lock tar:///home/cmm/local/node/lib/node_modules/debug /home/cmm/.npm/3e0600c2-ocal-node-lib-node-modules-debug.lock
+45 silly lockFile 5a7527ec--cmm-npm-debug-2-1-0-package-tgz tar:///home/cmm/.npm/debug/2.1.0/package.tgz
+46 verbose lock tar:///home/cmm/.npm/debug/2.1.0/package.tgz /home/cmm/.npm/5a7527ec--cmm-npm-debug-2-1-0-package-tgz.lock
+47 silly gunzTarPerm modes [ '775', '664' ]
+48 error Error: EACCES, mkdir '/home/cmm/local/node/lib/node_modules/debug'
+48 error  { [Error: EACCES, mkdir '/home/cmm/local/node/lib/node_modules/debug']
+48 error   errno: 3,
+48 error   code: 'EACCES',
+48 error   path: '/home/cmm/local/node/lib/node_modules/debug',
+48 error   fstream_type: 'Directory',
+48 error   fstream_path: '/home/cmm/local/node/lib/node_modules/debug',
+48 error   fstream_class: 'DirWriter',
+48 error   fstream_stack:
+48 error    [ '/home/cmm/local/node/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+48 error      '/home/cmm/local/node/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+48 error      'Object.oncomplete (fs.js:107:15)' ] }
+49 error Please try running this command again as root/Administrator.
+50 error System Linux 3.2.0-72-generic-pae
+51 error command "/home/cmm/local/node/bin/node" "/home/cmm/local/node/bin/npm" "install" "debug" "-g"
+52 error cwd /home/cmm/Documents/exercise1/NourritureTeam16
+53 error node -v v0.10.32
+54 error npm -v 1.4.28
+55 error path /home/cmm/local/node/lib/node_modules/debug
+56 error fstream_path /home/cmm/local/node/lib/node_modules/debug
+57 error fstream_type Directory
+58 error fstream_class DirWriter
+59 error code EACCES
+60 error errno 3
+61 error stack Error: EACCES, mkdir '/home/cmm/local/node/lib/node_modules/debug'
+62 error fstream_stack /home/cmm/local/node/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+62 error fstream_stack /home/cmm/local/node/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+62 error fstream_stack Object.oncomplete (fs.js:107:15)
+63 verbose exit [ 3, true ]

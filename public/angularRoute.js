@@ -19,6 +19,10 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/recipe/list',
                 controller: ToListRecipe
             }).
+            when('/recipe/single/:recipeId', {
+                templateUrl: '/recipe/single',
+                controller: ToSingleRecipe
+            }).
             when('/userinfo/show123',{
                 templateUrl:'/userinfo/show',
                 controller:showuser
@@ -32,3 +36,4 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             });
         $locationProvider.html5Mode(true);
     }]);
+

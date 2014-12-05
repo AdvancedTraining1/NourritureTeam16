@@ -837,4 +837,31 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .space100 {
   height:100px;
   clear:both;
+<<<<<<< HEAD
+=======
+}
+
+.search-box{
+  position:relative;
+}
+
+.search {
+  width:80%;
+  height:34px;
+  color:#555;
+  background:#eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left:5%;
+  padding-right:15%;
+}
+
+.search-icon, .search-icon:hover {
+  position:absolute;
+  font-size:14px;
+  top:7px;
+  right:12px;
+  color:#555;
+  text-decoration:none;
+>>>>>>> 9634f64fa38bc8b8f982300cf01845df17df5957
 }

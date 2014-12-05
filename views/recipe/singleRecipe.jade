@@ -1,0 +1,112 @@
+//Created by cmm on 12/5/14.
+#main(style='min-height:500px')
+	.container
+		section#blog
+			.hgroup
+				h1 {{recipe.recipeName}}
+				h2
+					span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
+					a(href='#post_comments')
+						span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
+				ul.breadcrumb.pull-right
+					li
+						a(href='/index') Home
+						span.divider /
+					li
+						a(href='/recipe/list') Recipes
+			.row
+				#leftcol.span8
+					article.post_content
+						figure
+							img(alt='0' src='{{recipe.photo}}')
+					table.table.table-bordered.table-responsive
+						tr
+							td
+								strong Description
+						tr
+							td(colspan='2')
+								|{{recipe.description}}
+						tr
+							td
+								strong Difficultity
+							td
+								|{{recipe.difficult}}
+						tr
+							td
+								strong Cook Time:
+							td
+								|{{recipe.cookTime}}
+						tr
+							td(colspan='2')
+								strong Material:
+						tr
+							td
+								strong Material Name
+							td
+								strong Material Amount
+						tr(ng-repeat='material in recipe.material')
+							td
+								|{{material.materialName}}
+							td
+								|{{material.amount}}
+						tr
+							td(colspan='2')
+								strong Step:
+						tr
+							td
+								strong Step Description
+							td
+								strong Step photo
+						tr
+							//(ng-repeat='step in recipe.step')
+							td(colspan='2')
+								.bs-docs-example
+									#accordion2.accordion
+										.accordion-group(ng-repeat='step in recipe.step')
+											.accordion-heading
+												a.accordion-toggle(href='#step{{step.stepNum}}' data-parent="#accordion2" data-toggle="collapse") step{{step.stepNum}}
+											div(id='step{{step.stepNum}}').accordion-body.collapse
+												.accordion-inner
+													p {{step.stepExplain}}
+													figure
+														img(alt='0' src='{{step.stepPhoto}}')
+
+							//	p {{step.stepExplain}}
+							//td
+							//	figure
+							//		img(alt='0' src='{{step.stepPhoto}}')
+
+
+					.post_comments
+						h4 Comments
+							.comment
+								.row
+									figure.span1
+										img(alt='0' src='{{recipe.photo}}')
+									.span7
+										.comment_name {{}}
+											a.reply Reply
+										.comment_date
+											span.glyphicon.glyphicon-time {{}}
+										.the_comment
+											p {{}}
+					.new_comment
+						h4 Add Comment
+						form
+							.row
+								.span8
+									textarea.span8(rows="7" placeholder="Comments")
+							.row
+								.span8
+									a.btn.send Add comment
+
+				#sidebar.span4
+					aside.widget
+					h4 Recipe Categories
+					ul.nav.nav-tabs.nav-stacked(id='myTab')
+						li.active
+							a(data-toggle="tab" href="#all") All
+						li
+							a(data-toggle="tab" href="#seafood") Seafood
+						li
+							a(data-toggle="tab" href="#meat") Meat

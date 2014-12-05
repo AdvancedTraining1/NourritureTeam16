@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 var schema = new Schema({
     recipeName: String,
     description: String,
+    photo: String,
     author: {
         _id: String,
         head: String,
@@ -25,7 +26,7 @@ var schema = new Schema({
         stepExplain: String,
         stepPhoto: String
     }],
-    logTime: Date,
+    logTime: String,
     collectNum: Number,
     commentNum: Number,
     productNum: Number,

@@ -51,16 +51,28 @@ RecipeDao.getAllNum = function (callback) {
     });
 };
 
-RecipeDao.searchRecipe = function (query,callback) {
+RecipeDao.searchRecipe = function (pageNo,pageSize,query,callback) {
     var str = ""+query+".*";
     //{ $regex: str} 第一种使用正则表达式的方式
     //var str1 = new RegExp(query); 第二种使用正则表达式的方式
-    Recipe.find({recipeName:{ $regex: str}}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
+    Recipe.find({recipeName:{ $regex: str}}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,recipe){
         if(error) return callback(error,null);
 
         return callback(null, recipe);
     });
-}
+};
+
+RecipeDao.searchRecipeNum = function (query,callback) {
+    var str = ""+query+".*";
+    //{ $regex: str} 第一种使用正则表达式的方式
+    //*var str1 = new RegExp(query); //第二种使用正则表达式的方式
+
+    Recipe.count({recipeName:{ $regex: str}}).exec(function(error,recipe){
+        if(error)
+            return callback(error,null);
+        return callback(null, recipe);
+    });
+};
 
 RecipeDao.listComment = function(id,callback){
     Recipe.find({_id:id},{commentList:1}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){

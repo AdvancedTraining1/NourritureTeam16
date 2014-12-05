@@ -111,7 +111,9 @@ exports.create = function (req, res){
         recipe.step = step0;
 
         //几个默认值设置
-        recipe.logTime = new Date();
+        var date = new Date();
+        var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        recipe.logTime = dateStr;
         recipe.collectNum = 0;
         recipe.commentNum = 0;
         recipe.productNum = 0;
@@ -147,8 +149,15 @@ exports.showOne = function (req, res) {
 };
 
 exports.searchRecipe = function(req,res){
-    RecipeDao.searchRecipe(req.params.queryStr,function (err, recipe) {
-        res.json(recipe);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var queryStr = req.param('queryStr');
+    RecipeDao.searchRecipe(pageNo,pageSize,queryStr,function (err1, recipe) {
+        RecipeDao.searchRecipeNum(queryStr,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:recipe,total:num});
+            }
+        });
     });
 }
 
@@ -297,7 +306,7 @@ exports.upload = function(req,res){
                     res.write(err+"\n");
                     res.end();
                 }
-                res.end(config.host+"/"+fName);
+                res.end("upload/"+fName);
             });
         }
     });
