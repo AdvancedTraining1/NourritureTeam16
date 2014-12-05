@@ -10,7 +10,7 @@ html(ng-app="nourriture")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
 
-		base(href='/')
+		base(href='/index')
 		title Nourtiture
 		//link(rel='stylesheet', href='css/bootstrap.css')
 		//link(rel='stylesheet', href='css/bootstrap-responsive.css')
@@ -38,7 +38,7 @@ html(ng-app="nourriture")
 								span.icon-bar
 							span.nb_right.pull-right menu
 						.nav-collapse.collapse
-							ul.nav.pull-right
+							ul#menuTab.nav.pull-right
 								li.active
 									a(href="/index") Home
 								li
@@ -54,7 +54,7 @@ html(ng-app="nourriture")
 								li.dropdown
 									a.dropdown-toggle(data-toggle="dropdown" href="") Publish
 										span.caret
-									ul.dropdown-menu
+									ul#subMenu.dropdown-menu
 										li
 											a(href='/recipe/create') Publish Recipe
 										li
@@ -79,7 +79,7 @@ html(ng-app="nourriture")
 								h3 About us
 								p We are Advanced Training Team 16 including 6 people.
 								p
-									span.glyphicon.glyphicon-map-marker 3 ShangYan Cun - Beijing Jiaotong University
+									span.glyphicon.glyphicon-map-marker 3 ShangYuan Cun - Beijing Jiaotong University
 								p
 									span.glyphicon.glyphicon-envelope hello@AdvancedTraining1.com
 							.span4.footer_teaser
@@ -102,3 +102,11 @@ html(ng-app="nourriture")
 							.span6 Copyright &copy; 2014.Company name All rights reserved. Advanced Training1 Team 16
 							.span6.text-right
 								a(href='') Nourriture
+
+script.
+	$(function(){
+		$("#menuTab > li").click(tab);
+		function tab() {
+			$(this).addClass("active").siblings().removeClass("active");
+		};
+	});

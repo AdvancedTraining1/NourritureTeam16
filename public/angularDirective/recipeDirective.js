@@ -2,7 +2,6 @@
  * Created by cmm on 12/4/14.
  */
 angular.module('nourriture').directive('paging', function ($timeout) {
-    alert("dir");
     return{
         replace:true,
         scope:{
@@ -73,6 +72,9 @@ angular.module('nourriture').directive('paging', function ($timeout) {
                                 str += '<li><a href="javascript:;" >'+i+'</a><li>' ;
                             }
                         }
+                    }
+                    if(maxPage == 1){
+                        str += '<li><span class="disabled">》</span></li>';
                     }
                 }
 

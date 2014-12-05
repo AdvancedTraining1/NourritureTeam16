@@ -16,13 +16,16 @@ module.exports = function (app) {
     app.get('/recipe/list', function(req,res){
         res.render("recipe/listRecipe");
     });
+    app.get('/recipe/single', function(req,res){
+        res.render("recipe/singleRecipe");
+    });
 
     app.get('/service/recipe/delete/:ids', recipe.deleteRecipe);
     app.get('/service/recipe/showOne/:id', recipe.showOne);
 
     app.get('/service/recipe/listOwn/:authorId', recipe.listOwn);
     app.get('/service/recipe/listAll', recipe.listAll);
-    app.get('/service/recipe/search/:queryStr', recipe.searchRecipe);
+    app.get('/service/recipe/search', recipe.searchRecipe);
     app.get('/service/recipe/listComment/:recipeId', recipe.listComment);
     app.get('/service/recipe/listProduct/:recipeId',recipe.listProduct);
 

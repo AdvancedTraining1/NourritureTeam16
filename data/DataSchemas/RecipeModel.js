@@ -26,7 +26,7 @@ var schema = new Schema({
         stepExplain: String,
         stepPhoto: String
     }],
-    logTime: Date,
+    logTime: String,
     collectNum: Number,
     commentNum: Number,
     productNum: Number,

@@ -9,8 +9,10 @@ function IndexPage($scope, $http, $location){
 }
 
 function ToCreateRecipe($scope, $http, $location, $upload) {
-    $scope.message = "Create a recipe!";
+    $scope.recipe = {};
     $scope.step = [];
+    $scope.photoSee = false;
+    $scope.stepSee = false;
     $scope.moreSteps = [{step:1}];
     $scope.moreMaterials = [{material:1}];
 
@@ -31,9 +33,27 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function (data, status, headers, config) {        // file is uploaded successfully
                 console.log(data);
-                //alert("Image upload success!");
-                $scope.successMessage="Image upload success!";
+                alert("Step image upload success!");
+                //$scope.successMessage="Image upload success!";
                 $scope.step.push(data);
+                $scope.stepSee = true;
+            });
+        }
+    };
+
+    $scope.onFileSelect1 = function ($files) {
+        if($files != null){
+            $scope.upload = $upload.upload({
+                url: '/service/recipe/upload',
+                file: $files
+            }).progress(function (evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function (data, status, headers, config) {        // file is uploaded successfully
+                console.log(data);
+                alert("Recipe image upload success!");
+                //$scope.successMessage="Image upload success!";
+                $scope.recipe.photo = data;
+                $scope.photoSee = true;
             });
         }
     };
@@ -59,6 +79,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
             alert("More than one step!");
         }else{
             $scope.moreSteps.pop();
+            $scope.step.pop();
         }
     };
 
@@ -95,13 +116,13 @@ function ToListRecipe($scope, $http, $location){
     $scope.recipes = {};
     $scope.pageing={
         pageNo : 1,
-        itemsCount : 2,
-        pageSize :1
+        itemsCount : 3,
+        pageSize :5
     };
 
-    $scope.init = function(){
+    $(function(){
         pageing();
-    };
+    });
 
     $scope.list = function () {
         pageing();
@@ -118,5 +139,45 @@ function ToListRecipe($scope, $http, $location){
 
         });
     }
+
+    $scope.searchRecipe = function(){
+        var api = "/service/recipe/search";
+        if($scope.search == ""){
+            pageing();
+        }else{
+            $http({
+                method: 'GET',
+                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $scope.search
+            }).success(function(data, status) {
+                alert(1);
+                $scope.recipes = data.root;
+                $scope.pageing.itemsCount = data.total;
+            }).error(function(data, status) {
+
+            });
+        }
+    };
+}
+
+function ToSingleRecipe($scope, $routeParams,$http, $location){
+    $scope.id = $routeParams.recipeId;
+    $(function(){
+        alert($scope.id);
+        var api = "/service/recipe/showOne";
+        $http({
+            method: 'GET',
+            url: api + '/'+$scope.id
+        }).success(function(data, status) {
+            $scope.recipe = data;
+        }).error(function(data, status) {
+
+        });
+    });
+
+    // kuai su ding wei
+    /*var old = $location.hash();
+    $location.hash('batchmenu-bottom');
+    $anchorScroll();
+    $location.hash(old);*/
 }
 
