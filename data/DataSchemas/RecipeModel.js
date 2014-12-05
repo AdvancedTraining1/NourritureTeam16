@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 var schema = new Schema({
     recipeName: String,
     description: String,
+    photo: String,
     author: {
         _id: String,
         head: String,

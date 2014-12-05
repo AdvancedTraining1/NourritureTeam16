@@ -11,6 +11,8 @@ function IndexPage($scope, $http, $location){
 function ToCreateRecipe($scope, $http, $location, $upload) {
     $scope.message = "Create a recipe!";
     $scope.step = [];
+    $scope.moreSteps = [{step:1}];
+    $scope.moreMaterials = [{material:1}];
 
     $scope.onFileSelect = function ($files) {
         if($files != null){
@@ -29,37 +31,34 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function (data, status, headers, config) {        // file is uploaded successfully
                 console.log(data);
-                alert("Image upload success!");
+                //alert("Image upload success!");
+                $scope.successMessage="Image upload success!";
                 $scope.step.push(data);
             });
         }
     };
 
-    $scope.moreMaterial = function (index) {
-        $("#materialList").append("<div class='span4'><div class='input-group'><span class='input-group-addon'>Material Name</span><input type='text' name='materialName' placeholder='Material Name' class='form-control ng-pristine ng-valid'></div></div><div class='span4'><div class='input-group'><span class='input-group-addon'>Material Amount</span><input type='text' name='amount' placeholder='Material Amount' class='form-control ng-pristine ng-valid'></div></div>");
+    $scope.moreMaterial = function () {
+        $scope.moreMaterials.push({material:1});
     };
 
     $scope.lessMaterial = function () {
-        if($("#materialList").find(".span4").length == 2)
-            alert("More than one material !");
-        else{
-            $("#materialList .span4 :last").remove();
-            $("#materialList .span4 :last").remove();
+        if($scope.moreMaterials.length == 1){
+            alert("More than one material!");
+        }else{
+            $scope.moreMaterials.pop();
         }
     };
 
     $scope.moreStep = function () {
-        $("#stepList").append("<div class='span8'><div class='input-group'><span class='input-group-addon'>Step Description</span><input type='text' name='stepExplain' placeholder='Step Description' class='form-control'></div></div><div class='span3'><p style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;'>Upload Photo</p></div><div class='span4'><input type='file' name='files' ng-file-select='onFileSelect($files)' multiple='multiple' accept='image/*' style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;' class='form-control'></div>");
+        $scope.moreSteps.push({step:1});
     };
 
     $scope.lessStep = function () {
-        if($("#stepList").find(".span8").length == 1)
-            alert("More than one step !");
-        else{
-            $("#stepList .span4:last").remove();
-            $("#stepList .span3:last").remove();
-            $("#stepList .span8:last").remove();
-            //$scope.step.pop();
+        if($scope.moreSteps.length == 1){
+            alert("More than one step!");
+        }else{
+            $scope.moreSteps.pop();
         }
     };
 
@@ -93,87 +92,31 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
 }
 
 function ToListRecipe($scope, $http, $location){
-    $scope.pageNo = 1;
-    $scope.pageSize = 5;
-
-    /*$scope.init = function(){
-        alert("init");
-        var api = "/service/recipe/listAll";
-        var params = {};
-        params.pageNo = 1;
-        params.pageSize = 5;
-        $http({
-            method: 'GET',
-            url: api + '?pageNo=' + 1 + '&pageSize=5'
-        }).success(function(data, status) {
-            $scope.recipes = data.root;
-            //dividePage(data.total);
-        }).error(function(data, status) {
-
-        });
-    };*/
-
-    $(function(){
-        alert("function");
-        var api = "/service/recipe/listAll";
-        var params = {};
-        params.pageNo = 1;
-        params.pageSize = 5;
-
-        $http({
-            method: 'GET',
-            url: api + '?pageNo=' + 1 + '&pageSize=5'
-        }).success(function(data, status) {
-            $scope.recipes = data.root;
-            dividePage(data.total);
-        }).error(function(data, status) {
-
-        });
-    });
-
-    function dividePage(totalItems){
-        var pager;
-        var items = totalItems;
-        var itemsOnPage = $scope.pageSize;
-        var pageCount = items/itemsOnPage;
-
-        $('<div id="pager" class="pager"></div>').appendTo('body').pagination({
-            items: items,
-            itemsOnPage: itemsOnPage,
-            currentPage:0
-        });
-
-        pager = $('#pager');
-
-        //addMatchers可能会在页面报错，undefined，暂时看来对显示没有影响
-        this.addMatchers({
-            toBePaged: function() {
-                return ( this.actual.hasClass('simple-pagination') &&
-                this.actual.find('li').length > 0 );
-            },
-            toBeOnPage: function(expected_page) {
-                actual_page = this.actual.find('li.active span').not('.prev').not('.next').html();
-                return actual_page == expected_page;
-            },
-            toBeDisabled: function() {
-                return this.actual.find('li').length == this.actual.find('li.disabled').length;
-            },
-            toBeSameTextValues:function(expected_pages){
-                var pages = this.actual.find('li >').map(function(){ return $(this).text()}).get();
-                return expected_pages.join(',') === pages.join(',');
-            }
-        });
-        //alert(2);
-    }
-
-    $scope.dodo = function(index){
-        alert("dodo");
+    $scope.recipes = {};
+    $scope.pageing={
+        pageNo : 1,
+        itemsCount : 2,
+        pageSize :1
     };
 
-    $(function(){
-        $.fn.dodo = function(ii) {
-            alert("dodoF");
-        };
-    });
+    $scope.init = function(){
+        pageing();
+    };
 
+    $scope.list = function () {
+        pageing();
+    };
+
+    function pageing(){
+        var api = "/service/recipe/listAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
+        }).success(function(data, status) {
+            $scope.recipes = data.root;
+        }).error(function(data, status) {
+
+        });
+    }
 }
+

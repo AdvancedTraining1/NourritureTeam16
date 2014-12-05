@@ -32,3 +32,4 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             });
         $locationProvider.html5Mode(true);
     }]);
+

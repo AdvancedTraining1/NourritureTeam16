@@ -32,6 +32,9 @@
 				useStartEdge : true,
 				useEndEdge : true,
 				onPageClick: function(pageNumber, event) {
+					alert(pageNumber);
+					$('#inin1').attr('value',true);
+					$('#inin2').attr('value',pageNumber);
 					// Callback triggered when a page is clicked
 					// Page number is given as an optional parameter
 				},
@@ -290,7 +293,9 @@
 				}
 				$link = $('<span class="current">' + (options.text) + '</span>');
 			} else {
-				$link = $('<a href="' + o.hrefTextPrefix + (pageIndex + 1) + o.hrefTextSuffix + '" class="page-link">' + (options.text) + '</a>');
+				//ng-click="setPage(n)"
+				$link = $('<a class="page-link">' + (options.text) + '</a>');
+				//$link = $('<a href="' + o.hrefTextPrefix + (pageIndex + 1) + o.hrefTextSuffix + '" class="page-link">' + (options.text) + '</a>');
 				$link.click(function(event){
 					return methods._selectPage.call(self, pageIndex, event);
 				});

@@ -54,7 +54,7 @@
 										span.glyphicon.glyphicon-plus Add one
 									button.btn.btn-link.pull-right(ng-click='lessMaterial()')
 										span.glyphicon.glyphicon-minus Delete one
-							.row#materialList
+							.row(ng-repeat="m in moreMaterials")
 								.span4
 									.input-group
 										span.input-group-addon Material Name
@@ -72,24 +72,17 @@
 										span.glyphicon.glyphicon-plus Add one
 									button.btn.btn-link.pull-right(ng-click='lessStep()')
 										span.glyphicon.glyphicon-minus Delete one
-
-							.row#stepList
+							.row(ng-repeat="s in moreSteps")
 								.span8
 									.input-group
 										span.input-group-addon Step Description
 										input.form-control(type='text' name='stepExplain' placeholder="Step Description")
 								.span3
 									p(style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;') Upload Photo
-								.span4
-									input.form-control(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
-								.span8
-									.input-group
-										span.input-group-addon Step Description
-										input.form-control(type='text' name='stepExplain' placeholder="Step Description")
 								.span3
-									p(style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;') Upload Photo
-								.span5
 									input.form-control(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+								.spna2
+									p(ng_bind="successMessage" style='padding: 6px 12px;font-size: 14px;color: #555;text-align: center;')
 							.row.space50
 							.row
 								.span8
