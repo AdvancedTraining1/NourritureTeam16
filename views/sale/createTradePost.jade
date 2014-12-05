@@ -1,6 +1,42 @@
 //
    Created by zhangcan on 14-11-28.
+#main
+    .container
+        section
+            .hgroup
+                h1 Publish a new trade post here
+                h2 Write more details and description to atttact customers take a interest in
+                ul.breadcrumb.pull-right
+                    li
+                        a(href='/index') Home
+                        span.divider /
+                    li.active Publish trade post
+            .row
+                .span3
+                .span9
+                    .trade_post
+                        form
+                            .row
+                                .span6
+                                    .input-group
+                                        span.input-group-addon Title
+                                        input.form-control(type='text' name='title' placeholder="Title")
 
-block content
-    p WTF
+                            br
+                            .row
+                                .span6
+                                    p(style='') Content:
+
+                            .row
+                                .span8
+                                    textarea(rows="8" class="span8" name="content")
+
+                            br
+                            br
+                            .row
+                                .span5
+                                    button.btn.btn-success.btn-large.pull-left(ng-click='publishTradePost()')
+                                        span.glyphicon.glyphicon-ok &nbsp;Commit
+
+
 

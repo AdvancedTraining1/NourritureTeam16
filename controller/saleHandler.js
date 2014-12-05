@@ -94,18 +94,19 @@ SaleHandler.edit = function(req, res){
 }
 
 SaleHandler.create = function(req, res){
-    /*req.setEncoding("utf-8");
+    req.setEncoding("utf-8");
     var postData = "";
     req.addListener("data", function(postDataChunk){
         postData += postDataChunk;
     });
-*/
-    //req.addListener("end",function(){
-        console.log('数据接收完毕');
 
-        //var params = querystring.parse(postData);//GET & POST
+    req.addListener("end",function(){
+        console.log('post数据接收完毕');
 
-        var sale = createSale()
+        var params = querystring.parse(postData);//GET & POST
+        var sale = params;
+
+        //var sale = createSale()
 
         SaleDao.create(sale,function (err, sale) {
             res.writeHead(200, {
@@ -113,7 +114,7 @@ SaleHandler.create = function(req, res){
             });
             res.end("发布成功！");
         });
-    //});
+    });
 }
 
 SaleHandler.delete = function(req, res){
