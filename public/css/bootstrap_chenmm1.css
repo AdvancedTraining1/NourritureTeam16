@@ -837,8 +837,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .space100 {
   height:100px;
   clear:both;
-<<<<<<< HEAD
-=======
 }
 
 .search-box{
@@ -863,5 +861,4 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   right:12px;
   color:#555;
   text-decoration:none;
->>>>>>> 9634f64fa38bc8b8f982300cf01845df17df5957
 }

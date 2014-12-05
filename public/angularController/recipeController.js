@@ -75,21 +75,11 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
     };
 
     $scope.lessStep = function () {
-<<<<<<< HEAD
-        if($("#stepList").find(".span8").length == 1)
-            alert("More than one step !");
-        else{
-            $("#stepList .span4:last").remove();
-            $("#stepList .span3:last").remove();
-            $("#stepList .span8:last").remove();
-            //$scope.step.pop();
-=======
         if($scope.moreSteps.length == 1){
             alert("More than one step!");
         }else{
             $scope.moreSteps.pop();
             $scope.step.pop();
->>>>>>> 9634f64fa38bc8b8f982300cf01845df17df5957
         }
     };
 
@@ -109,16 +99,16 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
         $scope.recipe.mNum = m_name.length
         $scope.recipe.sNum = s_explain.length;
         /*alert($scope.recipe.toString());
-        alert(JSON.stringify($scope.recipe));*/
+         alert(JSON.stringify($scope.recipe));*/
         $scope.recipe.authorId = 11;
 
         $.post('/service/recipe/create',$scope.recipe,function(data){
             alert(data);
         });
         /*$http.post('service/recipe/create', $scope.recipe).
-            success(function(data) {
-                alert(11);
-            });*/
+         success(function(data) {
+         alert(11);
+         });*/
     };
 }
 
@@ -186,8 +176,8 @@ function ToSingleRecipe($scope, $routeParams,$http, $location){
 
     // kuai su ding wei
     /*var old = $location.hash();
-    $location.hash('batchmenu-bottom');
-    $anchorScroll();
-    $location.hash(old);*/
+     $location.hash('batchmenu-bottom');
+     $anchorScroll();
+     $location.hash(old);*/
 }
 
