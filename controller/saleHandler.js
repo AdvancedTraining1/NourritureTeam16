@@ -5,10 +5,14 @@
 var mongoose = require('mongoose');
 var SaleModel = require('../data').sale;
 var SaleDao = require("../dao/SaleDao");
+var UserDao = require("../dao/UserDao");
 var SaleCommentModel = require('../data').CommentToBlog;
 var SaleCommentDao = require("../dao/SaleCommentDao");
 var SaleCollectModel = require('../data').CollectBlog;
 var SaleCollectDao = require("../dao/SaleCollectDao");
+
+var querystring = require('querystring'),
+    formidable = require('formidable');
 
 function SaleHandler(){
 
@@ -104,6 +108,7 @@ SaleHandler.create = function(req, res){
         console.log('post数据接收完毕');
 
         var params = querystring.parse(postData);//GET & POST
+        console.log(params);
         var sale = params;
 
         //var sale = createSale()
