@@ -5,9 +5,11 @@
 			.hgroup
 				h1 {{recipe.recipeName}}
 				h2
-					span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
+					span.glyphicon.glyphicon-time
+					| {{recipe.logTime}} &nbsp;&nbsp;
 					a(href='#post_comments')
-						span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
+						span.glyphicon.glyphicon-comment
+						| {{recipe.commentNum}} comments
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
@@ -33,12 +35,12 @@
 								|{{recipe.difficult}}
 						tr
 							td
-								strong Cook Time:
+								strong Cook Time
 							td
 								|{{recipe.cookTime}}
 						tr
 							td(colspan='2')
-								strong Material:
+								strong Material
 						tr
 							td
 								strong Material Name
@@ -51,14 +53,13 @@
 								|{{material.amount}}
 						tr
 							td(colspan='2')
-								strong Step:
+								strong Step
 						tr
 							td
 								strong Step Description
 							td
 								strong Step photo
 						tr
-							//(ng-repeat='step in recipe.step')
 							td(colspan='2')
 								.bs-docs-example
 									#accordion2.accordion
@@ -71,42 +72,36 @@
 													figure
 														img(alt='0' src='{{step.stepPhoto}}')
 
-							//	p {{step.stepExplain}}
-							//td
-							//	figure
-							//		img(alt='0' src='{{step.stepPhoto}}')
-
-
 					.post_comments
 						h4 Comments
-							.comment
-								.row
-									figure.span1
-										img(alt='0' src='{{recipe.photo}}')
-									.span7
-										.comment_name {{}}
-											a.reply Reply
-										.comment_date
-											span.glyphicon.glyphicon-time {{}}
-										.the_comment
-											p {{}}
+						.comment
+							.row(ng-if='noComment')
+								.span1
+								.span7
+									.h5 No comments right now
+							.row(ng-repeat='comment in comments')
+								figure.span1
+									img(alt='0' src='{{comment.author.head}}')
+								.span7
+									.comment_name {{comment.author.account}}
+										a.reply(ng-click='addComment(comment.author._id)') Reply
+									.comment_date
+										span.glyphicon.glyphicon-time
+										| {{comment.logTime}}
+									.the_comment
+										p {{comment.content}}
+						.pagination.pagination-centered(comment-page page-object="commentPaging" click-function="list")
 					.new_comment
 						h4 Add Comment
 						form
 							.row
 								.span8
-									textarea.span8(rows="7" placeholder="Comments")
+									textarea.span8(rows="7" placeholder="Comments" ng-model='comment.content')
 							.row
 								.span8
-									a.btn.send Add comment
+									a.btn.send(ng-click='addComment()') Add comment
+
 
 				#sidebar.span4
 					aside.widget
-					h4 Recipe Categories
-					ul.nav.nav-tabs.nav-stacked(id='myTab')
-						li.active
-							a(data-toggle="tab" href="#all") All
-						li
-							a(data-toggle="tab" href="#seafood") Seafood
-						li
-							a(data-toggle="tab" href="#meat") Meat
+						h4 Product for this recipe

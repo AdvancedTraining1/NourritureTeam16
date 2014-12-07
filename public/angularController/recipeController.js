@@ -116,7 +116,7 @@ function ToListRecipe($scope, $http, $location){
     $scope.recipes = {};
     $scope.pageing={
         pageNo : 1,
-        itemsCount : 3,
+        itemsCount : 10,
         pageSize :5
     };
 
@@ -135,6 +135,7 @@ function ToListRecipe($scope, $http, $location){
             url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
         }).success(function(data, status) {
             $scope.recipes = data.root;
+            $scope.pageing.itemsCount = data.total;
         }).error(function(data, status) {
 
         });
@@ -149,7 +150,6 @@ function ToListRecipe($scope, $http, $location){
                 method: 'GET',
                 url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $scope.search
             }).success(function(data, status) {
-                alert(1);
                 $scope.recipes = data.root;
                 $scope.pageing.itemsCount = data.total;
             }).error(function(data, status) {
@@ -161,19 +161,70 @@ function ToListRecipe($scope, $http, $location){
 
 function ToSingleRecipe($scope, $routeParams,$http, $location){
     $scope.id = $routeParams.recipeId;
+    $scope.noComment = true;
+    $scope.comments = {};
+    $scope.comment = {};
+    $scope.commentPaging={
+        pageNo : 1,
+        itemsCount : 10,
+        pageSize :10
+    };
+
     $(function(){
-        alert($scope.id);
-        var api = "/service/recipe/showOne";
+        var recipeApi = "/service/recipe/showOne";
         $http({
             method: 'GET',
-            url: api + '/'+$scope.id
+            url: recipeApi + '/'+$scope.id
         }).success(function(data, status) {
             $scope.recipe = data;
         }).error(function(data, status) {
 
         });
+
+        commentPage();
     });
 
+    $scope.list = function () {
+        commentPage();
+    };
+
+    function commentPage(){
+        var commentApi = "/service/recipe/listComment";
+        $http({
+            method: 'GET',
+            url: commentApi + '?pageNo=' + $scope.commentPaging.pageNo + '&pageSize='+$scope.commentPaging.pageSize + '&recipeId='+$scope.id
+        }).success(function(data, status) {
+            $scope.commentPaging.itemsCount = data.total;
+            $scope.comments = data.root;
+            if(data.total != 0){
+                $scope.noComment = false;
+            }
+        }).error(function(data, status) {
+
+        });
+    }
+
+    $scope.addComment = function(replyUserId){
+        var api = "/service/recipe/comment";
+        $scope.comment.authorId = 11;
+        $scope.comment.replyId = $scope.id;
+        $scope.comment.replyUserId = replyUserId;
+
+        $.post(api,$scope.comment,function(data){
+            alert(data);
+            commentPage();
+            $scope.comment.content = null;
+        });
+        /*$http({
+            method: 'POST',
+            url: api + '/'+$scope.id
+        }).success(function(data, status) {
+            $scope.recipe = data;
+        }).error(function(data, status) {
+
+        });*/
+
+    };
     // kuai su ding wei
     /*var old = $location.hash();
      $location.hash('batchmenu-bottom');

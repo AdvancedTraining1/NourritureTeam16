@@ -5,7 +5,7 @@
  */
 
 var RecipeDao = require("../dao/RecipeDao"),
-    CommentDao = require("../dao/CommentDao"),
+    CommentRecipeDao = require("../dao/CommentRecipeDao"),
     CollectDao = require("../dao/CollectDao"),
     ProductDao = require("../dao/ProductDao"),
     UserDao = require("../dao/UserDao"),
@@ -111,9 +111,7 @@ exports.create = function (req, res){
         recipe.step = step0;
 
         //几个默认值设置
-        var date = new Date();
-        var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-        recipe.logTime = dateStr;
+        recipe.logTime = logTime();
         recipe.collectNum = 0;
         recipe.commentNum = 0;
         recipe.productNum = 0;
@@ -162,8 +160,15 @@ exports.searchRecipe = function(req,res){
 }
 
 exports.listComment = function(req,res){
-    CommentDao.listComment(req.params.recipeId,function (err, commentList) {
-        res.json(commentList);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var recipeId = req.param('recipeId');
+    CommentRecipeDao.listComment(pageNo,pageSize,recipeId,function (err1, commentList) {
+        CommentRecipeDao.listCommentNum(recipeId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:commentList,total:num});
+            }
+        });
     });
 }
 
@@ -174,20 +179,32 @@ exports.comment = function(req,res){
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
         console.log('recipe数据接收完毕');
-
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        var comment = params;
+        comment.logTime = logTime();
+        //设置用户信息
+        /*var user = UserDao.getUserById(params['authorId']);
+         recipe.author = {};
+         recipe.author._id = params.authorId;
+         recipe.author.account = user.account;
+         recipe.author.head = user.head;*/
+        console.log(comment);
 
-        var comment = createComment(params);
-
-        CommentDao.create(comment,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("评论成功！");
+        CommentRecipeDao.create(comment,function (err, recipes) {
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("评论菜谱出现内部错误！");
+            }else {
+                res.writeHead(200, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("评论成功！");
+            }
         });
     });
 }
@@ -403,4 +420,10 @@ function createLike(params){
     like.account = "account2";
     like.head = "head2"
     return like;
+}
+
+function logTime(){
+    var date = new Date();
+    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    return dateStr;
 }
