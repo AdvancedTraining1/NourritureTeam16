@@ -114,6 +114,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
 
 function ToListRecipe($scope, $http, $location){
     $scope.recipes = {};
+    $scope.collect = {};
     $scope.pageing={
         pageNo : 1,
         itemsCount : 10,
@@ -157,18 +158,48 @@ function ToListRecipe($scope, $http, $location){
             });
         }
     };
+
+    $scope.addCollect = function(id){
+        var api = "/service/recipe/collect";
+        $scope.collect.userId = 11;
+        $scope.collect.recipeId = id;
+
+        var checkApi = '/service/recipe/checkCollect' + '?userId=' + $scope.collect.userId + '&recipeId='+$scope.collect.recipeId;
+
+        $.get(checkApi,function(data){
+            if(data == "false"){
+                $.post(api,$scope.collect,function(data){
+                    alert(data);
+                    pageing();
+                    $scope.recipe.collectNum += 1;
+                });
+            }else{
+                alert("Already collected");
+            }
+        });
+    };
 }
 
-function ToSingleRecipe($scope, $routeParams,$http, $location){
+function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     $scope.id = $routeParams.recipeId;
     $scope.noComment = true;
+    $scope.noProduct = true;
     $scope.comments = {};
     $scope.comment = {};
+    $scope.product = {};
+    $scope.collect = {};
+    $scope.productSee = false;
     $scope.commentPaging={
         pageNo : 1,
         itemsCount : 10,
-        pageSize :10
+        pageSize :5
     };
+    $scope.productPaging={
+        pageNo : 1,
+        itemsCount : 10,
+        pageSize :6
+    };
+
 
     $(function(){
         var recipeApi = "/service/recipe/showOne";
@@ -182,6 +213,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location){
         });
 
         commentPage();
+        productPage();
     });
 
     $scope.list = function () {
@@ -214,6 +246,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location){
             alert(data);
             commentPage();
             $scope.comment.content = null;
+            $scope.recipe.commentNum += 1;
         });
         /*$http({
             method: 'POST',
@@ -225,6 +258,76 @@ function ToSingleRecipe($scope, $routeParams,$http, $location){
         });*/
 
     };
+
+    $scope.listProduct = function () {
+        productPage();
+    };
+
+    function productPage(){
+        var commentApi = "/service/recipe/listProduct";
+        $http({
+            method: 'GET',
+            url: commentApi + '?pageNo=' + $scope.productPaging.pageNo + '&pageSize='+$scope.productPaging.pageSize + '&recipeId='+$scope.id
+        }).success(function(data, status) {
+            $scope.productPaging.itemsCount = data.total;
+            $scope.products = data.root;
+            if(data.total != 0){
+                $scope.noProduct = false;
+            }
+        }).error(function(data, status) {
+
+        });
+    }
+
+    $scope.onFileSelect = function ($files) {
+        if($files != null){
+            $scope.upload = $upload.upload({
+                url: '/service/recipe/upload',
+                file: $files
+            }).progress(function (evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function (data, status, headers, config) {        // file is uploaded successfully
+                console.log(data);
+                alert("Product image upload success!");
+                $scope.product.picture = data;
+                $scope.productSee = true;
+            });
+        }
+    };
+
+    $scope.addProduct = function(){
+        var api = "/service/recipe/createProduct";
+        $scope.product.authorId = 11;
+        $scope.product.recipeId = $scope.id;
+
+        $.post(api,$scope.product,function(data){
+            alert(data);
+            productPage();//ci chu qing hu lue
+            $scope.product.content = null;
+            $scope.recipe.productNum += 1;
+        });
+    };
+
+    $scope.addCollect = function(){
+        var api = "/service/recipe/collect";
+        $scope.collect.userId = 11;
+        $scope.collect.recipeId = $scope.id;
+
+        var checkApi = '/service/recipe/checkCollect' + '?userId=' + $scope.collect.userId + '&recipeId='+$scope.collect.recipeId;
+
+        $.get(checkApi,function(data){
+            if(data == "false"){
+                $.post(api,$scope.collect,function(data){
+                    alert(data);
+                    productPage();
+                    $scope.recipe.collectNum += 1;
+                });
+            }else{
+                alert("Already collected");
+            }
+        });
+    };
+
     // kuai su ding wei
     /*var old = $location.hash();
      $location.hash('batchmenu-bottom');

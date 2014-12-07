@@ -10,3 +10,11 @@ var DaoBase = require('./DaoBase'),
 var CollectDao = new DaoBase(CollectModel);
 
 module.exports = CollectDao;
+
+CollectDao.check = function (userId,recipeId,callback) {
+    CollectModel.find({userId:userId,recipeId:recipeId},function(error,collect){
+        if(error)
+            return callback(error,null);
+        return callback(null, collect);
+    });
+};

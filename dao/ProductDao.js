@@ -11,13 +11,21 @@ var ProductDao = new DaoBase(ProductModel);
 
 module.exports = ProductDao;
 
-ProductDao.listProduct = function (recipeId,callback) {
-    ProductModel.find({"recipeId":recipeId}).sort({'logTime':-1}).limit(10).exec(function(error,product){
-        if(error) return callback(error,null);
-
+ProductDao.listProduct = function (pageNo,pageSize,recipeId,callback) {
+    ProductModel.find({"recipeId":recipeId}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,product){
+        if(error)
+            return callback(error,null);
         return callback(null, product);
     });
-}
+};
+
+ProductDao.listProductNum = function (recipeId,callback) {
+    ProductModel.count({"recipeId":recipeId}).exec(function(error,num){
+        if(error) return callback(error,null);
+
+        return callback(null, num);
+    });
+};
 
 ProductDao.likeProduct = function (id,like,num,callback) {
     ProductModel.findByIdAndUpdate(id,{$push:{likeList:like},likeNum:num},function(error,recipe){
