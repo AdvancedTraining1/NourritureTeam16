@@ -5,7 +5,7 @@
  */
 
 var RecipeDao = require("../dao/RecipeDao"),
-    CommentDao = require("../dao/CommentDao"),
+    CommentRecipeDao = require("../dao/CommentRecipeDao"),
     CollectDao = require("../dao/CollectDao"),
     ProductDao = require("../dao/ProductDao"),
     UserDao = require("../dao/UserDao"),
@@ -24,10 +24,18 @@ exports.a = function(req,res){
 }
 
 exports.listOwn = function(req,res){
-    RecipeDao.getOwn(req.params.authorId,function (err, recipe) {
-        res.json(recipe);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var authorId = req.param('authorId');
+
+    RecipeDao.getOwn(pageNo,pageSize,authorId,function (err1, recipe) {
+        RecipeDao.getOwnNum(authorId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:recipe,total:num});
+            }
+        });
     });
-}
+};
 
 exports.modify = function(req,res){
     req.setEncoding('utf-8');
@@ -64,7 +72,7 @@ exports.deleteRecipe = function(req,res){
         });
         res.end("删除菜谱成功！");
     });
-}
+};
 
 exports.listAll = function (req, res) {
     var pageNo = req.param('pageNo');
@@ -111,9 +119,7 @@ exports.create = function (req, res){
         recipe.step = step0;
 
         //几个默认值设置
-        var date = new Date();
-        var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-        recipe.logTime = dateStr;
+        recipe.logTime = logTime();
         recipe.collectNum = 0;
         recipe.commentNum = 0;
         recipe.productNum = 0;
@@ -162,10 +168,17 @@ exports.searchRecipe = function(req,res){
 }
 
 exports.listComment = function(req,res){
-    CommentDao.listComment(req.params.recipeId,function (err, commentList) {
-        res.json(commentList);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var recipeId = req.param('recipeId');
+    CommentRecipeDao.listComment(pageNo,pageSize,recipeId,function (err1, commentList) {
+        CommentRecipeDao.listCommentNum(recipeId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:commentList,total:num});
+            }
+        });
     });
-}
+};
 
 exports.comment = function(req,res){
     req.setEncoding('utf-8');
@@ -174,23 +187,39 @@ exports.comment = function(req,res){
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
         console.log('recipe数据接收完毕');
-
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        var comment = params;
+        comment.logTime = logTime();
+        //设置用户信息
+        /*var user = UserDao.getUserById(params['authorId']);
+         recipe.author = {};
+         recipe.author._id = params.authorId;
+         recipe.author.account = user.account;
+         recipe.author.head = user.head;*/
+        console.log(comment);
 
-        var comment = createComment(params);
-
-        CommentDao.create(comment,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("评论成功！");
+        CommentRecipeDao.create(comment,function (err, recipes) {
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("评论菜谱出现内部错误！");
+            }else {
+                RecipeDao.updateCommentNum(comment.replyId,function(err1,recNew){
+                    if(!err1){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("评论成功！");
+                    }
+                });
+            }
         });
     });
-}
+};
 
 exports.collect = function (req,res) {
     req.setEncoding('utf-8');
@@ -199,57 +228,101 @@ exports.collect = function (req,res) {
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
-        console.log('recipe数据接收完毕');
-
+        console.log('collect数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        var collect = new CollectModel();
+        collect = params;
+        collect.logTime = logTime();
 
-        var collect = createCollect(params);
-
-        CollectDao.create(collect,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("collect成功！");
+        CollectDao.create(collect,function (err, collect) {
+            if(!err){
+                RecipeDao.updateCollectNum(collect.recipeId,function(err2,recNew){
+                    if(!err2){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("collect成功！");
+                    }
+                });
+            }
         });
     });
-}
+};
 
 exports.createProduct = function(req,res){
     req.setEncoding('utf-8');
     var postData = "";
-
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
-        console.log('recipe数据接收完毕');
-
+        console.log('product数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
-        var product = createProduct(params);
+        var product = params;
+        product.logTime = logTime();
+        //设置用户信息
+        /*var user = UserDao.getUserById(params['authorId']);
+         recipe.author = {};
+         recipe.author._id = params.authorId;
+         recipe.author.account = user.account;
+         recipe.author.head = user.head;*/
+        console.log(product);
 
-        ProductDao.create(product,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("product成功！");
+        ProductDao.create(product,function (err, product) {
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("product菜谱出现内部错误！");
+            }else {
+                RecipeDao.updateProductNum(product.recipeId,function(err1,recNew){
+                    if(!err1){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("product成功！");
+                    }
+                });
+            }
         });
     });
-}
+};
 
 
 exports.listProduct = function(req,res){
-    ProductDao.listProduct(req.params.recipeId,function (err, productList) {
-        res.json(productList);
-    });
-}
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var recipeId = req.param('recipeId');
 
-exports.likeProduct = function(req,res){
+    ProductDao.listProduct(pageNo,pageSize,recipeId,function (err1, products) {
+        ProductDao.listProductNum(recipeId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:products,total:num});
+            }
+        });
+    });
+};
+
+exports.checkCollect = function(req,res){
+    var userId = req.param('userId');
+    var recipeId = req.param('recipeId');
+
+    CollectDao.check(userId,recipeId,function (err1, collect) {
+        console.log(collect.length);
+        if(collect.length != 0){
+            res.end("true");
+        }
+        else{
+            res.send("false");
+        }
+    });
+};
+
+/*exports.likeProduct = function(req,res){
     req.setEncoding('utf-8');
     var postData = "";
 
@@ -276,10 +349,9 @@ exports.likeProduct = function(req,res){
         });
 
     });
-}
+};*/
 
 exports.upload = function(req,res){
-
     var form = new formidable.IncomingForm();
     form.uploadDir = "./../upload/temp/";//改变临时目录
     form.parse(req, function(error, fields, files){
@@ -310,9 +382,9 @@ exports.upload = function(req,res){
             });
         }
     });
-}
+};
 
-function createRecipe(){
+/*function createRecipe(){
     var recipe = new RecipeModel();
     recipe.recipeName="recipeName1";
     recipe.logTime = new Date();
@@ -334,9 +406,9 @@ function createRecipe(){
     recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
-}
+}*/
 
-function modifyRecipe(recipes,params){
+/*function modifyRecipe(recipes,params){
     var recipe = {};
 
     recipe.recipeName="recipeName1";
@@ -359,9 +431,9 @@ function modifyRecipe(recipes,params){
     recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
-}
+}*/
 
-function createComment(params,user){
+/*function createComment(params,user){
     var comment = new CommentModel();
     comment.author._id = "001";
     comment.author.head = "head1";
@@ -371,9 +443,9 @@ function createComment(params,user){
     comment.replyId = "01";
     comment.replyUserId = "02";
     return comment;
-}
+}*/
 
-function createCollect(params){
+/*function createCollect(params){
     var collect = new CollectModel();
     collect.user._id = "001";
     collect.user.account = "account1";
@@ -381,9 +453,9 @@ function createCollect(params){
     collect.logTime = new Date();
     collect.recipeId = "01";
     return collect;
-}
+}*/
 
-function createProduct(params){
+/*function createProduct(params){
     var product = new ProductModel();
     product.author._id = "001";
     product.author.account = "account1";
@@ -395,12 +467,20 @@ function createProduct(params){
     product.likeList = [];
     product.recipeId = "11";
     return product;
-}
+}*/
 
+/*
 function createLike(params){
     var like = {};
     like._id = "002";
     like.account = "account2";
     like.head = "head2"
     return like;
+}
+*/
+
+function logTime(){
+    var date = new Date();
+    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    return dateStr;
 }

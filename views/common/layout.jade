@@ -42,7 +42,7 @@ html(ng-app="nourriture")
 								li.active
 									a(href="/index") Home
 								li
-									a(href='/recipe/list') Recipe
+									a(href='/recipe/list_an') Recipe
 								li
 									a(href='#') Blog
 								li
@@ -60,7 +60,7 @@ html(ng-app="nourriture")
 										li
 											a(href='/recipe/create') Publish Recipe
 										li
-											a(href='#') Publish Blog
+											a(href='/blog/createBlog') Publish Blog
 										li
 											a(href='#') Publish Topic
 										li
@@ -112,3 +112,5 @@ script.
 			$(this).addClass("active").siblings().removeClass("active");
 		};
 	});
+
+

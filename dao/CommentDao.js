@@ -23,9 +23,9 @@ CommentDao.delete = function (conditions,callback) {
 
 // chenmm.add.start 2014/11/07 加入方法：列举一个菜谱的评论
 CommentDao.listComment = function (recipeId,callback) {
-    commentModel.find({"replyId":recipeId}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
-        if(error) return callback(error,null);
-
+    commentModel.find({"replyId":recipeId}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,recipe){
+        if(error)
+            return callback(error,null);
         return callback(null, recipe);
     });
 }

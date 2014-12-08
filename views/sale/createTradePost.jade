@@ -20,7 +20,7 @@
                                 .span6
                                     .input-group
                                         span.input-group-addon Title
-                                        input.form-control(type='text' name='title' placeholder="Title")
+                                        input.form-control(type='text' ng-model='sale.title' placeholder="Title")
 
                             br
                             .row
@@ -29,7 +29,7 @@
 
                             .row
                                 .span8
-                                    textarea(rows="8" class="span8" name="content")
+                                    textarea(rows="8" class="span8" ng-model="sale.content")
 
                             br
                             br

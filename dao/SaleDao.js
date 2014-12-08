@@ -10,7 +10,7 @@ var SaleDao = new DaoBase(Sale);
 module.exports = SaleDao;
 
 SaleDao.getAll = function (callback) {
-    Sale.find({}).sort({update_at:1}).limit(10).exec(function(err, sale){
+    Sale.find({}).sort({update_at:1}).limit(100).exec(function(err, sale){
         if(err)
             return callback(err, null);
         return callback(null, sale);
