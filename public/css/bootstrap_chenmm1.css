@@ -862,3 +862,16 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color:#555;
   text-decoration:none;
 }
+
+.portfolio_strict .portfolio_item .portfolio_photo a span {
+  background: url(images/backgrounds/wild_oliva_blue_light.png);
+  -webkit-border-radius: 500px;
+  -moz-border-radius: 500px;
+  border-radius: 500px;
+  padding: 10px;
+  margin: 20% 0;
+  line-height: 30px;
+  height: 30px;
+  width: 30px;
+  border: solid 5px;
+}

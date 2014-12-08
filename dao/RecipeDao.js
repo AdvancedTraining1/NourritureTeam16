@@ -11,13 +11,21 @@ var RecipeDao = new DaoBase(Recipe);
 
 module.exports = RecipeDao;
 
-RecipeDao.getOwn = function (authorId,callback) {
-    Recipe.find({"author.id":authorId,flag:true}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
-        if(error) return callback(error,null);
-
+RecipeDao.getOwn = function (pageNo,pageSize,authorId,callback) {
+    Recipe.find({"author.id":authorId,flag:true}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,recipe){
+        if(error)
+            return callback(error,null);
         return callback(null, recipe);
     });
-}
+};
+
+RecipeDao.getOwnNum = function (authorId,callback) {
+    Recipe.find({"author.id":authorId,flag:true}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
 
 RecipeDao.update = function(id,recipeNew,callback){
     Recipe.findByIdAndUpdate(id,recipeNew,function(error,recipe){

@@ -77,17 +77,15 @@
 												a.accordion-toggle(href='#step{{step.stepNum}}' data-parent="#accordion2" data-toggle="collapse") step{{step.stepNum}}
 											div(id='step{{step.stepNum}}').accordion-body.collapse
 												.accordion-inner
-													p {{step.stepExplain}}
-													figure
+													figure.span3
 														img(alt='0' src='{{step.stepPhoto}}')
+													.span4
+														p {{step.stepExplain}}
 
 					.post_comments
 						h4 Comments
+						h5(ng-if='noComment') No comments right now
 						.comment
-							.row(ng-if='noComment')
-								.span1
-								.span7
-									.h5 No comments right now
 							.bs-docs-example
 								#accordion3.accordion
 									.accordion-group
@@ -109,11 +107,8 @@
 												.pagination.pagination-centered(comment-page page-object="commentPaging" click-function="list")
 					.post_comments
 						h4 Products
+						h5(ng-if='noProduct') No products right now
 						.comment
-							.row(ng-if='noProduct')
-								.span1
-								.span7
-									.h5 No products right now
 							.bs-docs-example
 								#accordion4.accordion
 									.accordion-group
@@ -169,24 +164,8 @@
 							| {{recipe.auther.account}}
 						.row
 							p | user's recipe_count waiting for liu's session
-							button.btn.btn-info(ng-click='') {{}} Recipes
+
+							button.btn.btn-info(ng-click='jumpToRecipe(11)') {{}} See Recipes
+							//a(href='/recipe/otherAll/11')
 							button.btn.btn-info(ng-click='') {{}} Fans
 							button.btn.btn-info(ng-click='') {{}} Blogs
-					//aside.widget.ads.clearfix
-					//	h4 Product for this recipe
-					//	h5(ng-if='noProduct') No products right now
-					//	div(ng-repeat='product in products')
-					//		span.glyphicon.glyphicon-time
-					//			| {{product.logTime}} &nbsp;&nbsp;
-					//		p {{product.content}}
-					//		a(href='')
-					//			img(src='{{product.picture}}')
-					//	.pagination.pagination-centered(product-page page-object="productPaging" click-function="listProduct")
-					//aside.widget
-					//	h4 Your product
-					//	textarea.span3(rows="4" cols="50" placeholder="Your description about the product" ng-model='product.content')
-					//	input.span3(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
-					//	button.btn.btn-link.pull-right(ng-click='addProduct()') Commit
-					//aside.widget.ads.clearfix
-					//	a(href='' ng-if='productSee')
-					//		img(src='{{product.picture}}')
