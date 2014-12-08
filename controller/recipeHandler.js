@@ -24,10 +24,18 @@ exports.a = function(req,res){
 }
 
 exports.listOwn = function(req,res){
-    RecipeDao.getOwn(req.params.authorId,function (err, recipe) {
-        res.json(recipe);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var authorId = req.param('authorId');
+
+    RecipeDao.getOwn(pageNo,pageSize,authorId,function (err1, recipe) {
+        RecipeDao.getOwnNum(authorId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:recipe,total:num});
+            }
+        });
     });
-}
+};
 
 exports.modify = function(req,res){
     req.setEncoding('utf-8');
@@ -64,7 +72,7 @@ exports.deleteRecipe = function(req,res){
         });
         res.end("删除菜谱成功！");
     });
-}
+};
 
 exports.listAll = function (req, res) {
     var pageNo = req.param('pageNo');
@@ -241,7 +249,7 @@ exports.collect = function (req,res) {
             }
         });
     });
-}
+};
 
 exports.createProduct = function(req,res){
     req.setEncoding('utf-8');
@@ -314,7 +322,7 @@ exports.checkCollect = function(req,res){
     });
 };
 
-exports.likeProduct = function(req,res){
+/*exports.likeProduct = function(req,res){
     req.setEncoding('utf-8');
     var postData = "";
 
@@ -341,10 +349,9 @@ exports.likeProduct = function(req,res){
         });
 
     });
-}
+};*/
 
 exports.upload = function(req,res){
-
     var form = new formidable.IncomingForm();
     form.uploadDir = "./../upload/temp/";//改变临时目录
     form.parse(req, function(error, fields, files){
@@ -375,9 +382,9 @@ exports.upload = function(req,res){
             });
         }
     });
-}
+};
 
-function createRecipe(){
+/*function createRecipe(){
     var recipe = new RecipeModel();
     recipe.recipeName="recipeName1";
     recipe.logTime = new Date();
@@ -399,9 +406,9 @@ function createRecipe(){
     recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
-}
+}*/
 
-function modifyRecipe(recipes,params){
+/*function modifyRecipe(recipes,params){
     var recipe = {};
 
     recipe.recipeName="recipeName1";
@@ -424,9 +431,9 @@ function modifyRecipe(recipes,params){
     recipe.author={_id:"001",head:"headPath",account:"user1"};
 
     return recipe;
-}
+}*/
 
-function createComment(params,user){
+/*function createComment(params,user){
     var comment = new CommentModel();
     comment.author._id = "001";
     comment.author.head = "head1";
@@ -436,9 +443,9 @@ function createComment(params,user){
     comment.replyId = "01";
     comment.replyUserId = "02";
     return comment;
-}
+}*/
 
-function createCollect(params){
+/*function createCollect(params){
     var collect = new CollectModel();
     collect.user._id = "001";
     collect.user.account = "account1";
@@ -446,9 +453,9 @@ function createCollect(params){
     collect.logTime = new Date();
     collect.recipeId = "01";
     return collect;
-}
+}*/
 
-function createProduct(params){
+/*function createProduct(params){
     var product = new ProductModel();
     product.author._id = "001";
     product.author.account = "account1";
@@ -460,8 +467,9 @@ function createProduct(params){
     product.likeList = [];
     product.recipeId = "11";
     return product;
-}
+}*/
 
+/*
 function createLike(params){
     var like = {};
     like._id = "002";
@@ -469,6 +477,7 @@ function createLike(params){
     like.head = "head2"
     return like;
 }
+*/
 
 function logTime(){
     var date = new Date();
