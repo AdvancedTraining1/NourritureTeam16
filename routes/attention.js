@@ -9,6 +9,7 @@ var AttentionsHandler = require('../controller/attentionsHandler');
 module.exports = function(app){
 
     app.get('/attention/friendStatusList',function(req,res){
+        //console.log("+++++");
         res.render("attention/friendStatusList");  //views
     });
     app.get('/service/attention/lookFriendStatus',AttentionsHandler.lookFriendStatus);
@@ -16,7 +17,8 @@ module.exports = function(app){
 
 
     app.get('/attention/getAllAttention',function(req,res){
-        res.render("attention/allAttention");  //views
+        console.log("+++++");
+        res.render("attention/getAllAttention");  //views
     });
 
     app.get('/service/attention/searchAll',AttentionsHandler.searchAll);

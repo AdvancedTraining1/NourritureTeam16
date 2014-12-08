@@ -1,7 +1,7 @@
 //Created by zhaiyuan on 12/7/14.
 #main(style='min-height:500px')
 	.container
-		section#listFriendStatus
+		section#listUser
 			.hgroup
 				h1 All here !
 				h2 You
@@ -12,6 +12,15 @@
 					li.active Friend Status
 		.row
 			#leftcol.span8
+				//#protfolio_container.portfolio_strict.row
+					.portfolio_item.cat_travel.span4(ng-repeat="user in users")
+						.portfolio_photo(style="background-image:url({{user.head}})")
+							a(href='/recipe/single/{{recipe._id}}')
+								span.glyphicon.glyphicon-share
+								p {{recipe.description}}
+						.portfolio_description
+							h3
+								a(href='/recipe/single/{{recipe._id}}') {{user.username}}
 				article.post(ng-repeat="user in users")
 					.post_header
 						h3.post_title
@@ -26,7 +35,7 @@
 							a(href='/recipe/single')
 								img(alt='0' src='{{recipe.photo}}')
 						//p {{recipe.description}}
-						a.btn.btn-primary(href='/recipe/single') attention
+						a.btn.btn-primary(href='#') attention
 				.pagination.pagination-centered(paging page-object="pageing" click-function="list")
 			#sidebar.span4
 				aside.widget
@@ -34,7 +43,7 @@
 				aside.widget
 					.search-box
 						//a.search-icon(ng-click='searchAttention()')
-						a.search-icon(href='/attention/getAllAttention/{{search}}')
+						a.search-icon(href='/attention/getAllAttention')
 							span.glyphicon.glyphicon-search(style='top:4px')
 						input.search(ng-model='search' placeholder='search')
 				aside.widget

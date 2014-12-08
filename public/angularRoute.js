@@ -47,7 +47,7 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/attention/friendStatusList', //routes
                 controller:ToListFriendStatus
             }).
-            when('/attention/getAllAttention/:search',{
+            when('/attention/getAllAttention',{
                 templateUrl:'/attention/getAllAttention', //routes
                 controller:ToListAllAttention
             }).
