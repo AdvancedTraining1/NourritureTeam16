@@ -1,0 +1,42 @@
+//
+   Created by zhangcan on 14-12-8.
+
+#main(style='min-height:500px')
+    .container
+        section#listRecipe
+            .hgroup
+                h1 Let's make a trade !
+                h2 No fake. No deceive.
+                ul.breadcrumb.pull-right
+                    li
+                        a(href='/index') Home
+                        span.divider /
+                    li.active Recipes
+            .row
+                .span1
+                .span7
+                    article.post(ng-repeat = "sale in sales")
+                        .post_header
+                            h3.post_title
+                                a(href='/recipe/single/{{recipe._id}}') {{sale.title}}
+                            .post_sub
+                                span.glyphicon.glyphicon-time
+                                | {{sale.create_at}} &nbsp;&nbsp;
+                                a
+                                    span.glyphicon.glyphicon-comment
+                                    |{{recipe.commentNum}} comments &nbsp;
+                                a
+                                    span.glyphicon.glyphicon-star
+                                    |{{recipe.collectNum}} collects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                a.pull-right(href='' ng-click="addCollect(recipe._id)")
+                                    span.glyphicon.glyphicon-star-empty
+                                    |Collect it
+                    .pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
+                sidebar.span3
+                    aside.widget
+                        h4 Search
+                    aside.widget
+                        .search-box
+                            a.search-icon(ng-click='searchTradePost()')
+                                span.glyphicon.glyphicon-search(style='top:4px')
+                            input.search(ng-model='search' placeholder='search')

@@ -70,31 +70,44 @@ SaleHandler.getOwn = function(req, res){
     });
 }
 
+SaleHandler.listAll = function(req,res){
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    SaleDao.getAll(pageNo,pageSize,function (err1, sale) {
+        SaleDao.getSaleNum(function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:sale,total:num});
+            }
+        });
+    });
+}
+
 SaleHandler.edit = function(req, res){
     req.setEncoding('utf-8');
-    /*var postData = "";
+    var postData = "";
 
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
-    });*/
+    });
 
     // 数据接收完毕，执行回调函数
-    //req.addListener("end", function () {
+    req.addListener("end", function () {
         console.log('数据接收完毕');
+        var params = querystring.parse(postData);//GET & POST
+        console.log(params);
 
-        //var params = querystring.parse(postData);//GET & POST
-        //var updateStr = modifyRecipe(params);
-        var id = "5467475da0b38e3c1b57c47b";
-        var updateStr = editSale(id);
+        var sale = params;
+        sale.update_at = logTime();
+        console.log(sale);
 
-        console.log(updateStr);
-        SaleDao.edit(id,updateStr,function (err, sale) {
+        SaleDao.edit(id,sale,function (err, sale) {
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
             res.end("编辑成功！");
         });
-    //});
+    });
 }
 
 SaleHandler.create = function(req, res){
@@ -110,6 +123,8 @@ SaleHandler.create = function(req, res){
         var params = querystring.parse(postData);//GET & POST
         console.log(params);
         var sale = params;
+        sale.create_at = logTime();
+        sale.update_at = logTime();
 
         //var sale = createSale()
 
@@ -244,6 +259,12 @@ SaleHandler.createSaleCollect = function(req, res){
         });
     });
 
+}
+
+function logTime(){
+    var date = new Date();
+    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    return dateStr;
 }
 
 function createSale(){

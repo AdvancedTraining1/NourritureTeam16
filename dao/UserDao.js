@@ -61,7 +61,7 @@ UserDao.getUserByAccount = function (Account,callback) {
     });
 }
 UserDao.getUserByAccountAndPass=function (username,password,callback) {
-    UsersModel.findOne({account:username,password:password}).exec(function(error,user){
+    UsersModel.find({account:username,password:password}).exec(function(error,user){
         if(error)
             return callback(error,null);
         return callback(null, user);
