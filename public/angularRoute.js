@@ -35,6 +35,14 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog
             }).
+            when('/attention/friendStatusList',{
+                templateUrl:'/attention/friendStatusList', //routes
+                controller:ToListFriendStatus
+            }).
+            when('/attention/getAllAttention/:search',{
+                templateUrl:'/attention/getAllAttention', //routes
+                controller:ToListAllAttention
+            }).
             otherwise({
                 redirectTo: '/'
             });
