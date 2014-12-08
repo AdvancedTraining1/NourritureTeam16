@@ -9,8 +9,8 @@ var SaleDao = new DaoBase(Sale);
 
 module.exports = SaleDao;
 
-SaleDao.getAll = function (callback) {
-    Sale.find({}).sort({update_at:1}).limit(100).exec(function(err, sale){
+SaleDao.getAll = function (pageNo,pageSize,callback) {
+    Sale.find({}).skip((pageNo-1)*pageSize).limit(pageSize).sort({update_at:1}).limit(100).exec(function(err, sale){
         if(err)
             return callback(err, null);
         return callback(null, sale);
@@ -34,6 +34,14 @@ SaleDao.getOwn = function (authorId, callback) {
        return callback(null, sale);
     });
 }
+
+SaleDao.getSaleNum = function (callback) {
+    Sale.count(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
 
 /*SaleDao.getAllByLast = function (callback) {
  Sale.find({}).sort({update_at:1}).limit(10).exec(function(err, sale){

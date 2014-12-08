@@ -18,9 +18,11 @@
                         form
                             .row
                                 .span6
-                                    .input-group
-                                        span.input-group-addon Title
-                                        input.form-control(type='text' ng-model='sale.title' placeholder="Title")
+                                    p(style="") Title:
+
+                            .row
+                                .span6
+                                    input(type="text" class="span6" ng-model='sale.title' placeholder="Title")
 
                             br
                             .row
@@ -28,8 +30,8 @@
                                     p(style='') Content:
 
                             .row
-                                .span8
-                                    textarea(rows="8" class="span8" ng-model="sale.content")
+                                .span6
+                                    textarea(rows="15" class="span6" ng-model="sale.content")
 
                             br
                             br
