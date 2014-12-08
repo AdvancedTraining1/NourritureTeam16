@@ -33,7 +33,7 @@ router.get("/",function(req,res){
     res.render('index', { title: 'Express' });
 });
 router.get('/createBlog', function(req, res) {
-    res.render('/blog/createBlog');
+    res.render('blog/createBlog');
 });
 router.get('/showBlogDetail/:blog_id',BlogsHander.getABlogs)
 router.get('/showBlogList',BlogsHander.getAllBlogs);
