@@ -41,7 +41,7 @@ app.use('/attentions',attentions);
 app.use('/admin',adminpage);
 app.use('/advertise',advertisepage);
 app.use('/sale',sale);
-app.use('/userinfo',userinfo);
+userinfo(app);
 recipe(app);
 common(app);
 

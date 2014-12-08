@@ -23,9 +23,13 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/recipe/single',
                 controller: ToSingleRecipe
             }).
-            when('/userinfo/show123',{
+            when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
                 controller:showuser
+            }).
+            when('/userinfo/register',{    //这是index里面在ng-app中对应的urls
+                templateUrl:'/service/userinfo/gotoRegister',  //去route里面找
+                controller:RegisterAndLogin
             }).
             when('/sale/createTradePost',{
                 templateUrl:'/sale/createTradePost',
