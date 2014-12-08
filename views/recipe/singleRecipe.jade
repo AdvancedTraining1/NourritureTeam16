@@ -5,9 +5,20 @@
 			.hgroup
 				h1 {{recipe.recipeName}}
 				h2
-					span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
-					a(href='#post_comments')
-						span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
+					span.glyphicon.glyphicon-time
+					| {{recipe.logTime}} &nbsp;&nbsp;
+					a
+						span.glyphicon.glyphicon-comment
+						| {{recipe.commentNum}} comments &nbsp;
+					a
+						span.glyphicon.glyphicon-star
+						|{{recipe.collectNum}} collects &nbsp;
+					a
+						span.glyphicon.glyphicon-hand-up
+						|{{recipe.productNum}} products &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					a(href='' ng-click="addCollect()")
+						span.glyphicon.glyphicon-star-empty
+						|Collect it
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
@@ -33,12 +44,12 @@
 								|{{recipe.difficult}}
 						tr
 							td
-								strong Cook Time:
+								strong Cook Time
 							td
 								|{{recipe.cookTime}}
 						tr
 							td(colspan='2')
-								strong Material:
+								strong Material
 						tr
 							td
 								strong Material Name
@@ -51,14 +62,13 @@
 								|{{material.amount}}
 						tr
 							td(colspan='2')
-								strong Step:
+								strong Step
 						tr
 							td
 								strong Step Description
 							td
 								strong Step photo
 						tr
-							//(ng-repeat='step in recipe.step')
 							td(colspan='2')
 								.bs-docs-example
 									#accordion2.accordion
@@ -71,42 +81,112 @@
 													figure
 														img(alt='0' src='{{step.stepPhoto}}')
 
-							//	p {{step.stepExplain}}
-							//td
-							//	figure
-							//		img(alt='0' src='{{step.stepPhoto}}')
-
-
 					.post_comments
 						h4 Comments
-							.comment
-								.row
-									figure.span1
-										img(alt='0' src='{{recipe.photo}}')
-									.span7
-										.comment_name {{}}
-											a.reply Reply
-										.comment_date
-											span.glyphicon.glyphicon-time {{}}
-										.the_comment
-											p {{}}
+						.comment
+							.row(ng-if='noComment')
+								.span1
+								.span7
+									.h5 No comments right now
+							.bs-docs-example
+								#accordion3.accordion
+									.accordion-group
+										.accordion-heading
+											a.accordion-toggle(href='#comment' data-parent="#accordion3" data-toggle="collapse") comment
+										div#comment.accordion-body.collapse
+											.accordion-inner
+												.row(ng-repeat='comment in comments')
+													figure.span1
+														img(alt='0' src='{{comment.author.head}}')
+													.span6
+														.comment_name user: {{comment.author.account}}
+															//a.reply(ng-click='addComment(comment.author._id)') Reply
+														.comment_date
+															span.glyphicon.glyphicon-time
+															| {{comment.logTime}}
+														.the_comment
+															p {{comment.content}}
+												.pagination.pagination-centered(comment-page page-object="commentPaging" click-function="list")
+					.post_comments
+						h4 Products
+						.comment
+							.row(ng-if='noProduct')
+								.span1
+								.span7
+									.h5 No products right now
+							.bs-docs-example
+								#accordion4.accordion
+									.accordion-group
+										.accordion-heading
+											a.accordion-toggle(href='#product' data-parent="#accordion4" data-toggle="collapse") product
+										#product.accordion-body.collapse
+											.accordion-inner
+												.row
+													.span4(style='width:350px' ng-repeat='product in products')
+														figure.span1
+															.row
+																img(alt='0' src='{{product.author.head}}')
+															.row.comment_name {{product.author.account}}
+														.span2
+															figure
+																.comment_date
+																	span.glyphicon.glyphicon-time
+																	| {{product.logTime}}
+																p {{product.content}}
+																a(href='')
+																	img(src='{{product.picture}}')
+												.row
+													.pagination.pagination-centered(product-page page-object="productPaging" click-function="listProduct")
 					.new_comment
 						h4 Add Comment
 						form
 							.row
 								.span8
-									textarea.span8(rows="7" placeholder="Comments")
+									textarea.span8(rows="4" placeholder="Comments" ng-model='comment.content')
 							.row
 								.span8
-									a.btn.send Add comment
+									a.btn.send(ng-click='addComment()') Add comment
+					.new_comment
+						h4 Add Product
+						form
+							.row
+								.span8
+									textarea.span8(rows="4" placeholder="Your description about the product" ng-model='product.content')
+									input.span8(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+							.row
+								.span8
+									a.btn.send(ng-click='addProduct()') Add Product
+
 
 				#sidebar.span4
 					aside.widget
-					h4 Recipe Categories
-					ul.nav.nav-tabs.nav-stacked(id='myTab')
-						li.active
-							a(data-toggle="tab" href="#all") All
-						li
-							a(data-toggle="tab" href="#seafood") Seafood
-						li
-							a(data-toggle="tab" href="#meat") Meat
+						h4 Author
+						figure.span2
+							a(href='')
+								img(alt='0' src='{{product.author.head}}')
+					aside.widget
+						.row
+							| {{recipe.auther.account}}
+						.row
+							p | user's recipe_count waiting for liu's session
+							button.btn.btn-info(ng-click='') {{}} Recipes
+							button.btn.btn-info(ng-click='') {{}} Fans
+							button.btn.btn-info(ng-click='') {{}} Blogs
+					//aside.widget.ads.clearfix
+					//	h4 Product for this recipe
+					//	h5(ng-if='noProduct') No products right now
+					//	div(ng-repeat='product in products')
+					//		span.glyphicon.glyphicon-time
+					//			| {{product.logTime}} &nbsp;&nbsp;
+					//		p {{product.content}}
+					//		a(href='')
+					//			img(src='{{product.picture}}')
+					//	.pagination.pagination-centered(product-page page-object="productPaging" click-function="listProduct")
+					//aside.widget
+					//	h4 Your product
+					//	textarea.span3(rows="4" cols="50" placeholder="Your description about the product" ng-model='product.content')
+					//	input.span3(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+					//	button.btn.btn-link.pull-right(ng-click='addProduct()') Commit
+					//aside.widget.ads.clearfix
+					//	a(href='' ng-if='productSee')
+					//		img(src='{{product.picture}}')

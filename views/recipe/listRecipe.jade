@@ -18,17 +18,28 @@
 							//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
 							a(href='/recipe/single/{{recipe._id}}') {{recipe.recipeName}}
 						.post_sub
-							span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
-								a(href='/recipe/single#post_comments')
-									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
+							span.glyphicon.glyphicon-time
+							| {{recipe.logTime}} &nbsp;&nbsp;
+							a
+								span.glyphicon.glyphicon-comment
+								|{{recipe.commentNum}} comments &nbsp;
+							a
+								span.glyphicon.glyphicon-star
+								|{{recipe.collectNum}} collects &nbsp;
+							a
+								span.glyphicon.glyphicon-hand-up
+								|{{recipe.productNum}} products &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							a.pull-right(href='' ng-click="addCollect(recipe._id)")
+								span.glyphicon.glyphicon-star-empty
+								|Collect it
 					.post_content
 						figure
-							a(href='/recipe/single')
+							a(href='/recipe/single/{{recipe._id}}')
 								img(alt='0' src='{{recipe.photo}}')
 						p {{recipe.description}}
-						a.btn.btn-primary(href='/recipe/single') Read More
+						a.btn.btn-primary(href='/recipe/single/{{recipe._id}}') Read More
 
-				.pagination.pagination-centered(paging page-object="pageing" click-function="list")
+				.pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
 			#sidebar.span4
 				aside.widget
 					h4 Search
@@ -48,4 +59,3 @@
 							a(data-toggle="tab" href="#seafood") Seafood
 						li
 							a(data-toggle="tab" href="#meat") Meat
-

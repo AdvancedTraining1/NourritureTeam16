@@ -10,7 +10,7 @@ var CommentSchema = new mongoose.Schema({
         _id: String,
         account: String,
         head: String},
-    logTime: Date,
+    logTime: String,
     content: String,
     replyId: String,
     replyUserId: String

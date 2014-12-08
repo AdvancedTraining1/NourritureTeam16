@@ -5,7 +5,7 @@
  */
 
 var RecipeDao = require("../dao/RecipeDao"),
-    CommentDao = require("../dao/CommentDao"),
+    CommentRecipeDao = require("../dao/CommentRecipeDao"),
     CollectDao = require("../dao/CollectDao"),
     ProductDao = require("../dao/ProductDao"),
     UserDao = require("../dao/UserDao"),
@@ -111,9 +111,7 @@ exports.create = function (req, res){
         recipe.step = step0;
 
         //几个默认值设置
-        var date = new Date();
-        var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-        recipe.logTime = dateStr;
+        recipe.logTime = logTime();
         recipe.collectNum = 0;
         recipe.commentNum = 0;
         recipe.productNum = 0;
@@ -162,10 +160,17 @@ exports.searchRecipe = function(req,res){
 }
 
 exports.listComment = function(req,res){
-    CommentDao.listComment(req.params.recipeId,function (err, commentList) {
-        res.json(commentList);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var recipeId = req.param('recipeId');
+    CommentRecipeDao.listComment(pageNo,pageSize,recipeId,function (err1, commentList) {
+        CommentRecipeDao.listCommentNum(recipeId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:commentList,total:num});
+            }
+        });
     });
-}
+};
 
 exports.comment = function(req,res){
     req.setEncoding('utf-8');
@@ -174,23 +179,39 @@ exports.comment = function(req,res){
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
         console.log('recipe数据接收完毕');
-
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        var comment = params;
+        comment.logTime = logTime();
+        //设置用户信息
+        /*var user = UserDao.getUserById(params['authorId']);
+         recipe.author = {};
+         recipe.author._id = params.authorId;
+         recipe.author.account = user.account;
+         recipe.author.head = user.head;*/
+        console.log(comment);
 
-        var comment = createComment(params);
-
-        CommentDao.create(comment,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("评论成功！");
+        CommentRecipeDao.create(comment,function (err, recipes) {
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("评论菜谱出现内部错误！");
+            }else {
+                RecipeDao.updateCommentNum(comment.replyId,function(err1,recNew){
+                    if(!err1){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("评论成功！");
+                    }
+                });
+            }
         });
     });
-}
+};
 
 exports.collect = function (req,res) {
     req.setEncoding('utf-8');
@@ -199,20 +220,25 @@ exports.collect = function (req,res) {
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
-        console.log('recipe数据接收完毕');
-
+        console.log('collect数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
+        var collect = new CollectModel();
+        collect = params;
+        collect.logTime = logTime();
 
-        var collect = createCollect(params);
-
-        CollectDao.create(collect,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("collect成功！");
+        CollectDao.create(collect,function (err, collect) {
+            if(!err){
+                RecipeDao.updateCollectNum(collect.recipeId,function(err2,recNew){
+                    if(!err2){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("collect成功！");
+                    }
+                });
+            }
         });
     });
 }
@@ -220,34 +246,73 @@ exports.collect = function (req,res) {
 exports.createProduct = function(req,res){
     req.setEncoding('utf-8');
     var postData = "";
-
     req.addListener("data", function (postDataChunk) {
         postData += postDataChunk;
     });
-
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
-        console.log('recipe数据接收完毕');
-
+        console.log('product数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
-        var product = createProduct(params);
+        var product = params;
+        product.logTime = logTime();
+        //设置用户信息
+        /*var user = UserDao.getUserById(params['authorId']);
+         recipe.author = {};
+         recipe.author._id = params.authorId;
+         recipe.author.account = user.account;
+         recipe.author.head = user.head;*/
+        console.log(product);
 
-        ProductDao.create(product,function (err, recipes) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
-            });
-            res.end("product成功！");
+        ProductDao.create(product,function (err, product) {
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("product菜谱出现内部错误！");
+            }else {
+                RecipeDao.updateProductNum(product.recipeId,function(err1,recNew){
+                    if(!err1){
+                        res.writeHead(200, {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        });
+                        res.end("product成功！");
+                    }
+                });
+            }
         });
     });
-}
+};
 
 
 exports.listProduct = function(req,res){
-    ProductDao.listProduct(req.params.recipeId,function (err, productList) {
-        res.json(productList);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var recipeId = req.param('recipeId');
+
+    ProductDao.listProduct(pageNo,pageSize,recipeId,function (err1, products) {
+        ProductDao.listProductNum(recipeId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:products,total:num});
+            }
+        });
     });
-}
+};
+
+exports.checkCollect = function(req,res){
+    var userId = req.param('userId');
+    var recipeId = req.param('recipeId');
+
+    CollectDao.check(userId,recipeId,function (err1, collect) {
+        console.log(collect.length);
+        if(collect.length != 0){
+            res.end("true");
+        }
+        else{
+            res.send("false");
+        }
+    });
+};
 
 exports.likeProduct = function(req,res){
     req.setEncoding('utf-8');
@@ -403,4 +468,10 @@ function createLike(params){
     like.account = "account2";
     like.head = "head2"
     return like;
+}
+
+function logTime(){
+    var date = new Date();
+    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    return dateStr;
 }

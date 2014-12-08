@@ -7,12 +7,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;;
 
 var schema = new Schema({
-    user: {
-        _id:String,
-        account: String,
-        head: String
-    },
-    logTime: Date,
+    userId:String,
+    logTime: String,
     recipeId: String
 });
 
