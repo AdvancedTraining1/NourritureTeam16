@@ -21,7 +21,8 @@ link(href="javascript/external/google-code-prettify/prettify.css" rel="styleshee
                         a(href='/index') Home
                         span.divider /
                     li.active Create Blog
-            #leftcol.span8
+            .span2
+            .span8
                 form
                     .row
                         .span8(style="margin-left: 5px;")
@@ -102,7 +103,7 @@ link(href="javascript/external/google-code-prettify/prettify.css" rel="styleshee
                             .span8
                                 .input-group(style="margin-left: 5px;")
                                     span.input-group-addon &nbsp;Tag&nbsp;
-                                    input.form-control(type='text' ng-model='blogtitle' )
+                                    input.form-control(type='text' ng-model='blogtag' )
                         .row
                             .span8
                                 button.btn.btn-primary.btn-large.pull-right(ng-click='createBlog()' style="margin-top:4px;")

@@ -40,10 +40,18 @@ BlogDao.delete = function (list,callback) {
     });
 }
 
-BlogDao.getAll = function (callback) {
-    Blog.find({}).sort({'create_at':-1}).exec(function(error,blogs){
+BlogDao.getAll = function (pageNo,pageSize,callback) {
+    Blog.find({flag:true}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,blogs){
         if(error) return callback(error,null);
         return callback(null, blogs);
+    });
+};
+
+BlogDao.getAllNum = function (callback) {
+    Blog.count({flag:true}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
     });
 };
 

@@ -17,18 +17,22 @@ function BlogHander() {
 }
 
 BlogHander.getAllBlogs = function (req, res) {
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
     console.log("查询全部博客...");
-    BlogDao.getAll(function(err,blogs){
-        if (err) {
-            res.json(500, {message: err.toString()});
-            return;
-        }
-        if (!blogs) {
-            res.json(404, {message: "Not found."});
-            return;
-        }
-        res.json(200, blogs);
+    BlogDao.getAll(pageNo,pageSize,function(err,blogs){
+        RecipeDao.getAllNum(function(err2,num){
+            if(!(err || err2)){
+                res.json(500, {message: err.toString()});
+                return;
 
+            }
+            if (!blogs) {
+                res.json(404, {message: "Not found."});
+                return;
+            }
+            res.json({root:blogs,total:num});
+        });
     })
 };
 
@@ -70,10 +74,12 @@ BlogHander.publishABlog = function (req, res) {
         //var content = req.param('content');
         var title = params.title;
         var content = params.content;
+        var tag = params.tags;
         console.log(title);
         var blog = new BlogModel({
             title: title,
             content: content,
+            tag:tag,
             type: "1",
             author: {
                 id: req.session.user_id,
