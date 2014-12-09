@@ -41,21 +41,21 @@ module.exports = function(app){
     app.get('/attention/oneRecipe',function(req,res){
         res.render("attention/oneRecipe");  //views
     });
-    app.get('/service/attention/lookOneFriendStatusRecipe',AttentionsHandler.lookOneFriendStatusRecipe);
+    app.get('/service/attention/lookOneFriendStatusRecipe',AttentionsHandler.lookOneFriendStatusRecipe);  //enter
 
 
 
     app.get('/attention/oneBlog',function(req,res){
         res.render("attention/oneBlog");  //views
     });
-    app.get('/service/attention/lookOneFriendStatusBlog',AttentionsHandler.lookOneFriendStatusBlog);
+    app.get('/service/attention/lookOneFriendStatusBlog',AttentionsHandler.lookOneFriendStatusBlog);  //enter
 
 
 
     app.get('/attention/oneTopic',function(req,res){
         res.render("attention/oneTopic");  //views
     });
-    app.get('/service/attention/lookOneFriendStatusTopic',AttentionsHandler.lookOneFriendStatusTopic);
+    app.get('/service/attention/lookOneFriendStatusTopic',AttentionsHandler.lookOneFriendStatusTopic);  //enter
 
 
 

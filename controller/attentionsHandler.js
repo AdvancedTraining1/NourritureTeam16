@@ -241,12 +241,12 @@ AttentionsHandler.lookFriendStatusTopic=function(req,res){
 AttentionsHandler.lookOneFriendStatusRecipe=function(req,res) {
     console.log("查看具体好友动态---菜谱");                   //a little problem to do more
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
-
-    Recipe.find({_id: statusId}, function (err, recipe) {
+    //var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var recipeId=req.param('queryStr');
+    Recipe.find({_id: recipeId}, function (err, recipe) {
         //res.write(recipe);
 
-        CommentDao.listComment(statusId,function (err, commentList) {
+        CommentDao.listComment(recipeId,function (err, commentList) {
             res.json(commentList);
         });
 
@@ -258,12 +258,12 @@ AttentionsHandler.lookOneFriendStatusRecipe=function(req,res) {
 AttentionsHandler.lookOneFriendStatusBlog=function(req,res) {
     console.log("查看具体好友动态---博客");                   //a little problem to do more
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
-
-    Blog.find({_id: statusId}, function (err, blog) {
+    //var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var blogId=req.param('queryStr');
+    Blog.find({_id: blogId}, function (err, blog) {
         //res.json(blog);
-        CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
-            CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
+        CommentToBlogDao.getAllCommentToBlog = function (blogId,callback) {
+            CommentToBlogModel.find({blog_id:blogId}).sort({'create_at':-1}).exec(function(error,comments){
                 if(error) return callback(error,null);
                 return callback(null, comments);
             });
@@ -277,9 +277,9 @@ AttentionsHandler.lookOneFriendStatusBlog=function(req,res) {
 AttentionsHandler.lookOneFriendStatusTopic=function(req,res) {
     console.log("查看具体好友动态---话题");                   //a little problem to do more
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
-
-    Topic.find({_id: statusId}, function (err, topic) {    //topic problem
+    //var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var topicId=req.param('queryStr');
+    Topic.find({_id: topicId}, function (err, topic) {
         res.json(topic);
     });
 

@@ -22,6 +22,13 @@
 							h3
 								a(href='#') {{user.username}}
 							a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
+						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							a(href='' ng-click="addCollect()" ng-if='seeCollect')
+								span.glyphicon.glyphicon-star-empty
+								| Collect
+							a(ng-if='!seeCollect')
+								span.glyphicon.glyphicon-star
+								| Already Collected
 				//article.post(ng-repeat="user in users")
 					.post_header
 						h3.post_title
