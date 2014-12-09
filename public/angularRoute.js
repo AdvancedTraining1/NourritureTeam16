@@ -19,21 +19,25 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/recipe/list',
                 controller: ToListRecipe
             }).
-            when('/recipe/single/:recipeId', {
+            when('/recipe/single_an/:recipeId', {
                 templateUrl: '/recipe/single',
                 controller: ToSingleRecipe
             }).
-            when('/recipe/otherAll/:authorId', {
+            when('/recipe/otherAll_an/:authorId', {
                 templateUrl: '/recipe/otherAll',
                 controller: ToOtherRecipe
             }).
-            when('/recipe/ownAll/:authorId', {
+            when('/recipe/ownAll_an/:authorId', {
                 templateUrl: '/recipe/ownAll',
                 controller: ToOwnRecipe
             }).
-            when('/userinfo/show123',{
+            when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
                 controller:showuser
+            }).
+            when('/userinfo/register',{    //这是index里面在ng-app中对应的urls
+                templateUrl:'/service/userinfo/gotoRegister',  //去route里面找
+                controller:RegisterAndLogin
             }).
             when('/sale/createTradePost',{
                 templateUrl:'/sale/createTradePost',

@@ -1,7 +1,7 @@
 //Created by zhaiyuan on 12/7/14.
 #main(style='min-height:500px')
 	.container
-		section#listFriendStatus
+		section#listUser
 			.hgroup
 				h1 All here !
 				h2 You
@@ -12,7 +12,17 @@
 					li.active Friend Status
 		.row
 			#leftcol.span8
-				article.post(ng-repeat="user in users")
+				#protfolio_container.portfolio_strict.row
+					.portfolio_item.cat_travel.span4(ng-repeat="user in users")
+						.portfolio_photo(style="background-image:url({{user.head}})")
+							//a(href='/recipe/single/{{recipe._id}}')
+								span.glyphicon.glyphicon-share
+								p {{recipe.description}}
+						.portfolio_description
+							h3
+								a(href='#') {{user.username}}
+							a.btn.btn-primary(href='#') attention
+				//article.post(ng-repeat="user in users")
 					.post_header
 						h3.post_title
 							//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
@@ -26,8 +36,8 @@
 							a(href='/recipe/single')
 								img(alt='0' src='{{recipe.photo}}')
 						//p {{recipe.description}}
-						a.btn.btn-primary(href='/recipe/single') attention
-				.pagination.pagination-centered(paging page-object="pageing" click-function="list")
+						a.btn.btn-primary(href='#') attention
+				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")
 			#sidebar.span4
 				aside.widget
 					h4 Search

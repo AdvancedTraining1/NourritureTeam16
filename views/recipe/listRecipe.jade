@@ -15,12 +15,12 @@
 				#protfolio_container.portfolio_strict.row
 					.portfolio_item.cat_travel.span4(ng-repeat="recipe in recipes")
 						.portfolio_photo(style="background-image:url({{recipe.photo}})")
-							a(href='/recipe/single/{{recipe._id}}')
+							a(href='/recipe/single_an/{{recipe._id}}')
 								span.glyphicon.glyphicon-share
 								p {{recipe.description}}
 						.portfolio_description
 							h3
-								a(href='/recipe/single/{{recipe._id}}') {{recipe.recipeName}}
+								a(href='/recipe/single_an/{{recipe._id}}') {{recipe.recipeName}}
 				//article.post(ng-repeat="recipe in recipes")
 				//	.post_header
 				//		h3.post_title
