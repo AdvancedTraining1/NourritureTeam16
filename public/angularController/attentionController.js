@@ -5,14 +5,12 @@
 'use strict';
 
 
-function ToListFriendStatus($scope, $http, $location){
-    /*$scope.search = $routeParams.search;
-    alert(1);
+function ToListFriendStatusRecipe($scope, $http, $location){
     $scope.recipes = {};
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :5
+        pageSize :1
     };
 
     $(function(){
@@ -24,43 +22,17 @@ function ToListFriendStatus($scope, $http, $location){
     };
 
     function paging(){
-        var api = "/service/recipe/listAll";
+        var api = "/service/attention/lookFriendStatusRecipe";
         $http({
             method: 'GET',
             url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
         }).success(function(data, status) {
-            $scope.recipes = data.root;
+            $scope.recipes = data.root;console.log("root=="+data.root);
+            $scope.pageing.itemsCount = data.total;console.log("total=="+data.total);
         }).error(function(data, status) {
 
         });
     }
-
-    $(function(){
-        alert($scope.search);
-        var api = "/service/attention/searchAll";
-        if($scope.search == ""){
-            var api = "/service/attention/listAll";
-            $http({
-                method: 'GET',
-                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
-            }).success(function(data, status) {
-                $scope.users = data.root;
-                $scope.pageing.itemsCount = data.total;
-            }).error(function(data, status) {
-
-            });
-        }else{
-            $http({
-                method: 'GET',
-                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $scope.search
-            }).success(function(data, status) {
-                $scope.users = data.root;
-                $scope.pageing.itemsCount = data.total;
-            }).error(function(data, status) {
-
-            });
-        }
-    });*/
 }
 
 
@@ -121,5 +93,28 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
             });
         }
+    });
+}
+
+
+
+
+
+function ToAddAttention($scope,$routeParams, $http, $location){
+    //$scope.search = $routeParams.friendId;
+    alert("关注成功");
+    $(function(){
+        var api = "/service/attention/addAttentions";
+
+            $http({
+                method: 'GET',
+                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
+            }).success(function(data, status) {
+                $scope.users = data.root;
+                $scope.pageing.itemsCount = data.total;
+            }).error(function(data, status) {
+
+            });
+
     });
 }

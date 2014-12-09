@@ -88,22 +88,46 @@ AttentionsDao.deleteAttentionsFans = function (id,fans,callback) {
     });
 
 }
+//---------------------------------------------------------------------------------------------------------------------------
 
-AttentionsDao.lookFriendStatus = function (user, callback) {//a little problem??
-    var list=[];
+AttentionsDao.lookFriendStatusRecipe = function (pageNo,pageSize,callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    for(var i= 0,len=user[0].friends.length;i<len;i++){
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        console.log("friendIdList=="+friendIdList);
+        Recipe.find({"author._id":{$in:friendIdList.split(",")}}).sort({'logTime':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, recipes) {
+            if(err) return callback(err,null);
 
-        var friendId=user[0].friends[i]._id;
-        Blog.find({"author.id":friendId},function(err,blog){
-            list=list+blog;
-            //res.write(list);
-
-            if(i+1==len) return callback(null,list);
+            return callback(null, recipes);
         });
 
-    }
+    });
+
 }
+
+AttentionsDao.getFriendStatusRecipeNum = function (callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        Recipe.count({"author._id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
+            console.log("num=="+num);
+            if(err) return callback(err,null);
+
+            return callback(null, num);
+        });
+
+    });
+
+};
+
 
 AttentionsDao.addRecipe = function (newrecipe,callback){//recipe -----test
     newrecipe.save(function (error,newrec) {
