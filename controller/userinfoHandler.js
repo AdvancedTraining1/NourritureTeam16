@@ -75,19 +75,26 @@ UserinfoHandler.login=function(req,res){
         console.log(params);
         UserDao.getUserByAccountAndPass(params['username'], params['password'], function (err, user) {
 
-            if(err){
-                res.writeHead(500, {
-                    "Content-Type": "text/plain;charset=utf-8"
-                });
-                res.end("登录失败！");
-            }else {
+            if(err&& err.length>0){
+                res.json({message:"登录失败！",user:null});
+                //res.writeHead(500, {
+                //    "Content-Type": "text/plain;charset=utf-8"
+                //});
+                //res.end("登录失败！");
+            }else if(user==null){
+                res.json({message:"用户名不存在或密码错误，请重新登录！",user:null});
+            } else{
                 req.session.user_id = user._id;
                 req.session.account = user.account;
-                res.writeHead(200, {
-                    "Content-Type": "text/plain;charset=utf-8"
-                });
-                res.end("登录成功！");
+                console.log(req.session.user_id);
+                res.json({message:"登陆成功！",user:user});
+
+                //res.writeHead(200, {
+                //    "Content-Type": "text/plain;charset=utf-8"
+                //});
+                //res.end("登录成功！");
             }
+
         });
     });
 

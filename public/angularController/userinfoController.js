@@ -17,17 +17,16 @@ function RegisterAndLogin($scope, $http, $location, $upload) {
         $scope.userinfo.password = document.getElementById('password').value;
 
         $.post('/service/userinfo/login',$scope.userinfo,function(data){
-            alert(data);
-        });
+            $location.path('/userinfo/info');
+            alert(data.message);
+            console.log(data.user.user_id);
+            $scope.$apply();
 
-        //var form=document.createElement("form");
-        //form.action="/service/userinfo/login";
-        //form.method="post";//指定为post
-        //form.innerHTML="<input type='hidden' name='username' id='username' value='"+username+"'/>"+
-        //"<input type='hidden' name='password' id='password' value='"+password+"'/>";
-        //document.body.appendChild(form);
-        //form.submit();
+            //window.location.href='/userinfo/info';
+            // window.location.reload();
+        });
     }
+
     $scope.register= function () {
         alert("123");
         $scope.userinfo.username = document.getElementById('username2').value; //在dao层才去对比account

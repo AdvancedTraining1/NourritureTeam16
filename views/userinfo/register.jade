@@ -27,7 +27,7 @@
                p.sign_title Log in with your site account
                .form
                   form
-                     input.input-xlarge(type='text', placeholder='Username',id='username')
+                     input.input-xlarge(type='text',ng-model='user.name',placeholder='Username',id='username',required)
                      input.input-xlarge(type='password', placeholder='Password',id='password')
                      .forgot
                         label.checkbox
@@ -48,7 +48,7 @@
                       
                      input.input-xlarge(name='Username', placeholder='Username', required='', type='text',id='username2')
                       
-                     input.input-xlarge(name='Email', placeholder='Email address', required='', type='text',id='email2')
+                     input.input-xlarge(name='Email', placeholder='Email address',ng-model='user.email', required='', type='email',id='email2')
                       
                      input.input-xlarge(name='Password', placeholder='Password', required='', type='password',id='password2')
                       
