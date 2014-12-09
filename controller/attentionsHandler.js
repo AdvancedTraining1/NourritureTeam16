@@ -175,33 +175,60 @@ AttentionsHandler.deleteAttentions=function(req,res){
 };
 
 
-AttentionsHandler.lookFriendStatus=function(req,res){
-    console.log("查看好友动态");
+AttentionsHandler.lookFriendStatusRecipe=function(req,res){
+    console.log("查看好友动态---菜谱");
+
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    AttentionsDao.lookFriendStatusRecipe(pageNo,pageSize,function (err, recipes) {
+         console.log(recipes);
+         AttentionsDao.getFriendStatusRecipeNum(function(err2,num){
+              if(!(err || err2)){
+                   res.json({root:recipes,total:num});
+              }
+         });
+
+    });
+
+};
+
+
+AttentionsHandler.lookFriendStatusBlog=function(req,res){
+    console.log("查看好友动态---博客");
 
     var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user){
 
-        /*AttentionsDao.lookFriendStatus(user,function(err,bloglist){
-            res.json(bloglist);
-        })
-*/
-        var list1=[];
         var list2=[];
-        var list3=[];
         for(var i= 0,len=user[0].friends.length;i<len;i++){
 
             var friendId=user[0].friends[i]._id;
             Blog.find({"author.id":friendId},function(err,blog){
-                list1=list1+blog;
-                //if(i+1==len)
-                res.write(list1);
-            });
-            Recipe.find({"author._id":friendId},function(err,recipe){
-                list2=list2+recipe;
+                list2=list2+blog;
                 //if(i+1==len)
                 res.write(list2);
             });
+
+        }
+
+    });
+
+};
+
+
+AttentionsHandler.lookFriendStatusTopic=function(req,res){
+    console.log("查看好友动态---话题");
+
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user){
+
+        var list3=[];
+        for(var i= 0,len=user[0].friends.length;i<len;i++){
+            var friendId=user[0].friends[i]._id;
             Topic.find({"author.id":friendId},function(err,topic){
                 list3=list3+topic;
                 //if(i+1==len)

@@ -21,7 +21,7 @@
 						.portfolio_description
 							h3
 								a(href='#') {{user.username}}
-							a.btn.btn-primary(href='#') attention
+							a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
 				//article.post(ng-repeat="user in users")
 					.post_header
 						h3.post_title
@@ -38,21 +38,3 @@
 						//p {{recipe.description}}
 						a.btn.btn-primary(href='#') attention
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")
-			#sidebar.span4
-				aside.widget
-					h4 Search
-				aside.widget
-					.search-box
-						//a.search-icon(ng-click='searchAttention()')
-						a.search-icon(href='/attention/getAllAttention/{{search}}')
-							span.glyphicon.glyphicon-search(style='top:4px')
-						input.search(ng-model='search' placeholder='search')
-				aside.widget
-					h4 Categories
-					ul.nav.nav-tabs.nav-stacked(id='myTab')
-						li.active
-							a(data-toggle="tab" href="#Recipe") Recipe
-						li
-							a(data-toggle="tab" href="#Blog") Blog
-						li
-							a(data-toggle="tab" href="#Topic") Topic
