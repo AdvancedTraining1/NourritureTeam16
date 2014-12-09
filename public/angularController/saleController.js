@@ -8,6 +8,8 @@ function CreateTradePost($scope, $http, $location){
     $scope.sale = {};
 
     $scope.publishTradePost = function () {
+        var content = $('#editor').html();
+        $scope.sale.content = content;
         $.post('/sale/create',$scope.sale,function(data){
             alert(data);
             //$location.path('/sale/list');
