@@ -86,6 +86,7 @@ UserinfoHandler.login=function(req,res){
             } else{
                 req.session.user_id = user._id;
                 req.session.account = user.account;
+                req.session.head = user.head;
                 console.log(req.session.user_id);
                 res.json({message:"登陆成功！",user:user});
 

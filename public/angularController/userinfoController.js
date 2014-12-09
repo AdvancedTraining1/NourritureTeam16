@@ -6,6 +6,7 @@
 
 /* Controllers 主要用于夹在js对界面进行控制*/
 function showuser($scope, $http, $location){
+        console.log("sbc"+$http.req.session.user_id);
 
 }
 function RegisterAndLogin($scope, $http, $location, $upload) {
