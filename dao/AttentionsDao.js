@@ -13,25 +13,48 @@ var AttentionsDao = new DaoBase(User);
 
 module.exports = AttentionsDao;
 
-AttentionsDao.getAllAttentions = function (querystr,callback) {
-    var str = ""+querystr+".*";
-    if(str==null||str==""){
-        User.find({flag:true}).sort({'fans_count':-1}).limit(10).exec(function(error,users) {//是否查询全部
-            if (error) return callback(error,null);
+AttentionsDao.getAllAttentions = function (pageNo,pageSize,callback) {
 
-            return callback(null, users);
-
-        });
-    }else{
-        User.find({username:{ $regex: str}}).sort({'fans_count':-1}).limit(10).exec(function(error,users){
-            if(error) return callback(error,null);
-
-            return callback(null, users);
-        });
-    }
+    User.find({flag:true}).sort({'fans_count':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function(error,users){
+        if(error)
+            return callback(error,null);
+        return callback(null, users);
+    });
 
 }
 
+AttentionsDao.searchAllAttentions = function (pageNo,pageSize,queryStr,callback) {
+
+    var str = ""+queryStr+".*";
+
+    User.find({username:{ $regex: str}}).sort({'fans_count':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function(error,users){
+        if(error) return callback(error,null);
+
+        return callback(null, users);
+    });
+}
+
+AttentionsDao.getNum = function (callback) {
+    User.count({flag:true}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
+
+
+AttentionsDao.searchNum = function (query,callback) {
+    var str = ""+query+".*";
+    //{ $regex: str} 第一种使用正则表达式的方式
+    //*var str1 = new RegExp(query); //第二种使用正则表达式的方式
+
+    User.count({username:{ $regex: str}}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
+//---------------------------------------------------------------------------------------------------------------------------
 
 AttentionsDao.addAttentions = function (id,friends,callback) {
     User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){

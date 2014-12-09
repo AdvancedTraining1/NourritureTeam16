@@ -87,11 +87,37 @@ AttentionsHandler.addUser=function(req,res){
 };
 
 
-AttentionsHandler.getAllAttentions=function(req,res){
+AttentionsHandler.searchAll=function(req,res){
+    console.log("搜索关键字用户（目的添加好友）...");
+
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var queryStr = req.param('queryStr');
+
+    AttentionsDao.searchAllAttentions(pageNo,pageSize,queryStr,function (err, users) {
+        AttentionsDao.searchNum(queryStr,function(err2,num){
+            if(!(err || err2)){
+                res.json({root:users,total:num});
+            }
+        });
+
+    });
+
+};
+
+AttentionsHandler.listAll=function(req,res){
     console.log("搜索所有用户（目的添加好友）...");
 
-    AttentionsDao.getAllAttentions(req.params.queryStr,function (err, users) {
-        res.json(users);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    AttentionsDao.getAllAttentions(pageNo,pageSize,function (err, users) {
+        AttentionsDao.getNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:users,total:num});
+            }
+        });
+
     });
 
 };
