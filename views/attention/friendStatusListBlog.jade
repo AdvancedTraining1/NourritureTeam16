@@ -16,17 +16,17 @@
 				article.post(ng-repeat="blog in blogs")
 					.post_header
 						h3.post_title
-							a(href='/blog/single') {{blog.title}}
+							a(href='/attention/oneBlog/{{blog._id}}') {{blog.title}}
 						.post_sub
 							span.glyphicon.glyphicon-time {{blog.create_at}} &nbsp;&nbsp;
-								a(href='/blog/single#post_comments')
+								a(href='/attention/oneBlog/#post_comments')
 									span.glyphicon.glyphicon-comment {{blog.comment_count}} comments
 					.post_content
 						figure
 							//a(href='/recipe/single')
 								img(alt='0' src='{{recipe.photo}}')
 						p {{blog.content}}
-						a.btn.btn-primary(href='/blog/single') Read More
+						a.btn.btn-primary(href='/attention/oneBlog/{{blog._id}}') Read More
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")
 			#sidebar.span4
 				//input(ng-model='ccc')
@@ -43,7 +43,10 @@
 						//ul.nav.nav-tabs.nav-stacked(id='myTab')
 							li.active
 								a(data-toggle="tab" href='#Recipe') Recipe
+					li
 						button.btn.btn-info(ng-click='toRecipe()') Recipe
+					li
 						button.btn.btn-info(ng-click='toBlog()') Blog
+					li
 						button.btn.btn-info(ng-click='toTopic()') Topic
 

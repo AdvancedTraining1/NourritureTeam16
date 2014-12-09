@@ -38,6 +38,27 @@ module.exports = function(app){
 
 
 
+    app.get('/attention/oneRecipe',function(req,res){
+        res.render("attention/oneRecipe");  //views
+    });
+    app.get('/service/attention/lookOneFriendStatusRecipe',AttentionsHandler.lookOneFriendStatusRecipe);
+
+
+
+    app.get('/attention/oneBlog',function(req,res){
+        res.render("attention/oneBlog");  //views
+    });
+    app.get('/service/attention/lookOneFriendStatusBlog',AttentionsHandler.lookOneFriendStatusBlog);
+
+
+
+    app.get('/attention/oneTopic',function(req,res){
+        res.render("attention/oneTopic");  //views
+    });
+    app.get('/service/attention/lookOneFriendStatusTopic',AttentionsHandler.lookOneFriendStatusTopic);
+
+
+
     app.get('/attention/addAttentions/',AttentionsHandler.addAttentions);
     app.get('/attention/deleteAttentions/',AttentionsHandler.deleteAttentions);
 
@@ -60,7 +81,6 @@ router.get('/addRecipe/',AttentionsHandler.addRecipe);
 router.get('/addTopic/',AttentionsHandler.addTopic);
 router.get('/addBlog/',AttentionsHandler.addBlog);
 
-router.get('/lookOneFriendStatus/',AttentionsHandler.lookOneFriendStatus);
 
 router.get('/commentStatus/',AttentionsHandler.commentStatus);
 router.get('/deleteComment/:comment_id',BlogsHander.deleteCommentToBlog);//??

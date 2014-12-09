@@ -16,7 +16,7 @@
 				article.post(ng-repeat="topic in topics")
 					.post_header
 						h3.post_title
-							a(href='/topic/single') {{topic.topicName}}
+							a(href='/attention/oneTopic/{{topic._id}}') {{topic.topicName}}
 						.post_sub
 							span.glyphicon.glyphicon-time {{topic.time}} &nbsp;&nbsp;
 								//a(href='/topic/single#post_comments')
@@ -26,7 +26,7 @@
 							//a(href='/recipe/single')
 								img(alt='0' src='{{recipe.photo}}')
 						p {{topic.content}}
-						a.btn.btn-primary(href='/topic/single') Read More
+						a.btn.btn-primary(href='/attention/oneTopic/{{topic._id}}') Read More
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")
 			#sidebar.span4
 				//input(ng-model='ccc')
@@ -43,6 +43,9 @@
 						//ul.nav.nav-tabs.nav-stacked(id='myTab')
 							li.active
 								a(data-toggle="tab" href='#Recipe') Recipe
+					li
 						button.btn.btn-info(ng-click='toRecipe()') Recipe
+					li
 						button.btn.btn-info(ng-click='toBlog()') Blog
+					li
 						button.btn.btn-info(ng-click='toTopic()') Topic

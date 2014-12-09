@@ -59,6 +59,8 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog
             }).
+
+    //---------------------------------zhaiyuan start----------------------------------------------------------------
             when('/attention/friendStatusListRecipe',{
                 templateUrl:'/attention/friendStatusListRecipe', //routes
                 controller:ToListFriendStatusRecipe
@@ -75,10 +77,24 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/attention/getAllAttention', //routes
                 controller:ToListAllAttention
             }).
+            when('/attention/oneRecipe/:recipeId',{
+                templateUrl:'/attention/oneRecipe', //routes
+                controller:ToLookOneRecipe
+            }).
+            when('/attention/oneBlog/:blogId',{
+                templateUrl:'/attention/oneBlog', //routes
+                controller:ToLookOneBlog
+            }).
+            when('/attention/oneTopic/:topicId',{
+                templateUrl:'/attention/oneTopic', //routes
+                controller:ToLookOneTopic
+            }).
             when('/attention/addAttentions/:friendId',{//????????????
                 templateUrl:'/attention/addAttentions',
                 controller:ToAddAttention
             }).
+    //---------------------------------zhaiyuan end----------------------------------------------------------------
+
             when('/blog/createBlog_angular',{
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog

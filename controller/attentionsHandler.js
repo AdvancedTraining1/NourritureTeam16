@@ -238,22 +238,10 @@ AttentionsHandler.lookFriendStatusTopic=function(req,res){
 };
 
 
-AttentionsHandler.lookOneFriendStatus=function(req,res) {
-    console.log("查看具体好友动态");                   //a little problem to do more
+AttentionsHandler.lookOneFriendStatusRecipe=function(req,res) {
+    console.log("查看具体好友动态---菜谱");                   //a little problem to do more
 
     var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
-
-    /*Blog.find({_id: statusId}, function (err, blog) {
-        //res.json(blog);
-        CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
-            CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
-            if(error) return callback(error,null);
-                return callback(null, comments);
-            });
-        };
-
-    });*/
-
 
     Recipe.find({_id: statusId}, function (err, recipe) {
         //res.write(recipe);
@@ -264,12 +252,39 @@ AttentionsHandler.lookOneFriendStatus=function(req,res) {
 
     });
 
-   /*
-    Topic.find({_id: statusId}, function (err, topic) {    //topic problem
-        res.json(topic);
-    });*/
+};
+
+
+AttentionsHandler.lookOneFriendStatusBlog=function(req,res) {
+    console.log("查看具体好友动态---博客");                   //a little problem to do more
+
+    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+
+    Blog.find({_id: statusId}, function (err, blog) {
+        //res.json(blog);
+        CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
+            CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
+                if(error) return callback(error,null);
+                return callback(null, comments);
+            });
+        };
+
+     });
 
 };
+
+
+AttentionsHandler.lookOneFriendStatusTopic=function(req,res) {
+    console.log("查看具体好友动态---话题");                   //a little problem to do more
+
+    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+
+    Topic.find({_id: statusId}, function (err, topic) {    //topic problem
+        res.json(topic);
+    });
+
+};
+
 
 AttentionsHandler.commentStatus=function(req,res) {
     console.log("评论状态");
