@@ -13,7 +13,7 @@
 						span.divider /
 					li.active Friend Status
 		.row
-			#leftcol.span8
+			//#leftcol.span8
 				#protfolio_container.portfolio_strict.row
 					.portfolio_item.cat_travel.span4(ng-repeat="recipe in recipes")
 						.portfolio_photo(style="background-image:url({{recipe.photo}})")
@@ -25,11 +25,13 @@
 								a(href='/recipe/single/{{recipe._id}}') {{recipe.recipeName}}
 				.pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
 			#sidebar.span4
+				//input(ng-model='ccc')
+				//|{{ccc}}
 				aside.widget
 					h4 Search
 				aside.widget
 					.search-box
-						a.search-icon(href='/attention/getAllAttention/')
+						a.search-icon(href='/attention/getAllAttention/{{search}}')
 							span.glyphicon.glyphicon-search(style='top:4px')
 						input.search(ng-model='search' placeholder='search')
 				aside.widget

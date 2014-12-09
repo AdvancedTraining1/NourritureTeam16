@@ -66,52 +66,54 @@ function ToListFriendStatus($scope, $http, $location){
 
 
 function ToListAllAttention($scope,$routeParams, $http, $location){
-    $scope.search = $routeParams.search;
+    //$scope.search = $routeParams.search;
+    //alert($routeParams.search);
     $scope.users = {};
     $scope.pageing={
-        pageNo : 1,
-        itemsCount : 3,
-        pageSize :5
+        pageNo : 1,  //页码
+        itemsCount : 3,  //总共
+        pageSize :2  //每页有几个
     };
 
-    /*$(function(){
+    $(function(){
         paging();
     });
 
-    $scope.users = function () {
-        paging();
+    $scope.list = function () { //下一页
+        //paging();
+        var api = "/service/attention/searchAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
     };
 
     function paging(){
-        var api = "/service/recipe/listAll";
+        var api = "/service/attention/listAll";
         $http({
             method: 'GET',
             url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
         }).success(function(data, status) {
-            $scope.recipes = data.root;
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
         }).error(function(data, status) {
 
         });
     }
-*/
     $(function(){
-        alert($scope.search);
+        //alert($routeParams.search);
         var api = "/service/attention/searchAll";
-        if($scope.search == ""){
-            var api = "/service/attention/listAll";
-            $http({
-                method: 'GET',
-                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
-            }).success(function(data, status) {
-                $scope.users = data.root;
-                $scope.pageing.itemsCount = data.total;
-            }).error(function(data, status) {
-
-            });
+        if($routeParams.search == ""){
+            paging();
         }else{
             $http({
                 method: 'GET',
-                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $scope.search
+                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
             }).success(function(data, status) {
                 $scope.users = data.root;
                 $scope.pageing.itemsCount = data.total;

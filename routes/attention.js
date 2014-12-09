@@ -17,7 +17,6 @@ module.exports = function(app){
 
 
     app.get('/attention/getAllAttention',function(req,res){
-        console.log("+++++");
         res.render("attention/getAllAttention");  //views
     });
 
