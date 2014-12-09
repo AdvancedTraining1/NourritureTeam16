@@ -14,6 +14,9 @@ module.exports = function (app) {
 	app.get('/service/userinfo/gotoRegister',function(req,res){
 		res.render('userinfo/register');
 	});
+	app.get('/service/userinfo/gotoInfo',function(req,res){
+		res.render('userinfo/info');
+	});
 	app.post('/service/userinfo/register',UserinfoHandler.register);
 	app.post('/service/userinfo/login',UserinfoHandler.login);
 	app.post('/modifypass',UserinfoHandler.modifypass);
