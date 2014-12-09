@@ -1,5 +1,7 @@
+.gitignore
 .idea/
 node_modules/
 npm-debug.log
 ./view/createBlog2
 util/database.js
+upload/temp

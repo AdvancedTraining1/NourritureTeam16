@@ -51,6 +51,10 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
+            when('/sale/showTradePost/:saleId',{
+                templateUrl:'/sale/showTradePost',
+                controller:ShowTradePost
+            }).
             when('/blog/createBlog',{
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog
@@ -74,6 +78,22 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             when('/attention/addAttentions/:friendId',{//????????????
                 templateUrl:'/attention/addAttentions',
                 controller:ToAddAttention
+            }).
+            when('/blog/createBlog_angular',{
+                templateUrl:'/blog/createBlog',
+                controller:ToCreateBlog
+            }).
+            when('/blog/blogList_angular',{
+                templateUrl:'/blog/blogList',
+                controller:ToListBlog
+            }).
+            when('/blog/blogDetail_angular/:blog_id', {
+                templateUrl: '/blog/blogDetail',
+                controller: BlogDetail
+            }).
+            when('/blog/addcomment/:blog_id', {
+                templateUrl: '/blog/blogDetail',
+                controller: BlogDetail
             }).
             otherwise({
                 redirectTo: '/'

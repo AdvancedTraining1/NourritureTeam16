@@ -21,7 +21,8 @@ link(href="javascript/external/google-code-prettify/prettify.css" rel="styleshee
                         a(href='/index') Home
                         span.divider /
                     li.active Create Blog
-            #leftcol.span8
+            .span2
+            .span8
                 form
                     .row
                         .span8(style="margin-left: 5px;")
@@ -87,9 +88,9 @@ link(href="javascript/external/google-code-prettify/prettify.css" rel="styleshee
                                     a.btn(data-edit="unlink" title="Remove Hyperlink")
                                         i.icon-cut
                                 .btn-group
-                                    a.btn(title="Insert picture (or just drag & drop)")#pictureBtn
+                                    a.btn(title="Insert picture (or just drag & drop)" data-edit="image" )#pictureBtn
                                         i.icon-picture
-                                    input(type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage")
+                                    input(type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage")#picture-select
                                 .btn-group
                                     a.btn(data-edit="undo" title="Undo (Ctrl/Cmd+Z)")
                                         i.icon-undo
@@ -97,12 +98,13 @@ link(href="javascript/external/google-code-prettify/prettify.css" rel="styleshee
                                         i.icon-repeat
                                 input(type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="")
                             #editor(style="min-height:300px; background-color:#FFFFFF;border: 1px solid rgb(204, 204, 204);")
+                                GO
                     .row.space50(style="margin-top:5px")
                         .row
                             .span8
                                 .input-group(style="margin-left: 5px;")
                                     span.input-group-addon &nbsp;Tag&nbsp;
-                                    input.form-control(type='text' ng-model='blogtitle' )
+                                    input.form-control(type='text' ng-model='blogtag' )
                         .row
                             .span8
                                 button.btn.btn-primary.btn-large.pull-right(ng-click='createBlog()' style="margin-top:4px;")
