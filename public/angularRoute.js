@@ -51,9 +51,25 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
+            when('/sale/showTradePost/:saleId',{
+                templateUrl:'/sale/showTradePost',
+                controller:ShowTradePost
+            }).
+            when('/blog/createBlog',{
+                templateUrl:'/blog/createBlog',
+                controller:ToCreateBlog
+            }).
             when('/attention/friendStatusListRecipe',{
                 templateUrl:'/attention/friendStatusListRecipe', //routes
                 controller:ToListFriendStatusRecipe
+            }).
+            when('/attention/friendStatusListBlog',{
+                templateUrl:'/attention/friendStatusListBlog', //routes
+                controller:ToListFriendStatusBlog
+            }).
+            when('/attention/friendStatusListTopic',{
+                templateUrl:'/attention/friendStatusListTopic', //routes
+                controller:ToListFriendStatusTopic
             }).
             when('/attention/getAllAttention/:search',{
                 templateUrl:'/attention/getAllAttention', //routes

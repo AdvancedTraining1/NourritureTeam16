@@ -23,13 +23,31 @@ router.get('/getUser', function(req, res) {
   res.render('admin/getuser');
 });
 
+router.get('/updateUser', function(req, res) {
+	res.render('admin/updateuser');
+});
+
+router.get('/updateUser_an/:_account', function(req, res) {
+	res.render("admin/adminIndex");
+});
+
+router.get('/addUser_an', function(req, res) {
+	res.render("admin/adminIndex");
+});
+
+router.get('/getUser_an', function(req, res) {
+	res.render("admin/adminIndex");
+});
 /*
 user
 * */
 router.post('/add',adminHandler.addUser);
-router.get('/getAllUsers',adminHandler.getAllUsers);
+//router.get('/getAllUsers',adminHandler.getAllUsers);
 router.post('/delete',adminHandler.deleteUser);
-router.post('/getUserByAccount',adminHandler.getUserByAccount);
+router.get('/getUsers',adminHandler.getUsers1);
+
+router.get('/getUserByAccount',adminHandler.getUserByAccount);
+//router.post('/getUsers',adminHandler.getUsers);
 router.post('/updateUser',adminHandler.updateUser);
 
 /*

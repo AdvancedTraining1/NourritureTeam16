@@ -30,7 +30,6 @@ var querystring = require('querystring');
 var fs = require('fs');
 var url = require('url');
 
-
 function AttentionsHandler(){
 
 }
@@ -198,23 +197,21 @@ AttentionsHandler.lookFriendStatusRecipe=function(req,res){
 AttentionsHandler.lookFriendStatusBlog=function(req,res){
     console.log("查看好友动态---博客");
 
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    User.find({_id:sessionId},function(err,user){
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
 
-        var list2=[];
-        for(var i= 0,len=user[0].friends.length;i<len;i++){
-
-            var friendId=user[0].friends[i]._id;
-            Blog.find({"author.id":friendId},function(err,blog){
-                list2=list2+blog;
-                //if(i+1==len)
-                res.write(list2);
-            });
-
-        }
+    AttentionsDao.lookFriendStatusBlog(pageNo,pageSize,function (err, blogs) {
+        console.log(blogs);
+        AttentionsDao.getFriendStatusBlogNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:blogs,total:num});
+            }
+        });
 
     });
+
 
 };
 
@@ -222,21 +219,21 @@ AttentionsHandler.lookFriendStatusBlog=function(req,res){
 AttentionsHandler.lookFriendStatusTopic=function(req,res){
     console.log("查看好友动态---话题");
 
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    User.find({_id:sessionId},function(err,user){
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
 
-        var list3=[];
-        for(var i= 0,len=user[0].friends.length;i<len;i++){
-            var friendId=user[0].friends[i]._id;
-            Topic.find({"author.id":friendId},function(err,topic){
-                list3=list3+topic;
-                //if(i+1==len)
-                res.end(list3);
-            });
-        }
+    AttentionsDao.lookFriendStatusTopic(pageNo,pageSize,function (err, topics) {
+        console.log(topics);
+        AttentionsDao.getFriendStatusTopicNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:topics,total:num});
+            }
+        });
 
     });
+
 
 };
 
@@ -571,17 +568,17 @@ AttentionsHandler.addRecipe=function(req,res){
 
 };
 
-AttentionsHandler.addTopic=function(req,res){
-    console.log("发布话题--test");
+AttentionsHandler.addBlog=function(req,res){
+    console.log("发布博客--test");
 
-    var topic = new Topic({
-        topicName:"2",
-        content: "2",
+    var blog = new Blog({
+        title:"1210hhh",
+        content: "1210hhh",
         author: {
-            id: "54578976af75277b630cc379",
-            account: "zhaiyuan" },
-        time: 2014-11-14,
-
+            id: "5457aa1f0233539703192dc9",
+            account: "mengchi" },
+        create_at: 2014-12-10,
+/*
         upload: {
             author: {
                 id: "54578976af75277b630cc379",
@@ -589,7 +586,41 @@ AttentionsHandler.addTopic=function(req,res){
             picture : "3.img",
             upload_time:2014-11-14,
             like_count: 4
-        },
+        },*/
+
+        like_count: 2,
+        collect_count:5,
+        comment_count: 1
+
+    });
+
+    AttentionsDao.addBlog(blog,function(err,newblog){
+        res.json(201, newblog);
+        res.render('index');
+
+    });
+
+};
+
+AttentionsHandler.addTopic=function(req,res){
+    console.log("发布话题--test");
+
+    var topic = new Topic({
+        topicName:"20141",
+        content: "20141",
+        author: {
+            id: "5457aa1f0233539703192dc9",
+            account: "mengchi" },
+        time: 2014-12-10,
+        /*
+         upload: {
+         author: {
+         id: "54578976af75277b630cc379",
+         account:  "zhaiyuan" },
+         picture : "3.img",
+         upload_time:2014-11-14,
+         like_count: 4
+         },*/
 
         upload_count: 4
 
@@ -602,5 +633,6 @@ AttentionsHandler.addTopic=function(req,res){
     });
 
 };
+
 
 module.exports = AttentionsHandler;
