@@ -8,20 +8,25 @@ var AttentionsHandler = require('../controller/attentionsHandler');
 
 module.exports = function(app){
 
-    app.get('/attention/friendStatusList',function(req,res){
+    app.get('/attention/friendStatusListRecipe',function(req,res){
         //console.log("+++++");
-        res.render("attention/friendStatusList");  //views
+        res.render("attention/friendStatusListRecipe");  //views
     });
-    app.get('/service/attention/lookFriendStatus',AttentionsHandler.lookFriendStatus);
+    app.get('/service/attention/lookFriendStatusRecipe',AttentionsHandler.lookFriendStatusRecipe);
 
 
 
     app.get('/attention/getAllAttention',function(req,res){
         res.render("attention/getAllAttention");  //views
     });
-
     app.get('/service/attention/searchAll',AttentionsHandler.searchAll);
     app.get('/service/attention/listAll',AttentionsHandler.listAll);
+
+
+
+    app.get('/attention/addAttentions/',AttentionsHandler.addAttentions);
+    app.get('/attention/deleteAttentions/',AttentionsHandler.deleteAttentions);
+
 
 };
 
@@ -35,12 +40,6 @@ router.get('/register',function(req,res){
     res.render('register');
 });
 router.post('/addUser',AttentionsHandler.addUser);
-
-router.get('/addAttentions/',AttentionsHandler.addAttentions);
-router.get('/deleteAttentions/',AttentionsHandler.deleteAttentions);
-
-
-
 
 
 
