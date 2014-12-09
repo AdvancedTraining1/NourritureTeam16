@@ -15,10 +15,10 @@
             .row
                 .span1
                 .span7
-                    article.post(ng-repeat = "sale in sales")
+                    article.post(ng-repeat = "sale in sales" style = "padding:0 0 15px 0; margin:0 0 15px 0")
                         .post_header
                             h3.post_title
-                                a(href='/recipe/single/{{recipe._id}}') {{sale.title}}
+                                a(href='/sale/single/{{sale._id}}') {{sale.title}}
                             .post_sub
                                 span.glyphicon.glyphicon-time
                                 | {{sale.create_at}} &nbsp;&nbsp;
@@ -31,7 +31,7 @@
                                 a.pull-right(href='' ng-click="addCollect(recipe._id)")
                                     span.glyphicon.glyphicon-star-empty
                                     |Collect it
-                    .pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
+                    .pagination.pagination-centered(trade-page page-object="pageing" click-function="list")
                 sidebar.span3
                     aside.widget
                         h4 Search

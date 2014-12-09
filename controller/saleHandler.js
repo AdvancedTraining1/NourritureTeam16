@@ -19,7 +19,7 @@ function SaleHandler(){
 }
 
 SaleHandler.getAll = function(req, res){
-    SaleDao.getAll(function(err, sale){
+    SaleDao.getAll(1,100,function(err, sale){
         if(err)
         {
             res.json(500, {message: err.toString()});
