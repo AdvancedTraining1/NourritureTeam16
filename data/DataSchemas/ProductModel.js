@@ -13,15 +13,15 @@ var schema = new Schema({
         head: String,
         account: String
     },
-    logTime: Date,
+    logTime: String,
     picture:String,
     content: String,
-    likeNum: Number,
+    /*likeNum: Number,
     likeList:[{
         _id: String,
         head: String,
         account: String
-    }],
+    }],*/
     recipeId:String
 });
 

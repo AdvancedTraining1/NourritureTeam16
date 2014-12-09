@@ -13,25 +13,48 @@ var AttentionsDao = new DaoBase(User);
 
 module.exports = AttentionsDao;
 
-AttentionsDao.getAllAttentions = function (querystr,callback) {
-    var str = ""+querystr+".*";
-    if(str==null||str==""){
-        User.find({flag:true}).sort({'fans_count':-1}).limit(10).exec(function(error,users) {//是否查询全部
-            if (error) return callback(error,null);
+AttentionsDao.getAllAttentions = function (pageNo,pageSize,callback) {
 
-            return callback(null, users);
-
-        });
-    }else{
-        User.find({username:{ $regex: str}}).sort({'fans_count':-1}).limit(10).exec(function(error,users){
-            if(error) return callback(error,null);
-
-            return callback(null, users);
-        });
-    }
+    User.find({flag:true}).sort({'fans_count':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function(error,users){
+        if(error)
+            return callback(error,null);
+        return callback(null, users);
+    });
 
 }
 
+AttentionsDao.searchAllAttentions = function (pageNo,pageSize,queryStr,callback) {
+
+    var str = ""+queryStr+".*";
+
+    User.find({username:{ $regex: str}}).sort({'fans_count':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function(error,users){
+        if(error) return callback(error,null);
+
+        return callback(null, users);
+    });
+}
+
+AttentionsDao.getNum = function (callback) {
+    User.count({flag:true}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
+
+
+AttentionsDao.searchNum = function (query,callback) {
+    var str = ""+query+".*";
+    //{ $regex: str} 第一种使用正则表达式的方式
+    //*var str1 = new RegExp(query); //第二种使用正则表达式的方式
+
+    User.count({username:{ $regex: str}}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
+//---------------------------------------------------------------------------------------------------------------------------
 
 AttentionsDao.addAttentions = function (id,friends,callback) {
     User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){
@@ -65,22 +88,46 @@ AttentionsDao.deleteAttentionsFans = function (id,fans,callback) {
     });
 
 }
+//---------------------------------------------------------------------------------------------------------------------------
 
-AttentionsDao.lookFriendStatus = function (user, callback) {//a little problem??
-    var list=[];
+AttentionsDao.lookFriendStatusRecipe = function (pageNo,pageSize,callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    for(var i= 0,len=user[0].friends.length;i<len;i++){
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        console.log("friendIdList=="+friendIdList);
+        Recipe.find({"author._id":{$in:friendIdList.split(",")}}).sort({'logTime':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, recipes) {
+            if(err) return callback(err,null);
 
-        var friendId=user[0].friends[i]._id;
-        Blog.find({"author.id":friendId},function(err,blog){
-            list=list+blog;
-            //res.write(list);
-
-            if(i+1==len) return callback(null,list);
+            return callback(null, recipes);
         });
 
-    }
+    });
+
 }
+
+AttentionsDao.getFriendStatusRecipeNum = function (callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        Recipe.count({"author._id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
+            console.log("num=="+num);
+            if(err) return callback(err,null);
+
+            return callback(null, num);
+        });
+
+    });
+
+};
+
 
 AttentionsDao.addRecipe = function (newrecipe,callback){//recipe -----test
     newrecipe.save(function (error,newrec) {

@@ -42,30 +42,32 @@ html(ng-app="nourriture")
 								li.active
 									a(href="/index") Home
 								li
-									a(href='/recipe/list') Recipe
+									a(href='/recipe/list_an') Recipe
 								li
-									a(href='#') Blog
+									a(href='/blog/blogList_angular') Blog
 								li
 									a(href='#') Topic
 								li
 									a(href='#') Personal Center
 								li
-									a(href='#') Trade
+									a(href='/attention/friendStatusListRecipe') Friend Status
+								li
+									a(href='/sale/listTradePost') Trade
 								li.dropdown
 									a.dropdown-toggle(data-toggle="dropdown" href="") Publish
 										span.caret
 									ul#subMenu.dropdown-menu
 										li
-											a(href='/recipe/create') Publish Recipe
+											a(href='/recipe/create_an') Publish Recipe
 										li
-											a(href='#') Publish Blog
+											a(href='/blog/createBlog_angular') Publish Blog
 										li
 											a(href='#') Publish Topic
 										li
 											a(href='/sale/createTradePost') Publish Trade Post
 
 				#sign
-					a(href='#')
+					a(href='/userinfo/register')
 						span.glyphicon.glyphicon-user  Register / Sign In
 
 		block team
@@ -110,3 +112,5 @@ script.
 			$(this).addClass("active").siblings().removeClass("active");
 		};
 	});
+
+

@@ -14,8 +14,8 @@ var schema = new Schema({
         account: String },
     content: String,
 
-    create_at: { type: Date, default: Date.now },
-    update_at: { type: Date, default: Date.now },
+    create_at: { type: String},
+    update_at: { type: String},
 
     collectNum: { type: Number, default: 0 },
     commentNum: { type: Number, default: 0 }

@@ -1,0 +1,40 @@
+//Created by zhaiyuan on 12/7/14.
+#main(style='min-height:500px')
+	.container
+		section#listUser
+			.hgroup
+				h1 All here !
+				h2 You
+				ul.breadcrumb.pull-right
+					li
+						a(href='/index') Home
+						span.divider /
+					li.active Friend Status
+		.row
+			#leftcol.span8
+				#protfolio_container.portfolio_strict.row
+					.portfolio_item.cat_travel.span4(ng-repeat="user in users")
+						.portfolio_photo(style="background-image:url({{user.head}})")
+							//a(href='/recipe/single/{{recipe._id}}')
+								span.glyphicon.glyphicon-share
+								p {{recipe.description}}
+						.portfolio_description
+							h3
+								a(href='#') {{user.username}}
+							a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
+				//article.post(ng-repeat="user in users")
+					.post_header
+						h3.post_title
+							//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
+							a(href='#') {{user.head}}
+						.post_sub
+							span.glyphicon.glyphicon-time {{user.username}} &nbsp;&nbsp;
+								//a(href='/recipe/single#post_comments')
+									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
+					.post_content
+						//figure
+							a(href='/recipe/single')
+								img(alt='0' src='{{recipe.photo}}')
+						//p {{recipe.description}}
+						a.btn.btn-primary(href='#') attention
+				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")

@@ -8,32 +8,76 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/index', {
-                templateUrl: '/indexPart'
-		        //,controller: IndexPage
+                templateUrl: '/indexPart',
+		        controller: IndexPage
             }).
-            when('/recipe/create', {
+            when('/recipe/create_an', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
             }).
-            when('/recipe/list', {
+            when('/recipe/list_an', {
                 templateUrl: '/recipe/list',
                 controller: ToListRecipe
             }).
-            when('/recipe/single/:recipeId', {
+            when('/recipe/single_an/:recipeId', {
                 templateUrl: '/recipe/single',
                 controller: ToSingleRecipe
             }).
-            when('/userinfo/show123',{
+            when('/recipe/otherAll_an/:authorId', {
+                templateUrl: '/recipe/otherAll',
+                controller: ToOtherRecipe
+            }).
+            when('/recipe/ownAll_an/:authorId', {
+                templateUrl: '/recipe/ownAll',
+                controller: ToOwnRecipe
+            }).
+            when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
+                controller:showuser
+            }).
+            when('/userinfo/register',{    //这是index里面在ng-app中对应的urls
+                templateUrl:'/service/userinfo/gotoRegister',  //去route里面找
+                controller:RegisterAndLogin
+            }).
+            when('/userinfo/info',{    //这是index里面在ng-app中对应的urls
+                templateUrl:'/service/userinfo/gotoInfo',  //去route里面找
                 controller:showuser
             }).
             when('/sale/createTradePost',{
                 templateUrl:'/sale/createTradePost',
                 controller:CreateTradePost
             }).
-            when('/blog/createBlog',{
+            when('/sale/listTradePost',{
+                templateUrl:'/sale/listTradePost',
+                controller:ListTradePost
+            }).
+            when('/attention/friendStatusListRecipe',{
+                templateUrl:'/attention/friendStatusListRecipe', //routes
+                controller:ToListFriendStatusRecipe
+            }).
+            when('/attention/getAllAttention/:search',{
+                templateUrl:'/attention/getAllAttention', //routes
+                controller:ToListAllAttention
+            }).
+            when('/attention/addAttentions/:friendId',{//????????????
+                templateUrl:'/attention/addAttentions',
+                controller:ToAddAttention
+            }).
+            when('/blog/createBlog_angular',{
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog
+            }).
+            when('/blog/blogList_angular',{
+                templateUrl:'/blog/blogList',
+                controller:ToListBlog
+            }).
+            when('/blog/blogDetail_angular/:blog_id', {
+                templateUrl: '/blog/blogDetail',
+                controller: BlogDetail
+            }).
+            when('/blog/addcomment/:blog_id', {
+                templateUrl: '/blog/blogDetail',
+                controller: BlogDetail
             }).
             otherwise({
                 redirectTo: '/'

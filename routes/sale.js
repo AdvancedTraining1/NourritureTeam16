@@ -19,12 +19,17 @@ router.get('/createTradePost',function(req,res){
     res.render('sale/createTradePost');
 });
 
+router.get('/listTradePost',function(req,res){
+    res.render('sale/listTradePost');
+});
+
+router.get('/listAll',saleHandler.listAll);
 router.get('/getAll',saleHandler.getAll);
 router.get('/getOne',saleHandler.getOne);
 router.get('/getOwn',saleHandler.getOwn);
-router.get('/delete',saleHandler.delete);
+router.post('/delete',saleHandler.delete);
 router.post('/create',saleHandler.create);
-router.get('/edit',saleHandler.edit);
+router.post('/edit',saleHandler.edit);
 router.get('/search',saleHandler.search);
 
 module.exports = router;
