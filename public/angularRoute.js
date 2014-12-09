@@ -8,20 +8,28 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/index', {
-                templateUrl: '/indexPart'
-		        //,controller: IndexPage
+                templateUrl: '/indexPart',
+		        controller: IndexPage
             }).
-            when('/recipe/create', {
+            when('/recipe/create_an', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
             }).
-            when('/recipe/list', {
+            when('/recipe/list_an', {
                 templateUrl: '/recipe/list',
                 controller: ToListRecipe
             }).
             when('/recipe/single/:recipeId', {
                 templateUrl: '/recipe/single',
                 controller: ToSingleRecipe
+            }).
+            when('/recipe/otherAll/:authorId', {
+                templateUrl: '/recipe/otherAll',
+                controller: ToOtherRecipe
+            }).
+            when('/recipe/ownAll/:authorId', {
+                templateUrl: '/recipe/ownAll',
+                controller: ToOwnRecipe
             }).
             when('/userinfo/show123',{
                 templateUrl:'/userinfo/show',
@@ -38,6 +46,14 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             when('/blog/createBlog',{
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog
+            }).
+            when('/attention/friendStatusList',{
+                templateUrl:'/attention/friendStatusList', //routes
+                controller:ToListFriendStatus
+            }).
+            when('/attention/getAllAttention/:search',{
+                templateUrl:'/attention/getAllAttention', //routes
+                controller:ToListAllAttention
             }).
             otherwise({
                 redirectTo: '/'
