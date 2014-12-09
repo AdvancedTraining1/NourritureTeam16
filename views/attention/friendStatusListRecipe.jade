@@ -17,17 +17,17 @@
 				article.post(ng-repeat="recipe in recipes")
 					.post_header
 						h3.post_title
-							a(href='/recipe/single') {{recipe.recipeName}}
+							a(href='/attention/oneRecipe/{{recipe._id}}') {{recipe.recipeName}}
 						.post_sub
 							span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
-								a(href='/recipe/single#post_comments')
+								a(href='/attention/oneRecipe#post_comments')
 									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
 					.post_content
 						figure
 							//a(href='/recipe/single')
 								img(alt='0' src='{{recipe.photo}}')
 						p {{recipe.description}}
-						a.btn.btn-primary(href='/recipe/single') Read More
+						a.btn.btn-primary(href='/attention/oneRecipe/{{recipe._id}}') Read More
 
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")
 			#sidebar.span4
@@ -45,6 +45,9 @@
 						//ul.nav.nav-tabs.nav-stacked(id='myTab')
 							li.active
 								a(data-toggle="tab" href='#Recipe') Recipe
+					li
 						button.btn.btn-info(ng-click='toRecipe()') Recipe
+					li
 						button.btn.btn-info(ng-click='toBlog()') Blog
+					li
 						button.btn.btn-info(ng-click='toTopic()') Topic

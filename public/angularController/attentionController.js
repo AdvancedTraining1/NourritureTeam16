@@ -199,6 +199,63 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
 
 
+function ToLookOneRecipe($scope,$routeParams, $http, $location){
+    //$scope.search = $routeParams.friendId;
+    $(function(){
+        var api = "/service/attention/lookOneFriendStatusRecipe";
+
+        $http({
+            method: 'GET',
+            url: api +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
+
+    });
+}
+
+
+
+function ToLookOneBlog($scope,$routeParams, $http, $location){
+    //$scope.search = $routeParams.friendId;
+    $(function(){
+        var api = "/service/attention/lookOneFriendStatusBlog";
+
+        $http({
+            method: 'GET',
+            url: api +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
+
+    });
+}
+
+
+
+function ToLookOneTopic($scope,$routeParams, $http, $location){
+    //$scope.search = $routeParams.friendId;
+    $(function(){
+        var api = "/service/attention/lookOneFriendStatusTopic";
+
+        $http({
+            method: 'GET',
+            url: api +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
+
+    });
+}
 
 
 function ToAddAttention($scope,$routeParams, $http, $location){
