@@ -132,32 +132,30 @@ exports.create = function (req, res){
         //设置用户信息
         console.log("-------"+req.session);
         console.log("-------"+JSON.stringify(req.session));
-        var userId = req.session.user_id;
-        UserDao.getById(userId,function(errU,user){
-            recipe.author = {
-                _id : userId,
-                account : user.account,
-                head : user.head
-            };
 
-            RecipeDao.create(recipe,function (err, recipes) {
-                if(err){
-                    res.writeHead(500, {
-                        "Content-Type": "text/plain;charset=utf-8"
-                    });
-                    res.end("发布菜谱出现内部错误！");
-                }else {
-                    res.writeHead(200, {
-                        "Content-Type": "text/plain;charset=utf-8"
-                    });
-                    res.end("发布菜谱成功！");
-                }
-            });
+        recipe.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
+        };
+
+        RecipeDao.create(recipe,function (err, recipes) {
+            if(err){
+                res.writeHead(500, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("发布菜谱出现内部错误！");
+            }else {
+                res.writeHead(200, {
+                    "Content-Type": "text/plain;charset=utf-8"
+                });
+                res.end("发布菜谱成功！");
+            }
         });
+    });
         /*recipe.author._id = params.userId;
         recipe.author.account = user.account;
         recipe.author.head = user.head;*/
-    });
 };
 
 exports.showOne = function (req, res) {
