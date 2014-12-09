@@ -29,19 +29,10 @@
 							a(ng-if='!seeCollect')
 								span.glyphicon.glyphicon-star
 								| Already Collected
-				//article.post(ng-repeat="user in users")
-					.post_header
-						h3.post_title
-							//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
-							a(href='#') {{user.head}}
-						.post_sub
-							span.glyphicon.glyphicon-time {{user.username}} &nbsp;&nbsp;
-								//a(href='/recipe/single#post_comments')
-									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
-					.post_content
-						//figure
-							a(href='/recipe/single')
-								img(alt='0' src='{{recipe.photo}}')
-						//p {{recipe.description}}
-						a.btn.btn-primary(href='#') attention
+							a(href='' ng-click="addCollect()" ng-if='seeCollect')
+								span.glyphicon.glyphicon-star-empty
+								| Collect
+							a(ng-if='!seeCollect' ng-click="deleteCollect()")
+								span.glyphicon.glyphicon-star
+								| cancel Collected
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")

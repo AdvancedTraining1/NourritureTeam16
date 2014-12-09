@@ -373,22 +373,197 @@ function ToLookOneRecipe($scope,$routeParams, $http, $location,$upload){
 
 
 
-function ToLookOneBlog($scope,$routeParams, $http, $location){
+function ToLookOneBlog($scope,$routeParams, $http, $location,$upload){
     //$scope.search = $routeParams.friendId;
-    $(function(){
+    /*$(function(){
         var api = "/service/attention/lookOneFriendStatusBlog";
 
         $http({
             method: 'GET',
-            url: api +'&queryStr=' + $routeParams.search
+            url: api +'&queryStr=' + $routeParams.blogId
         }).success(function(data, status) {
-            $scope.users = data.root;
-            $scope.pageing.itemsCount = data.total;
+            $scope.blog = data.root;
         }).error(function(data, status) {
 
         });
 
+    });*/
+
+
+    $scope.id = $routeParams.blog_id;
+    $scope.seeCollect = true;
+
+    console.log("id------",$scope.id);
+    $scope.noComment = true;
+    $scope.comments = {};
+    $scope.comment = {};
+    $scope.collect = {};
+    $scope.blog = {};
+    $scope.content = {};
+
+    $scope.commentPaging = {
+        pageNo: 1,
+        itemsCount: 10,
+        pageSize: 5
+    };
+
+    $(function () {
+        paging();
     });
+
+    $scope.list = function () {
+        commentPage();
+    };
+
+    function paging(){
+        $http({
+            method: 'GET',
+            url: "blog/showBlogDetail/" + $scope.id
+        }).success(function (data, status) {
+            $scope.blog = data.blog;
+
+            document.getElementById("post_content").innerHTML = data.blog.content;
+
+        }).error(function (data, status) {
+
+        });
+
+        commentPage();
+        checkCollection();
+    }
+
+    function commentPage() {
+        var commentApi = "/blog/showCommentListToBlog";
+        $http({
+            method: 'GET',
+            url: commentApi + '?pageNo=' + $scope.commentPaging.pageNo + '&pageSize=' + $scope.commentPaging.pageSize + '&blog_id=' + $scope.id
+        }).success(function (data, status) {
+            $scope.commentPaging.itemsCount = data.total;
+            $scope.comments = data.root;
+
+            console.log($scope.comments);
+            if (data.total != 0) {
+                $scope.noComment = false;
+            }
+        }).error(function (data, status) {
+
+        });
+    }
+
+    function checkCollection(){
+
+        var checkApi = '/blog/checkCollection/' + $scope.id;
+
+        $http({
+            method: 'GET',
+            url: checkApi
+        }).success(function(data,status){
+            console.log("data-------"+data);
+            if(data == "false"){
+
+                $scope.seeCollect = true;
+
+
+            }else{
+
+                $scope.seeCollect = false;
+            }
+        });
+
+    };
+
+    $scope.addComment = function () {
+
+        $scope.comment.blog_id = $routeParams.blog_id;
+
+
+        $.post("/blog/addCommentToBlog", $scope.comment, function (data) {
+            alert(data);
+            commentPage();
+            $scope.comment.content = null;
+            $scope.blog.comment_count += 1;
+        });
+    };
+
+    $scope.addCollect = function(){
+
+        var checkApi = '/blog/collectionBlog/' + $routeParams.blog_id;
+
+        $.get(checkApi,function(data) {
+            alert(data.status);
+
+            if(data.status){
+
+                alert(data.message);
+                paging();
+                //   $scope.blog.collect_count += 1;
+                $scope.seeCollect = false;
+
+            }else{
+                alert(data.message);
+            }
+
+
+        })
+
+    };
+
+    $scope.deleteCollect = function(){
+
+        var checkApi = '/blog/cancellationBlog/' + $routeParams.blog_id;
+
+        $.get(checkApi,function(data) {
+
+            if(data.status){
+
+                alert(data.message);
+                paging();
+                //       $scope.blog.collect_count -= 1;
+                $scope.seeCollect = true;
+
+            }else{
+                alert(data.message);
+            }
+        })
+
+    };
+
+    $scope.addLike = function(){
+
+        var checkApi = '/blog/likeBlog/' + $routeParams.blog_id;
+
+        $.get(checkApi,function(data) {
+
+
+            if(data.status){
+
+                alert(data.message);
+                paging();
+
+
+            }else{
+                alert(data.message);
+            }
+
+
+        })
+
+    };
+
+
+
+    $scope.toRecipe = function() {
+        $location.path('/attention/friendStatusListRecipe');
+    };
+
+    $scope.toBlog = function() {
+        $location.path('/attention/friendStatusListBlog');
+    };
+
+    $scope.toTopic = function() {
+        $location.path('/attention/friendStatusListTopic');
+    };
+
 }
 
 
