@@ -173,7 +173,7 @@ function ToListRecipe($scope, $http, $location){
                 alert("Already collected");
             }
         });
-    };
+    };$scope.id
 }
 
 function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){

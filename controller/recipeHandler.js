@@ -81,6 +81,9 @@ exports.listAll = function (req, res) {
     RecipeDao.getAll(pageNo,pageSize,function (err1, recipe) {
         RecipeDao.getAllNum(function(err2,num){
             if(!(err1 || err2)){
+                req.session.user_id = '5485bd76a0e572df17e81d70';
+                req.session.account = "cmm";
+                req.session.head = "/head/defaulthead.jpeg";
                 res.json({root:recipe,total:num});
             }
         });
@@ -98,7 +101,8 @@ exports.create = function (req, res){
         console.log('recipe数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
         console.log(params);
-        var recipe = params;
+        var recipe = new RecipeModel();
+        recipe = params;
 
         //特殊参数，数组形式，特殊处理，步骤和食材
         var mNum = params['mNum'];
@@ -126,25 +130,33 @@ exports.create = function (req, res){
         recipe.flag = true;
 
         //设置用户信息
-        /*var user = UserDao.getUserById(params['authorId']);
-        recipe.author = {};
-        recipe.author._id = params.authorId;
+        console.log("-------"+req.session);
+        console.log("-------"+JSON.stringify(req.session));
+        var userId = req.session.user_id;
+        UserDao.getById(userId,function(errU,user){
+            recipe.author = {
+                _id : userId,
+                account : user.account,
+                head : user.head
+            };
+
+            RecipeDao.create(recipe,function (err, recipes) {
+                if(err){
+                    res.writeHead(500, {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    });
+                    res.end("发布菜谱出现内部错误！");
+                }else {
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    });
+                    res.end("发布菜谱成功！");
+                }
+            });
+        });
+        /*recipe.author._id = params.userId;
         recipe.author.account = user.account;
         recipe.author.head = user.head;*/
-
-        RecipeDao.create(recipe,function (err, recipes) {
-            if(err){
-                res.writeHead(500, {
-                    "Content-Type": "text/plain;charset=utf-8"
-                });
-                res.end("发布菜谱出现内部错误！");
-            }else {
-                res.writeHead(200, {
-                    "Content-Type": "text/plain;charset=utf-8"
-                });
-                res.end("发布菜谱成功！");
-            }
-        });
     });
 };
 
@@ -191,7 +203,8 @@ exports.comment = function(req,res){
     req.addListener("end", function () {
         console.log('recipe数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
-        var comment = params;
+        var comment = new CommentModel();
+        comment = params;
         comment.logTime = logTime();
         //设置用户信息
         /*var user = UserDao.getUserById(params['authorId']);
@@ -262,7 +275,8 @@ exports.createProduct = function(req,res){
         console.log('product数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
-        var product = params;
+        var product = new ProductModel();
+        product = params;
         product.logTime = logTime();
         //设置用户信息
         /*var user = UserDao.getUserById(params['authorId']);
