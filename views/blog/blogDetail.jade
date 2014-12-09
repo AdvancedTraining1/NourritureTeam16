@@ -11,7 +11,15 @@
                         | {{blog.create_at}}&nbsp;&nbsp;
                         a(href='single_post.html#post_comments')
                     span.glyphicon.glyphicon-comment
-                        |  {{blog.comment_count}} comments
+                        |  {{blog.comment_count}} comments&nbsp;&nbsp;
+                    span.glyphicon.glyphicon-star
+                        |   {{blog.collect_count}} collects &nbsp;&nbsp;&nbsp;&nbsp;
+                    a(href='' ng-click="addCollect()" ng-if='seeCollect')
+                        span.glyphicon.glyphicon-star-empty
+                        |Collect
+                    a(ng-if='!seeCollect' ng-click="deleteCollect()")
+                        span.glyphicon.glyphicon-star
+                        |cancel Collected
                 ul.breadcrumb.pull-right
                     li
                         a(href='/index') Home
@@ -20,11 +28,13 @@
                         a.active Blog
             .row
                 #leftcol.span8
-                    article.post
+                    article.post(style="margin-bottom: 20px;")
                         .post_content
                             #post_content
                         //| !{blog.content}
                         //div.post_content!= {{blog.content}}
+                    .like__content(style="text-align:right;margin-right:10px")
+                        a(href="" ng-click="addCollect()").glyphicon.glyphicon-thumbs-up {{blog.like_count}}
                     .post_comments
                         h4 Comments
                         h5(ng-if='noComment') No comments right now
@@ -39,7 +49,7 @@
                                                 .row(ng-repeat='comment in comments')
                                                     figure.span1
                                                         p author
-                                                        //img(alt='0' src='{{comment.author.head}}')
+                                                        img(alt='0' src='{{comment.author.head}}')
                                                     .span6
                                                         .comment_name user: {{comment.author.account}}
                                                             //a.reply(ng-click='addComment(comment.author._id)') Reply
@@ -47,22 +57,19 @@
                                                             span.glyphicon.glyphicon-time
                                                             | {{comment.time}}
                                                         .the_comment
+                                                            br
                                                             p {{comment.content}}
                                                 .pagination.pagination-centered(comment-page page-object="commentPaging" click-function="list")
+
                     .new_comment
                         h4 Add Comment
                         form
                             .row
-                                .span4
-                                    input.span4(type='text', name='name', placeholder='Name')
-                                .span4
-                                    input.span4(type='text', name='email', placeholder='Email')
+                                .span8
+                                    textarea.span8(rows="4" placeholder="Comments" ng-model='comment.content')
                             .row
                                 .span8
-                                    textarea.span8(rows='7', placeholder='Comments')
-                            .row
-                                .span8
-                                    a.btn.send(href='#') Add comment
+                                    a.btn.send(ng-click='addComment()') Add comment
                 #sidebar.span4
                     aside.widget
                         h4 Blog Categories

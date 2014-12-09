@@ -5,34 +5,6 @@
 
 function ToCreateBlog($scope, $http) {
 
-/*    $scope.onFileSelect = function ($files) {
-        if($files != null){
-            $scope.upload = $upload.upload({
-                url: '/blog/upload',
-                file: $files
-            }).progress(function (evt) {
-                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-            }).success(function (data, status, headers, config) {        // file is uploaded successfully
-                console.log(data);
-                alert("Recipe image upload success!");
-                //$scope.successMessage="Image upload success!";
-                $scope.recipe.photo = data;
-                $scope.photoSee = true;
-            });
-        }
-
-        $('#editor').wysiwyg();
-
-        var imgTag = $("#editor").find("img[src='" + dataUrl + "']");
-        if (imgTag.length > 0) {
-             // 图片存在, 上传当前文件.
-             // uploadImage方法为你的上传图片方法.
-             var url = uploadImage(fileObj);
-                    imgTag.attr("src", url);
-
-
-    };*/
-
     $scope.createBlog = function () {
         $scope.blog={}
 
@@ -97,31 +69,14 @@ function ToListBlog($scope, $http, $location){
 
             });
         }
-    };
-
-    $scope.addCollect = function(id){
-        var api = "/service/recipe/collect";
-        $scope.collect.userId = 11;
-        $scope.collect.recipeId = id;
-
-        var checkApi = '/service/recipe/checkCollect' + '?userId=' + $scope.collect.userId + '&recipeId='+$scope.collect.recipeId;
-
-        $.get(checkApi,function(data){
-            if(data == "false"){
-                $.post(api,$scope.collect,function(data){
-                    alert(data);
-                    pageing();
-                    $scope.recipe.collectNum += 1;
-                });
-            }else{
-                alert("Already collected");
-            }
-        });
     };*/
+
+
 }
 
 function BlogDetail($scope, $routeParams,$http, $location,$upload) {
     $scope.id = $routeParams.blog_id;
+    $scope.seeCollect = true;
 
     console.log("id------",$scope.id);
     $scope.noComment = true;
@@ -138,11 +93,20 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
     };
 
     $(function () {
+        paging();
+    });
+
+    $scope.list = function () {
+        commentPage();
+    };
+
+    function paging(){
         $http({
             method: 'GET',
             url: "blog/showBlogDetail/" + $scope.id
         }).success(function (data, status) {
             $scope.blog = data.blog;
+
             document.getElementById("post_content").innerHTML = data.blog.content;
 
         }).error(function (data, status) {
@@ -150,11 +114,8 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
         });
 
         commentPage();
-    });
-
-    $scope.list = function () {
-        commentPage();
-    };
+        checkCollection();
+    }
 
     function commentPage() {
         var commentApi = "/blog/showCommentListToBlog";
@@ -164,6 +125,8 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
         }).success(function (data, status) {
             $scope.commentPaging.itemsCount = data.total;
             $scope.comments = data.root;
+
+            console.log($scope.comments);
             if (data.total != 0) {
                 $scope.noComment = false;
             }
@@ -172,19 +135,84 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
         });
     }
 
-   /* $scope.addComment = function (replyUserId) {
-        var api = "/service/recipe/comment";
-        $scope.comment.authorId = 11;
-        $scope.comment.replyId = $scope.id;
-        $scope.comment.replyUserId = replyUserId;
+    function checkCollection(){
 
-        $.post(api, $scope.comment, function (data) {
+            var checkApi = '/blog/checkCollection/' + $scope.id;
+
+            $http({
+                method: 'GET',
+                url: checkApi
+            }).success(function(data,status){
+                console.log("data-------"+data);
+                if(data == "false"){
+
+                        $scope.seeCollect = true;
+
+
+                }else{
+
+                    $scope.seeCollect = false;
+                }
+            });
+
+    };
+
+    $scope.addComment = function () {
+
+        $scope.comment.blog_id = $routeParams.blog_id;
+
+
+        $.post("/blog/addCommentToBlog", $scope.comment, function (data) {
             alert(data);
             commentPage();
             $scope.comment.content = null;
-            $scope.recipe.commentNum += 1;
+            $scope.blog.comment_count += 1;
         });
-    };*/
+    };
+
+    $scope.addCollect = function(){
+
+        var checkApi = '/blog/collectionBlog/' + $routeParams.blog_id;
+
+        $.get(checkApi,function(data) {
+            alert(data.status);
+
+            if(data.status){
+
+                alert(data.message);
+                paging();
+             //   $scope.blog.collect_count += 1;
+                $scope.seeCollect = false;
+
+            }else{
+                alert(data.message);
+            }
+
+
+        })
+
+    };
+
+    $scope.deleteCollect = function(){
+
+        var checkApi = '/blog/cancellationBlog/' + $routeParams.blog_id;
+
+        $.get(checkApi,function(data) {
+
+            if(data.status){
+
+                alert(data.message);
+                paging();
+         //       $scope.blog.collect_count -= 1;
+                $scope.seeCollect = true;
+
+            }else{
+                alert(data.message);
+            }
+        })
+
+    };
+
 
 
 }

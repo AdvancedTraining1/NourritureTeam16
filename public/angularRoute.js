@@ -107,10 +107,6 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/blog/blogDetail',
                 controller: BlogDetail
             }).
-            when('/blog/addcomment/:blog_id', {
-                templateUrl: '/blog/blogDetail',
-                controller: BlogDetail
-            }).
             otherwise({
                 redirectTo: '/'
             });
