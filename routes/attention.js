@@ -58,6 +58,7 @@ router.post('/addUser',AttentionsHandler.addUser);
 
 router.get('/addRecipe/',AttentionsHandler.addRecipe);
 router.get('/addTopic/',AttentionsHandler.addTopic);
+router.get('/addBlog/',AttentionsHandler.addBlog);
 
 router.get('/lookOneFriendStatus/',AttentionsHandler.lookOneFriendStatus);
 

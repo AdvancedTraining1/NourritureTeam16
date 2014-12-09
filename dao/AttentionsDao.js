@@ -179,7 +179,7 @@ AttentionsDao.lookFriendStatusTopic = function (pageNo,pageSize,callback) {
             friendIdList = friendIdList+user[0].friends[i]._id+",";
         }
         console.log("friendIdList=="+friendIdList);
-        Topic.find({"author._id":{$in:friendIdList.split(",")}}).sort({'time':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, topics) {
+        Topic.find({"author.id":{$in:friendIdList.split(",")}}).sort({'time':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, topics) {
             if(err) return callback(err,null);
 
             return callback(null, topics);
@@ -192,7 +192,7 @@ AttentionsDao.lookFriendStatusTopic = function (pageNo,pageSize,callback) {
 AttentionsDao.getFriendStatusTopicNum = function (callback) {
     var friendIdList=[];
     var sessionId="5464a134462eaef3480abb39";//ZHAI id
-console.log(5);
+
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {
             friendIdList = friendIdList+user[0].friends[i]._id+",";
@@ -213,6 +213,13 @@ AttentionsDao.addRecipe = function (newrecipe,callback){//recipe -----test
     newrecipe.save(function (error,newrec) {
         if(error) return callback(error,null);
         return callback(null,newrec);
+    });
+};
+
+AttentionsDao.addBlog = function (newblog,callback){//blog -----test
+    newblog.save(function (error,newblog) {
+        if(error) return callback(error,null);
+        return callback(null,newblog);
     });
 };
 
