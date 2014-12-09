@@ -198,23 +198,21 @@ AttentionsHandler.lookFriendStatusRecipe=function(req,res){
 AttentionsHandler.lookFriendStatusBlog=function(req,res){
     console.log("查看好友动态---博客");
 
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    User.find({_id:sessionId},function(err,user){
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
 
-        var list2=[];
-        for(var i= 0,len=user[0].friends.length;i<len;i++){
-
-            var friendId=user[0].friends[i]._id;
-            Blog.find({"author.id":friendId},function(err,blog){
-                list2=list2+blog;
-                //if(i+1==len)
-                res.write(list2);
-            });
-
-        }
+    AttentionsDao.lookFriendStatusBlog(pageNo,pageSize,function (err, blogs) {
+        console.log(blogs);
+        AttentionsDao.getFriendStatusBlogNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:blogs,total:num});
+            }
+        });
 
     });
+
 
 };
 
@@ -222,21 +220,21 @@ AttentionsHandler.lookFriendStatusBlog=function(req,res){
 AttentionsHandler.lookFriendStatusTopic=function(req,res){
     console.log("查看好友动态---话题");
 
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    User.find({_id:sessionId},function(err,user){
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
 
-        var list3=[];
-        for(var i= 0,len=user[0].friends.length;i<len;i++){
-            var friendId=user[0].friends[i]._id;
-            Topic.find({"author.id":friendId},function(err,topic){
-                list3=list3+topic;
-                //if(i+1==len)
-                res.end(list3);
-            });
-        }
+    AttentionsDao.lookFriendStatusTopic(pageNo,pageSize,function (err, topics) {
+        console.log(topics);
+        AttentionsDao.getFriendStatusTopicNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:topics,total:num});
+            }
+        });
 
     });
+
 
 };
 
@@ -575,13 +573,13 @@ AttentionsHandler.addTopic=function(req,res){
     console.log("发布话题--test");
 
     var topic = new Topic({
-        topicName:"2",
-        content: "2",
+        topicName:"20141209",
+        content: "20141209",
         author: {
             id: "54578976af75277b630cc379",
             account: "zhaiyuan" },
-        time: 2014-11-14,
-
+        time: 2014-12-09,
+/*
         upload: {
             author: {
                 id: "54578976af75277b630cc379",
@@ -589,7 +587,7 @@ AttentionsHandler.addTopic=function(req,res){
             picture : "3.img",
             upload_time:2014-11-14,
             like_count: 4
-        },
+        },*/
 
         upload_count: 4
 

@@ -15,6 +15,20 @@ module.exports = function(app){
     app.get('/service/attention/lookFriendStatusRecipe',AttentionsHandler.lookFriendStatusRecipe);
 
 
+    app.get('/attention/friendStatusListBlog',function(req,res){
+        //console.log("+++++");
+        res.render("attention/friendStatusListBlog");  //views
+    });
+    app.get('/service/attention/lookFriendStatusBlog',AttentionsHandler.lookFriendStatusBlog);
+
+
+    app.get('/attention/friendStatusListTopic',function(req,res){
+        //console.log("+++++");
+        res.render("attention/friendStatusListTopic");  //views
+    });
+    app.get('/service/attention/lookFriendStatusTopic',AttentionsHandler.lookFriendStatusTopic);
+
+
 
     app.get('/attention/getAllAttention',function(req,res){
         res.render("attention/getAllAttention");  //views
@@ -26,7 +40,6 @@ module.exports = function(app){
 
     app.get('/attention/addAttentions/',AttentionsHandler.addAttentions);
     app.get('/attention/deleteAttentions/',AttentionsHandler.deleteAttentions);
-
 
 };
 

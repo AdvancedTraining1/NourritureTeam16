@@ -33,6 +33,107 @@ function ToListFriendStatusRecipe($scope, $http, $location){
 
         });
     }
+
+    $scope.toRecipe = function() {
+        $location.path('/attention/friendStatusListRecipe');
+    };
+
+
+    $scope.toBlog = function() {
+        $location.path('/attention/friendStatusListBlog');
+    };
+
+    $scope.toTopic = function() {
+        $location.path('/attention/friendStatusListTopic');
+    };
+}
+
+
+function ToListFriendStatusBlog($scope, $http, $location){
+    $scope.blogs = {};
+    $scope.pageing={
+        pageNo : 1,
+        itemsCount : 3,
+        pageSize :1
+    };
+
+    $(function(){
+        paging();
+    });
+
+    $scope.list = function () {
+        paging();
+    };
+
+    function paging(){
+        var api = "/service/attention/lookFriendStatusBlog";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
+        }).success(function(data, status) {
+            $scope.blogs = data.root;console.log("root=="+data.root);
+            $scope.pageing.itemsCount = data.total;console.log("total=="+data.total);
+        }).error(function(data, status) {
+
+        });
+    }
+
+    $scope.toRecipe = function() {
+        $location.path('/attention/friendStatusListRecipe');
+    };
+
+
+    $scope.toBlog = function() {
+        $location.path('/attention/friendStatusListBlog');
+    };
+
+    $scope.toTopic = function() {
+        $location.path('/attention/friendStatusListTopic');
+    };
+}
+
+
+function ToListFriendStatusTopic($scope, $http, $location){
+    $scope.topics = {};
+    $scope.pageing={
+        pageNo : 1,
+        itemsCount : 3,
+        pageSize :1
+    };
+
+    $(function(){
+        paging();
+    });
+
+    $scope.list = function () {
+        paging();
+    };
+
+    function paging(){
+        var api = "/service/attention/lookFriendStatusTopic";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
+        }).success(function(data, status) {
+            $scope.topics = data.root;console.log("root=="+data.root);
+            $scope.pageing.itemsCount = data.total;console.log("total=="+data.total);
+        }).error(function(data, status) {
+
+        });
+    }
+
+    $scope.toRecipe = function() {
+        $location.path('/attention/friendStatusListRecipe');
+    };
+
+
+    $scope.toBlog = function() {
+        $location.path('/attention/friendStatusListBlog');
+    };
+
+    $scope.toTopic = function() {
+        $location.path('/attention/friendStatusListTopic');
+    };
 }
 
 
