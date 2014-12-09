@@ -51,6 +51,10 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
+            when('/sale/showTradePost/:saleId',{
+                templateUrl:'/sale/showTradePost',
+                controller:ShowTradePost
+            }).
             when('/blog/createBlog',{
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog

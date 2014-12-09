@@ -30,10 +30,17 @@ SaleHandler.getAll = function(req, res){
 }
 
 SaleHandler.getOne = function(req, res){
-    //var id = req.params.sale_id;
-    var id = "546747b89ac900691b0584ac";
+    var id = req.params.id;
+//    SaleDao.getOne(id,function(err, sale){
+//        if(err)
+//        {
+//            res.json(500, {message: err.toString()});
+//            return;
+//        }
+//        res.json(sale);
+//    });
 
-    SaleDao.getOne(id,function(err, sale){
+    SaleDao.getById(id,function(err,sale){
         if(err)
         {
             res.json(500, {message: err.toString()});
