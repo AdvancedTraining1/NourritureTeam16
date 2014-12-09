@@ -36,7 +36,7 @@ function ListTradePost($scope, $http, $location){
         var api = "/sale/listAll";
         $http({
             method: 'GET',
-            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize=' + $scope.pageing.pageSize
         }).success(function(data, status) {
             $scope.sales = data.root;
             $scope.pageing.itemsCount = data.total;
