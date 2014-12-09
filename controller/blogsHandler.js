@@ -17,18 +17,24 @@ function BlogHander() {
 }
 
 BlogHander.getAllBlogs = function (req, res) {
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
     console.log("查询全部博客...");
-    BlogDao.getAll(function(err,blogs){
-        if (err) {
-            res.json(500, {message: err.toString()});
-            return;
-        }
-        if (!blogs) {
-            res.json(404, {message: "Not found."});
-            return;
-        }
-        res.json(200, blogs);
+    BlogDao.getAll(pageNo,pageSize,function(err,blogs){
+        BlogDao.getAllNum(function(err2,num){
+            if(err || err2){
+                res.json(500, {message: err.toString()});
+                return;
 
+            }
+            if (!blogs) {
+                res.json(404, {message: "Not found."});
+                return;
+            }
+
+            console.log("num"+num)
+            res.json({root:blogs,total:num});
+        });
     })
 };
 
@@ -47,7 +53,7 @@ BlogHander.getABlogs = function (req, res) {
             res.json(404, {message: "Not found."});
             return;
         }
-        res.render('showBlog', {title: blog.title, content: blog.content, _id:blog._id});
+        res.json(200, {blog:blog});
 
     })
 };
@@ -70,10 +76,12 @@ BlogHander.publishABlog = function (req, res) {
         //var content = req.param('content');
         var title = params.title;
         var content = params.content;
+        var tag = params.tags;
         console.log(title);
         var blog = new BlogModel({
             title: title,
             content: content,
+            tag:tag,
             type: "1",
             author: {
                 id: req.session.user_id,
@@ -487,17 +495,23 @@ BlogHander.addCommentToBlog=function(req, res){
 }
 
 BlogHander.getAllCommentToBlog = function (req, res) {
-    var blog_id = req.params.blog_id;
-    CommentToBlogDao.getAllCommentToBlog(blog_id,function(err,comments){
-        if (err) {
-            res.json(500, {message: err.toString()});
-            return;
-        }
-        if (!comments) {
-            res.json(404, {message: "Not found."});
-            return;
-        }
-        res.json(200, comments);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var blog_id = req.param('blog_id');
+    console.log("+++++")
+    CommentToBlogDao.getAllCommentToBlog(pageNo,pageSize,blog_id,function(err,comments){
+        CommentToBlogDao.listCommentNum(blog_id,function(err2,num){
+            if(err || err2){
+                res.json(500, {message: err.toString()});
+                return;
+
+            }
+            if (!comments) {
+                res.json(404, {message: "Not found."});
+                return;
+            }
+            res.json({root:comments,total:num});
+        });
 
     })
 };
@@ -516,5 +530,38 @@ BlogHander.deleteCommentToBlog = function (req, res) {
     });
 
 }
+
+BlogHander.upload = function(req,res){
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "./../upload/temp/";//改变临时目录
+    form.parse(req, function(error, fields, files){
+        for(var key in files){
+            var file = files[key];
+            console.log(file.type);
+            var fName = (new Date()).getTime();
+
+            switch (file.type){
+                case "image/jpeg":
+                    fName = fName + ".jpg";
+                    break;
+                case "image/png":
+                    fName = fName + ".png";
+                    break;
+                default :
+                    fName =fName + ".png";
+                    break;
+            }
+            console.log(file.size);
+            var uploadDir = "./../public/upload/" + fName;
+            fs.rename(file.path, uploadDir, function(err) {
+                if (err) {
+                    res.write(err+"\n");
+                    res.end();
+                }
+                res.end("upload/"+fName);
+            });
+        }
+    });
+};
 
 module.exports = BlogHander;

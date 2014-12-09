@@ -1,15 +1,14 @@
-
 #main
 	.container
 		section#adduser
 			.hgroup
-				h1 Add a user here !
+				h1 Update a user here !
 				h2 Fill in the normal information of user.
 				ul.breadcrumb.pull-right
 					li
 						a(href='/adminIndex') Home
 						span.divider /
-					li.active Add user
+					li.active Update user
 		.row
 			#leftcol.span12
 				.new_user
@@ -24,7 +23,7 @@
 								br
 								.input-group
 									span.input-group-addon &nbsp&nbspAccount
-									input.form-control(type='text' ng-model='user.account' id = "txt_account" placeholder="Account")
+									input.form-control(type='text' ng-model='user.account' id = "txt_account" placeholder="Account" disabled)
 								br
 								.input-group
 									span.input-group-addon &nbsp&nbsp&nbsp&nbsp&nbspPhone
@@ -45,7 +44,6 @@
 									option(value = 2) Dietitian
 									option(value = 3) Administrator
 							.span4
-
 						.row
 							.span4
 							.span1
@@ -58,7 +56,7 @@
 						.row
 							.span5
 							.span3
-								button.btn.btn-primary.btn-large.pull-left(onclick='submitData()')
+								button.btn.btn-primary.btn-large.pull-left(ng-click='submit()')
 									span.glyphicon.glyphicon-ok &nbsp;Submit
 							.span4
 						br
@@ -94,7 +92,6 @@
 	//input(type = "button" value = "提交" onclick = "submitData();")
 	//br
 	//output(id="result")
-
 	//这个方法是用来判定输入的是否为数字
 	//我在想要是邮箱的话 正则表达式谁来写
 	script.
@@ -103,7 +100,6 @@
 			var k=window.event? e.keyCode : e.whitch;
 			if((k>=48) && (k<=57) || k==8 || k==0)
 			{
-
 			}else
 			{
 				if(window.event)
@@ -113,29 +109,3 @@
 					e.preventDefault();//为了火狐浏览器而设置
 			}
 		}
-
-
-		function submitData()
-		{
-			ListBox = document.getElementById("sel_type");
-			var index = ListBox.selectedIndex;
-			var sex_index = document.getElementById("sel_sex").selectedIndex;
-			var obj = {
-			name:document.getElementById("txt_name").value,
-			tel:document.getElementById("txt_cellphone").value,
-			account:document.getElementById("txt_account").value,
-			password:document.getElementById("txt_password").value,
-			type:ListBox.options[index].getAttribute("value"),
-			sex:document.getElementById("sel_sex").options[sex_index].getAttribute("value")
-			};
-			var xhr = new XMLHttpRequest();
-			xhr.open('post','/admin/add',true);
-			xhr.onload = function(e)
-			{
-				//document.getElementById("result").innerHTML = this.response;
-				alert(this.response);
-				window.location.reload();
-			}
-			xhr.send(JSON.stringify(obj));
-		};
-

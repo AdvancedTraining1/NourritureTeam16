@@ -7,7 +7,9 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var CommentToBlogSchema = new mongoose.Schema({
     author: {
         id: ObjectId,
-        account: String },
+        account: String,
+        head:String
+    },
     time: { type: Date, default: Date.now },
     content: String,
     reply_id: { type: ObjectId },
