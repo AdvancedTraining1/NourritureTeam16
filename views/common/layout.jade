@@ -50,15 +50,19 @@ html(ng-app="nourriture")
 								li
 									a(href='#') Personal Center
 								li
+<<<<<<< HEAD
 									a(href='#') Trade
 								li
 									a(href='/attention/friendStatusList') Friend Status
+=======
+									a(href='/sale/listTradePost') Trade
+>>>>>>> 5dff8953fcb3843a50e9efe5278104eb9caa78e4
 								li.dropdown
 									a.dropdown-toggle(data-toggle="dropdown" href="") Publish
 										span.caret
 									ul#subMenu.dropdown-menu
 										li
-											a(href='/recipe/create') Publish Recipe
+											a(href='/recipe/create_an') Publish Recipe
 										li
 											a(href='/blog/createBlog') Publish Blog
 										li
@@ -67,7 +71,7 @@ html(ng-app="nourriture")
 											a(href='/sale/createTradePost') Publish Trade Post
 
 				#sign
-					a(href='#')
+					a(href='/userinfo/register')
 						span.glyphicon.glyphicon-user  Register / Sign In
 
 		block team

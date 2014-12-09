@@ -316,15 +316,15 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     };
 
     $scope.jumpToRecipe = function(userId) {
-        $location.path('/recipe/otherAll/' + userId);
+        $location.path('/recipe/otherAll_an/' + userId);
     };
 
     $scope.jumpToBlog = function(userId) {
-        $location.path('/recipe/otherAll/' + userId);
+        $location.path('/recipe/otherAll_an/' + userId);
     };
 
     $scope.jumpToFans = function(userId) {
-        $location.path('/recipe/otherAll/' + userId);
+        $location.path('/recipe/otherAll_an/' + userId);
     };
 }
 

@@ -15,7 +15,7 @@
 				article.post(ng-repeat="recipe in recipes")
 					.post_header
 						h3.post_title
-							a(href='/recipe/single/{{recipe._id}}') {{recipe.recipeName}}
+							a(href='/recipe/single_an/{{recipe._id}}') {{recipe.recipeName}}
 						.post_sub
 							span.glyphicon.glyphicon-time
 							| {{recipe.logTime}} &nbsp;&nbsp;
@@ -30,10 +30,10 @@
 								|Collect it
 					.post_content
 						figure
-							a(href='/recipe/single/{{recipe._id}}')
+							a(href='/recipe/single_an/{{recipe._id}}')
 								img(alt='0' src='{{recipe.photo}}')
 						p {{recipe.description}}
-						a.btn.btn-primary(href='/recipe/single/{{recipe._id}}') Read More
+						a.btn.btn-primary(href='/recipe/single_an/{{recipe._id}}') Read More
 				.pagination.pagination-centered(otherrecipe-page page-object="pageing" click-function="list")
 			#sidebar.span4
 				aside.widget
