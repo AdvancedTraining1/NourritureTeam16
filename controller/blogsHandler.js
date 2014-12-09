@@ -98,7 +98,7 @@ BlogHander.publishABlog = function (req, res) {
                 console.log(newblog._id);
                 var id = newblog._id;
                 res.json(200, {message:message});
-               // res.render('showBlog', {title: title, content: content, message: message, _id:id})
+
             }
 
 
@@ -262,11 +262,11 @@ BlogHander.collectionBlog = function (req, res) {
                     if (error) {
                         console.log(error);
                         var message = "update failed";
-                        res.json(500, {message: message});
+                        res.json(500, {message: message,status:false});
                         return;
                     } else {
                         console.log("collection successful");
-                        res.json(200, {message: "collection successful"});
+                        res.json(200, {message: "collection successful",status:true});
                     }
                 });
 
@@ -298,29 +298,31 @@ BlogHander.cancellationBlog = function (req, res) {
         BlogDao.update({_id: blog_id}, update, options, function (error) {
             if (error) {
                 var message = "update failed";
-                res.json(500, {message: message});
+                res.json(500, {message: message,status:false});
                 return;
             } else {
                 console.log("update successful");
+                var conditions = {blog_id: blog_id, user_id: user_id};
+
+                CollectBlogDao.delete(conditions, function (error) {
+                    if (error) {
+                        console.log("cancel fail!");
+                        var message = "cancel fail!"
+                        res.json(500, {message: message,status:false});
+                        return;
+                    } else {
+                        console.log('cancel successful!');
+                        var message = "cancel successful!"
+
+                        res.json(200, {message: message,status:true});
+                    }
+                })
 
             }
         });
 
     });
-    var conditions = {blog_id: blog_id, user_id: user_id};
 
-    CollectBlogDao.delete(conditions, function (error) {
-        if (error) {
-            console.log(error);
-            res.json(500, {message: error});
-            return;
-        } else {
-            console.log('delete ok!');
-            var message = "delete ok!"
-
-            res.json(200, {message: message});
-        }
-    })
 }
 
 BlogHander.likeBlog = function (req, res) {
@@ -424,11 +426,6 @@ BlogHander.cancelLikeBlog = function (req, res) {
 }
 
 BlogHander.addCommentToBlog=function(req, res){
-//        var content = req.param('comment');
-//        var user_id = req.session.user_id;
-//        var account = req.session.account;
-//        var blog_id = req.param('_id');
-//        var reply_id = req.param('comment_id');
 
     req.setEncoding('utf-8');
     var postData = "";
@@ -443,11 +440,12 @@ BlogHander.addCommentToBlog=function(req, res){
 
         var params = querystring.parse(postData);
 
-        var content = params.comment;
+        var content = params.content;
         var user_id = req.session.user_id;
         var account = req.session.account;
-        var blog_id = params._id;
-        var reply_id = params.comment_id;
+        var blog_id = params.blog_id;
+        console.log("blog_id----"+blog_id)
+        //var reply_id = params.comment_id;
 
         console.log(user_id);
         var commentToBlog = new CommentToBlogModel({
@@ -455,7 +453,7 @@ BlogHander.addCommentToBlog=function(req, res){
                 id: user_id,
                 account: account },
             content: content,
-            reply_id: reply_id,
+         //   reply_id: reply_id,
             blog_id:blog_id
         });
 
@@ -479,11 +477,11 @@ BlogHander.addCommentToBlog=function(req, res){
                         if (error) {
                             console.log(error);
                             var message = "update failed";
-                            res.json(500, {message: message});
+                            res.json(500, {message: message, status:false});
                             return;
                         } else {
                             console.log("comment successful");
-                            res.json(200, {message: "comment successful"});
+                            res.json(200, {message: "comment successful",status:true});
                         }
                     });
 
@@ -531,37 +529,20 @@ BlogHander.deleteCommentToBlog = function (req, res) {
 
 }
 
-BlogHander.upload = function(req,res){
-    var form = new formidable.IncomingForm();
-    form.uploadDir = "./../upload/temp/";//改变临时目录
-    form.parse(req, function(error, fields, files){
-        for(var key in files){
-            var file = files[key];
-            console.log(file.type);
-            var fName = (new Date()).getTime();
-
-            switch (file.type){
-                case "image/jpeg":
-                    fName = fName + ".jpg";
-                    break;
-                case "image/png":
-                    fName = fName + ".png";
-                    break;
-                default :
-                    fName =fName + ".png";
-                    break;
-            }
-            console.log(file.size);
-            var uploadDir = "./../public/upload/" + fName;
-            fs.rename(file.path, uploadDir, function(err) {
-                if (err) {
-                    res.write(err+"\n");
-                    res.end();
-                }
-                res.end("upload/"+fName);
-            });
+BlogHander.checkCollction=function (req, res) {
+    console.log("check--------")
+    var blogId = req.param('blog_id');
+    var userId = req.session.user_id;
+    CollectBlogDao.check(userId,blogId,function (err1, collect) {
+        console.log(collect.length);
+        if(collect.length != 0){
+            res.end("true");
+        }
+        else{
+            res.send("false");
         }
     });
-};
+}
+
 
 module.exports = BlogHander;
