@@ -46,7 +46,12 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             when('/blog/blogList_angular',{
                 templateUrl:'/blog/blogList',
                 controller:ToListBlog
-            }).when('/blog/blogDetail_angular/:blog_id', {
+            }).
+            when('/blog/blogDetail_angular/:blog_id', {
+                templateUrl: '/blog/blogDetail',
+                controller: BlogDetail
+            }).
+            when('/blog/addcomment/:blog_id', {
                 templateUrl: '/blog/blogDetail',
                 controller: BlogDetail
             }).
