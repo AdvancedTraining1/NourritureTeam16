@@ -82,7 +82,31 @@ RecipeDao.searchRecipeNum = function (query,callback) {
     });
 };
 
-RecipeDao.listComment = function(id,callback){
+RecipeDao.updateCommentNum = function (id,callback) {
+    Recipe.findByIdAndUpdate(id,{$inc:{commentNum:1}},function(error,recipe){
+        if(error)
+            return callback(error,null);
+        return callback(null, recipe);
+    });
+};
+
+RecipeDao.updateProductNum = function (id,callback) {
+    Recipe.findByIdAndUpdate(id,{$inc:{productNum:1}},function(error,recipe){
+        if(error)
+            return callback(error,null);
+        return callback(null, recipe);
+    });
+};
+
+RecipeDao.updateCollectNum = function (id,callback) {
+    Recipe.findByIdAndUpdate(id,{$inc:{collectNum:1}},function(error,recipe){
+        if(error)
+            return callback(error,null);
+        return callback(null, recipe);
+    });
+};
+
+/*RecipeDao.listComment = function(id,callback){
     Recipe.find({_id:id},{commentList:1}).sort({'logTime':-1}).limit(10).exec(function(error,recipe){
         if(error) return callback(error,null);
 
@@ -96,4 +120,4 @@ RecipeDao.comment = function (id,comment,callback) {
 
         return callback(null, recipe);
     });
-}
+}*/

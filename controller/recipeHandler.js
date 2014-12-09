@@ -81,9 +81,9 @@ exports.listAll = function (req, res) {
     RecipeDao.getAll(pageNo,pageSize,function (err1, recipe) {
         RecipeDao.getAllNum(function(err2,num){
             if(!(err1 || err2)){
-                req.session.user_id = '5485bd76a0e572df17e81d70';
+                /*req.session.user_id = '5485bd76a0e572df17e81d70';
                 req.session.account = "cmm";
-                req.session.head = "/head/defaulthead.jpeg";
+                req.session.head = "/head/defaulthead.jpeg";*/
                 res.json({root:recipe,total:num});
             }
         });
@@ -205,11 +205,12 @@ exports.comment = function(req,res){
         comment = params;
         comment.logTime = logTime();
         //设置用户信息
-        /*var user = UserDao.getUserById(params['authorId']);
-         recipe.author = {};
-         recipe.author._id = params.authorId;
-         recipe.author.account = user.account;
-         recipe.author.head = user.head;*/
+        comment.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
+        };
+
         console.log(comment);
 
         CommentRecipeDao.create(comment,function (err, recipes) {
@@ -246,6 +247,7 @@ exports.collect = function (req,res) {
         var collect = new CollectModel();
         collect = params;
         collect.logTime = logTime();
+        collect.userId = req.session.user_id;
 
         CollectDao.create(collect,function (err, collect) {
             if(!err){
@@ -276,12 +278,13 @@ exports.createProduct = function(req,res){
         var product = new ProductModel();
         product = params;
         product.logTime = logTime();
-        //设置用户信息
-        /*var user = UserDao.getUserById(params['authorId']);
-         recipe.author = {};
-         recipe.author._id = params.authorId;
-         recipe.author.account = user.account;
-         recipe.author.head = user.head;*/
+
+        product.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
+        };
+
         console.log(product);
 
         ProductDao.create(product,function (err, product) {
@@ -320,9 +323,8 @@ exports.listProduct = function(req,res){
 };
 
 exports.checkCollect = function(req,res){
-    var userId = req.param('userId');
     var recipeId = req.param('recipeId');
-
+    var userId = req.session.user_id;
     CollectDao.check(userId,recipeId,function (err1, collect) {
         console.log(collect.length);
         if(collect.length != 0){
