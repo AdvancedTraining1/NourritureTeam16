@@ -111,6 +111,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
 function ToListRecipe($scope, $http, $location){
     $scope.recipes = {};
     $scope.collect = {};
+    $scope.search = "";
     $scope.pageing={
         pageNo : 1,
         itemsCount : 10,
@@ -122,7 +123,11 @@ function ToListRecipe($scope, $http, $location){
     });
 
     $scope.list = function () {
-        pageing();
+        if($scope.search == ""){
+            pageing();
+        }else{
+            searchPaging();
+        }
     };
 
     function pageing(){
@@ -143,6 +148,7 @@ function ToListRecipe($scope, $http, $location){
         if($scope.search == ""){
             pageing();
         }else{
+            $scope.pageing.pageNo = 1;
             $http({
                 method: 'GET',
                 url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $scope.search
@@ -155,12 +161,24 @@ function ToListRecipe($scope, $http, $location){
         }
     };
 
-    $scope.addCollect = function(id){
+    function searchPaging(){
+        var api = "/service/recipe/search";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $scope.search
+        }).success(function(data, status) {
+            $scope.recipes = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
+    }
+
+    /*$scope.addCollect = function(id){
         var api = "/service/recipe/collect";
-        $scope.collect.userId = 11;
         $scope.collect.recipeId = id;
 
-        var checkApi = '/service/recipe/checkCollect' + '?userId=' + $scope.collect.userId + '&recipeId='+$scope.collect.recipeId;
+        var checkApi = '/service/recipe/checkCollect' + '?recipeId='+$scope.collect.recipeId;
 
         $.get(checkApi,function(data){
             if(data == "false"){
@@ -173,7 +191,7 @@ function ToListRecipe($scope, $http, $location){
                 alert("Already collected");
             }
         });
-    };$scope.id
+    };*/
 }
 
 function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
@@ -185,6 +203,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     $scope.product = {};
     $scope.collect = {};
     $scope.productSee = false;
+    $scope.seeCollect = true;
     $scope.commentPaging={
         pageNo : 1,
         itemsCount : 10,
@@ -195,7 +214,6 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
         itemsCount : 10,
         pageSize :6
     };
-
 
     $(function(){
         var recipeApi = "/service/recipe/showOne";
@@ -300,17 +318,20 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
         $scope.collect.userId = 11;
         $scope.collect.recipeId = $scope.id;
 
-        var checkApi = '/service/recipe/checkCollect' + '?userId=' + $scope.collect.userId + '&recipeId='+$scope.collect.recipeId;
+        var checkApi = '/service/recipe/checkCollect' + '?&recipeId='+$scope.collect.recipeId;
 
         $.get(checkApi,function(data){
             if(data == "false"){
                 $.post(api,$scope.collect,function(data){
                     alert(data);
                     productPage();
+                    $scope.seeCollect = false;
                     $scope.recipe.collectNum += 1;
                 });
             }else{
                 alert("Already collected");
+                productPage();
+                $scope.seeCollect = false;
             }
         });
     };
