@@ -7,9 +7,10 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var UserSchema = new mongoose.Schema({
     username: { type: String, index: true },
     account: { type: String, unique: true },
+    email: { type: String },
     password: { type: String },
     type: { type: Number },
-    phone: { type: String, unique: true },
+    phone: { type: String},
     sex: { type: Number },
     head:{ type: String },
     friends: [{

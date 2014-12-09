@@ -1,20 +1,26 @@
 /**
  * Created by liuhanxu on 2014-11-12.
  */
-var express = require('express');
-var router = express.Router();
+
 var UserinfoHandler = require('../controller/userinfoHandler');
+module.exports = function (app) {
 
-router.get('/testinterface',function(req,res){
-	res.render('testuserinfo');
-});
-router.get('/show',function(req,res){
-	res.render('userinfo/showUserinfo');
-});
-router.post('/register',UserinfoHandler.register);
-router.post('/login',UserinfoHandler.login);
-router.post('/modifypass',UserinfoHandler.modifypass);
-router.post('/modifyinfo',UserinfoHandler.modifyinfo);
-router.post('/showuserinfo',UserinfoHandler.viewUserinfo);
+	app.get('/testinterface',function(req,res){
+		res.render('testuserinfo');
+	});
+	app.get('/show',function(req,res){
+		res.render('userinfo/showUserinfo');
+	});
+	app.get('/service/userinfo/gotoRegister',function(req,res){
+		res.render('userinfo/register');
+	});
+	app.get('/service/userinfo/gotoInfo',function(req,res){
+		res.render('userinfo/info');
+	});
+	app.post('/service/userinfo/register',UserinfoHandler.register);
+	app.post('/service/userinfo/login',UserinfoHandler.login);
+	app.post('/modifypass',UserinfoHandler.modifypass);
+	app.post('/modifyinfo',UserinfoHandler.modifyinfo);
+	app.post('/showuserinfo',UserinfoHandler.viewUserinfo);
 
-module.exports = router;
+};

@@ -112,7 +112,7 @@ RecipeDao.updateCollectNum = function (id,callback) {
 
         return callback(null, recipe);
     });
-};
+}
 
 RecipeDao.comment = function (id,comment,callback) {
     Recipe.findByIdAndUpdate(id,{$push:comment},function(error,recipe){
@@ -120,4 +120,4 @@ RecipeDao.comment = function (id,comment,callback) {
 
         return callback(null, recipe);
     });
-};*/
+}*/

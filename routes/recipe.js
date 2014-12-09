@@ -13,6 +13,9 @@ module.exports = function (app) {
     app.get('/recipe/create', function(req,res){
         res.render("recipe/createRecipe");
     });
+    app.get('/recipe/create_an', function(req,res){
+        res.render("common/index");
+    });
     app.get('/recipe/list', function(req,res){
         res.render("recipe/listRecipe");
     });
@@ -22,11 +25,20 @@ module.exports = function (app) {
     app.get('/recipe/single', function(req,res){
         res.render("recipe/singleRecipe");
     });
+    app.get('/recipe/single_an/:id', function(req,res){
+        res.render("common/index");
+    });
     app.get('/recipe/otherAll', function(req,res){
         res.render("recipe/listOtherRecipe");
     });
+    app.get('/recipe/otherAll_an', function(req,res){
+        res.render("common/index");
+    });
     app.get('/recipe/ownAll', function(req,res){
         res.render("recipe/listORecipe");
+    });
+    app.get('/recipe/ownAll_an', function(req,res){
+        res.render("common/index");
     });
 
     //zanshi create comment product collect shangwei jia dui user duixiang de gengxin caozuo

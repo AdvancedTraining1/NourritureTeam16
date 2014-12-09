@@ -81,6 +81,9 @@ exports.listAll = function (req, res) {
     RecipeDao.getAll(pageNo,pageSize,function (err1, recipe) {
         RecipeDao.getAllNum(function(err2,num){
             if(!(err1 || err2)){
+                /*req.session.user_id = '5485bd76a0e572df17e81d70';
+                req.session.account = "cmm";
+                req.session.head = "/head/defaulthead.jpeg";*/
                 res.json({root:recipe,total:num});
             }
         });
@@ -98,7 +101,8 @@ exports.create = function (req, res){
         console.log('recipe数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
         console.log(params);
-        var recipe = params;
+        var recipe = new RecipeModel();
+        recipe = params;
 
         //特殊参数，数组形式，特殊处理，步骤和食材
         var mNum = params['mNum'];
@@ -126,11 +130,14 @@ exports.create = function (req, res){
         recipe.flag = true;
 
         //设置用户信息
-        /*var user = UserDao.getUserById(params['authorId']);
-        recipe.author = {};
-        recipe.author._id = params.authorId;
-        recipe.author.account = user.account;
-        recipe.author.head = user.head;*/
+        console.log("-------"+req.session);
+        console.log("-------"+JSON.stringify(req.session));
+
+        recipe.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
+        };
 
         RecipeDao.create(recipe,function (err, recipes) {
             if(err){
@@ -146,6 +153,9 @@ exports.create = function (req, res){
             }
         });
     });
+        /*recipe.author._id = params.userId;
+        recipe.author.account = user.account;
+        recipe.author.head = user.head;*/
 };
 
 exports.showOne = function (req, res) {
@@ -191,14 +201,16 @@ exports.comment = function(req,res){
     req.addListener("end", function () {
         console.log('recipe数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
-        var comment = params;
+        var comment = new CommentModel();
+        comment = params;
         comment.logTime = logTime();
         //设置用户信息
-        /*var user = UserDao.getUserById(params['authorId']);
-         recipe.author = {};
-         recipe.author._id = params.authorId;
-         recipe.author.account = user.account;
-         recipe.author.head = user.head;*/
+        comment.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
+        };
+
         console.log(comment);
 
         CommentRecipeDao.create(comment,function (err, recipes) {
@@ -235,6 +247,7 @@ exports.collect = function (req,res) {
         var collect = new CollectModel();
         collect = params;
         collect.logTime = logTime();
+        collect.userId = req.session.user_id;
 
         CollectDao.create(collect,function (err, collect) {
             if(!err){
@@ -262,14 +275,16 @@ exports.createProduct = function(req,res){
         console.log('product数据接收完毕');
         var params = querystring.parse(postData);//GET & POST  ////解释表单数据部分{name="zzl",email="zzl@sina.com"}
 
-        var product = params;
+        var product = new ProductModel();
+        product = params;
         product.logTime = logTime();
-        //设置用户信息
-        /*var user = UserDao.getUserById(params['authorId']);
-         recipe.author = {};
-         recipe.author._id = params.authorId;
-         recipe.author.account = user.account;
-         recipe.author.head = user.head;*/
+
+        product.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
+        };
+
         console.log(product);
 
         ProductDao.create(product,function (err, product) {
@@ -308,9 +323,8 @@ exports.listProduct = function(req,res){
 };
 
 exports.checkCollect = function(req,res){
-    var userId = req.param('userId');
     var recipeId = req.param('recipeId');
-
+    var userId = req.session.user_id;
     CollectDao.check(userId,recipeId,function (err1, collect) {
         console.log(collect.length);
         if(collect.length != 0){
@@ -481,6 +495,7 @@ function createLike(params){
 
 function logTime(){
     var date = new Date();
-    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    console.log(dateStr);
     return dateStr;
 }

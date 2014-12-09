@@ -7,24 +7,27 @@
 				h2
 					span.glyphicon.glyphicon-time
 					| {{recipe.logTime}} &nbsp;&nbsp;
-					a
-						span.glyphicon.glyphicon-comment
-						| {{recipe.commentNum}} comments &nbsp;
-					a
-						span.glyphicon.glyphicon-star
-						|{{recipe.collectNum}} collects &nbsp;
-					a
-						span.glyphicon.glyphicon-hand-up
-						|{{recipe.productNum}} products &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					a(href='' ng-click="addCollect()")
+					//a
+					span.glyphicon.glyphicon-comment
+					| {{recipe.commentNum}} comments &nbsp;
+					//a
+					span.glyphicon.glyphicon-star
+					|{{recipe.collectNum}} collects &nbsp;
+					//a
+					span.glyphicon.glyphicon-hand-up
+					|{{recipe.productNum}} products &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					a(href='' ng-click="addCollect()" ng-if='seeCollect')
 						span.glyphicon.glyphicon-star-empty
-						|Collect it
+						|Collect
+					a(ng-if='!seeCollect')
+						span.glyphicon.glyphicon-star
+						|Already Collected
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
 						span.divider /
 					li
-						a(href='/recipe/list') Recipes
+						a(href='/recipe/list_an') Recipes
 			.row
 				#leftcol.span8
 					article.post_content
@@ -97,7 +100,8 @@
 													figure.span1
 														img(alt='0' src='{{comment.author.head}}')
 													.span6
-														.comment_name user: {{comment.author.account}}
+														.comment_name
+															strong {{comment.author.account}}
 															//a.reply(ng-click='addComment(comment.author._id)') Reply
 														.comment_date
 															span.glyphicon.glyphicon-time
@@ -154,14 +158,19 @@
 
 
 				#sidebar.span4
-					aside.widget
+					aside.widget.ads.clearfix
 						h4 Author
-						figure.span2
-							a(href='')
-								img(alt='0' src='{{product.author.head}}')
+						.team_member(style='background:none')
+							figure(style="background-image: url({{recipe.author.head}})")
+								img(alt='0' src='{{recipe.author.head}}')
+							h5(style='color:#555') {{recipe.author.account}}
+						a(href='')
+							img(alt='0' src='{{recipe.author.head}}')
+						.row
+							| {{recipe.author.account}}
 					aside.widget
 						.row
-							| {{recipe.auther.account}}
+							| {{recipe.author.account}}
 						.row
 							p | user's recipe_count waiting for liu's session
 
