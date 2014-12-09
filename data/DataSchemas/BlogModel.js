@@ -12,8 +12,8 @@ var BlogSchema = new Schema({
     content:{ type: String },
     tag:{type:String},
     type:{ type:String },//type 1 publish, type 2 save to draft
-    create_at: { type: Date, default: Date.now },
-    update_at: { type: Date, default: Date.now },
+    create_at: { type: String},
+    update_at: { type: String},
     author: {
         id: String,
         account: String },

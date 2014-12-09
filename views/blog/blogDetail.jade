@@ -31,10 +31,12 @@
                     article.post(style="margin-bottom: 20px;")
                         .post_content
                             #post_content
+                    .keyword_content
+                        h5 Key Word: {{blog.tag}}
                         //| !{blog.content}
                         //div.post_content!= {{blog.content}}
-                    .like__content(style="text-align:right;margin-right:10px")
-                        a(href="" ng-click="addCollect()").glyphicon.glyphicon-thumbs-up {{blog.like_count}}
+                    .like_content(style="text-align:right;margin-right:10px")
+                        a(href="" ng-click="addLike()").glyphicon.glyphicon-thumbs-up {{blog.like_count}}
                     .post_comments
                         h4 Comments
                         h5(ng-if='noComment') No comments right now
@@ -71,19 +73,16 @@
                                 .span8
                                     a.btn.send(ng-click='addComment()') Add comment
                 #sidebar.span4
-                    aside.widget
-                        h4 Blog Categories
-                        ul.nav.nav-tabs.nav-stacked
-                            li.active
-                                a(href='#') All
-                            li
-                                a(href='#') News
-                            li
-                                a(href='#') Press
-                    aside.widget
-                        h4 Text Widget
-                        p
-                            | Fugiat dapibus, tellus ac cursus commodo, mauesris condime ntum nibh, ut fermentum mas justo sitters amet risus. Cras mattis cosi sectetut amet fermens etrsaters tum aecenas faucib sadips amets.
+                    aside.widget.ads.clearfix
+                        h4 Author
+                        .team_member(style='background:none')
+                            figure(style="background-image: url({{blog.author.head}})")
+                                img(alt='0' src='{{blog.author.head}}')
+                            h5(style='color:#555') {{blog.author.account}}
+                        a(href='')
+                            img(alt='0' src='{{recipe.author.head}}')
+                        .row
+                            | {{recipe.author.account}}
                     aside.widget.ads.clearfix
                         h4 Ads
                         a(href='#')

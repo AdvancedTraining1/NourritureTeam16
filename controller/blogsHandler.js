@@ -10,6 +10,7 @@ var CommentToBlogDao = require('../dao/CommentToBlogDao');
 var CommentToBlogModel = require('./../data').CommentToBlog;
 var BlogLikeModel = require('./../data').BlogLike;
 var BlogLikeDao = require('../dao/BlogLikeDao');
+var UserDao = require('../dao/UserDao');
 var querystring=require('querystring');
 
 function BlogHander() {
@@ -74,15 +75,19 @@ BlogHander.publishABlog = function (req, res) {
         var params = querystring.parse(postData);
         //var title = req.param('title');
         //var content = req.param('content');
+        var user_id = req.session.user_id;
         var title = params.title;
         var content = params.content;
         var tag = params.tags;
+        var time = getTime();
+        console.log(time);
         console.log(title);
         var blog = new BlogModel({
             title: title,
             content: content,
             tag:tag,
             type: "1",
+            create_at:time,
             author: {
                 id: req.session.user_id,
                 account: req.session.account }
@@ -97,7 +102,7 @@ BlogHander.publishABlog = function (req, res) {
                 message = "publish successful";
                 console.log(newblog._id);
                 var id = newblog._id;
-                res.json(200, {message:message});
+                res.json(200, {message:message,newId:id});
 
             }
 
@@ -364,11 +369,11 @@ BlogHander.likeBlog = function (req, res) {
                     if (error) {
                         console.log(error);
                         var message = "update failed";
-                        res.json(500, {message: message});
+                        res.json(500, {message: message,status:false});
                         return;
                     } else {
                         console.log("like successful");
-                        res.json(200, {message: "like successful"});
+                        res.json(200, {message: "like successful",status:true});
                     }
                 });
 
@@ -444,6 +449,7 @@ BlogHander.addCommentToBlog=function(req, res){
         var user_id = req.session.user_id;
         var account = req.session.account;
         var blog_id = params.blog_id;
+        var time = getTime();
         console.log("blog_id----"+blog_id)
         //var reply_id = params.comment_id;
 
@@ -454,7 +460,8 @@ BlogHander.addCommentToBlog=function(req, res){
                 account: account },
             content: content,
          //   reply_id: reply_id,
-            blog_id:blog_id
+            blog_id:blog_id,
+            time:time
         });
 
         BlogDao.getOne(blog_id, function (err, blog) {
@@ -542,6 +549,13 @@ BlogHander.checkCollction=function (req, res) {
             res.send("false");
         }
     });
+}
+
+function getTime(){
+    var date = new Date();
+    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    console.log(dateStr);
+    return dateStr;
 }
 
 

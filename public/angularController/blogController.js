@@ -3,7 +3,8 @@
  */
 'use strict';
 
-function ToCreateBlog($scope, $http) {
+function ToCreateBlog($scope, $http,$location) {
+    $scope.id = {}
 
     $scope.createBlog = function () {
         $scope.blog={}
@@ -17,11 +18,12 @@ function ToCreateBlog($scope, $http) {
         alert($scope.blog.tags);
 
         $.post('/blog/publishBlog',$scope.blog,function(data){
-            alert("a");
-            alert(data);
+            $location.path("/blog/blogDetail_angular/"+data.newId);
+            $scope.$apply();
         });
 
     }
+
 }
 
 function ToListBlog($scope, $http, $location){
@@ -209,6 +211,28 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
             }else{
                 alert(data.message);
             }
+        })
+
+    };
+
+    $scope.addLike = function(){
+
+        var checkApi = '/blog/likeBlog/' + $routeParams.blog_id;
+
+        $.get(checkApi,function(data) {
+
+
+            if(data.status){
+
+                alert(data.message);
+                paging();
+
+
+            }else{
+                alert(data.message);
+            }
+
+
         })
 
     };

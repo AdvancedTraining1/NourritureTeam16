@@ -10,7 +10,7 @@ var CommentToBlogSchema = new mongoose.Schema({
         account: String,
         head:String
     },
-    time: { type: Date, default: Date.now },
+    time: { type: String },
     content: String,
     reply_id: { type: ObjectId },
     blog_id:{type:ObjectId}
