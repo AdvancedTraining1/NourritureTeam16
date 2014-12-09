@@ -158,14 +158,19 @@
 
 
 				#sidebar.span4
-					aside.widget
+					aside.widget.ads.clearfix
 						h4 Author
-						figure.span2
-							a(href='')
-								img(alt='0' src='{{product.author.head}}')
+						.team_member(style='background:none')
+							figure(style="background-image: url({{recipe.author.head}})")
+								img(alt='0' src='{{recipe.author.head}}')
+							h5(style='color:#555') {{recipe.author.account}}
+						a(href='')
+							img(alt='0' src='{{recipe.author.head}}')
+						.row
+							| {{recipe.author.account}}
 					aside.widget
 						.row
-							| {{recipe.auther.account}}
+							| {{recipe.author.account}}
 						.row
 							p | user's recipe_count waiting for liu's session
 

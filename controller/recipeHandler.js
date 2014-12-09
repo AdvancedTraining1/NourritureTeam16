@@ -495,6 +495,7 @@ function createLike(params){
 
 function logTime(){
     var date = new Date();
-    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    console.log(dateStr);
     return dateStr;
 }
