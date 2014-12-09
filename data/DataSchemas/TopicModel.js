@@ -10,7 +10,7 @@ var TopicSchema = new mongoose.Schema({
     author: {
         id: String,
         account: String },
-    time: { type: Date, default: Date.now },
+    time: { type: String },
 
     upload_count: { type: Number, default: 0 }
 });

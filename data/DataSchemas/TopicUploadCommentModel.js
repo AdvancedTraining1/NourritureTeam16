@@ -9,7 +9,7 @@ var TopicUploadCommentSchema = new mongoose.Schema({
     author: {
         id: ObjectId,
         account: String },
-    time: { type: Date, default: Date.now },
+    time: { type: String },
     content: String,
     reply_id: { type: ObjectId },
     topicUpload_id:{ type:ObjectId }
