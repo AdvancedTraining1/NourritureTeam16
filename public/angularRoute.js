@@ -51,7 +51,7 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
-            when('/blog/createBlog',{
+            when('/blog/createBlogs',{
                 templateUrl:'/blog/createBlog',
                 controller:ToCreateBlog
             }).
