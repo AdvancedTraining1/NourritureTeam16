@@ -27,8 +27,7 @@
 					li
 						a(href='/index') Home
 						span.divider /
-					li
-						a(href='/recipe/list_an') Recipes
+					li.active Friend Status
 			.row
 				#leftcol.span8
 					article.post_content
@@ -167,11 +166,11 @@
 						.row
 							| {{recipe.author.account}}
 					aside.widget
-						.row
-							| {{recipe.author.account}}
-						.row
-							p | user's recipe_count waiting for liu's session
-							button.btn.btn-info(ng-click='jumpToRecipe(11)') {{}} See Recipes
-							//a(href='/recipe/otherAll/11')
-							button.btn.btn-info(ng-click='') {{}} Fans
-							button.btn.btn-info(ng-click='') {{}} Blogs
+						h4 Categories
+						li
+							button.btn.btn-info(ng-click='toRecipe()') Recipe
+						li
+							button.btn.btn-info(ng-click='toBlog()') Blog
+						li
+							button.btn.btn-info(ng-click='toTopic()') Topic
+

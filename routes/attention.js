@@ -36,31 +36,30 @@ module.exports = function(app){
     app.get('/service/attention/searchAll',AttentionsHandler.searchAll);
     app.get('/service/attention/listAll',AttentionsHandler.listAll);
 
+    app.get('/service/attention/check/:friendId',AttentionsHandler.checkAttention);
+    app.get('/service/attention/addAttentions/:friendId',AttentionsHandler.addAttentions);
+    app.get('/service/attention/deleteAttentions/:friendId',AttentionsHandler.deleteAttentions);
+
 
 
     app.get('/attention/oneRecipe',function(req,res){
         res.render("attention/oneRecipe");  //views
     });
-    app.get('/service/attention/lookOneFriendStatusRecipe',AttentionsHandler.lookOneFriendStatusRecipe);
+    app.get('/service/attention/lookOneFriendStatusRecipe',AttentionsHandler.lookOneFriendStatusRecipe);  //enter
 
 
 
     app.get('/attention/oneBlog',function(req,res){
         res.render("attention/oneBlog");  //views
     });
-    app.get('/service/attention/lookOneFriendStatusBlog',AttentionsHandler.lookOneFriendStatusBlog);
+    app.get('/service/attention/lookOneFriendStatusBlog',AttentionsHandler.lookOneFriendStatusBlog);  //enter
 
 
 
     app.get('/attention/oneTopic',function(req,res){
         res.render("attention/oneTopic");  //views
     });
-    app.get('/service/attention/lookOneFriendStatusTopic',AttentionsHandler.lookOneFriendStatusTopic);
-
-
-
-    app.get('/attention/addAttentions/',AttentionsHandler.addAttentions);
-    app.get('/attention/deleteAttentions/',AttentionsHandler.deleteAttentions);
+    app.get('/service/attention/lookOneFriendStatusTopic',AttentionsHandler.lookOneFriendStatusTopic);  //enter
 
 };
 

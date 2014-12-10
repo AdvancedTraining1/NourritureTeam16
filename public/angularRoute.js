@@ -77,17 +77,13 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/attention/oneRecipe', //routes
                 controller:ToLookOneRecipe
             }).
-            when('/attention/oneBlog/:blogId',{
+            when('/attention/oneBlog/:blog_id',{
                 templateUrl:'/attention/oneBlog', //routes
                 controller:ToLookOneBlog
             }).
             when('/attention/oneTopic/:topicId',{
                 templateUrl:'/attention/oneTopic', //routes
                 controller:ToLookOneTopic
-            }).
-            when('/attention/addAttentions/:friendId',{//????????????
-                templateUrl:'/attention/addAttentions',
-                controller:ToAddAttention
             }).
     //---------------------------------zhaiyuan end----------------------------------------------------------------
 
