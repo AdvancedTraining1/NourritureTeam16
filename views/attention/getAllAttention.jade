@@ -21,18 +21,11 @@
 						.portfolio_description
 							h3
 								a(href='#') {{user.username}}
-							a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
-						//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							a(href='' ng-click="addCollect()" ng-if='seeCollect')
+							//a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
+							a.btn.btn-primary(href='' ng-click="addAttention()" ng-if='seeAttention')
 								span.glyphicon.glyphicon-star-empty
-								| Collect
-							a(ng-if='!seeCollect')
+								| attention
+							a.btn.btn-primary(ng-click="deleteAttention()" ng-if='!seeAttention')
 								span.glyphicon.glyphicon-star
-								| Already Collected
-							a(href='' ng-click="addCollect()" ng-if='seeCollect')
-								span.glyphicon.glyphicon-star-empty
-								| Collect
-							a(ng-if='!seeCollect' ng-click="deleteCollect()")
-								span.glyphicon.glyphicon-star
-								| cancel Collected
+								| cancel attention
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")

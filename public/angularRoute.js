@@ -89,10 +89,6 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/attention/oneTopic', //routes
                 controller:ToLookOneTopic
             }).
-            when('/attention/addAttentions/:friendId',{//????????????
-                templateUrl:'/attention/addAttentions',
-                controller:ToAddAttention
-            }).
     //---------------------------------zhaiyuan end----------------------------------------------------------------
 
             when('/blog/createBlog_angular',{

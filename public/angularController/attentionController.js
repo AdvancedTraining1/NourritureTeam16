@@ -141,6 +141,11 @@ function ToListFriendStatusTopic($scope, $http, $location){
 function ToListAllAttention($scope,$routeParams, $http, $location){
     //$scope.search = $routeParams.search;
     //alert($routeParams.search);
+
+    $scope._id = $routeParams.blog_id;//?
+    $scope.seeCollect = true;
+
+
     $scope.users = {};
     $scope.pageing={
         pageNo : 1,  //页码
@@ -177,6 +182,8 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).error(function(data, status) {
 
         });
+
+        checkAttention();//?
     }
     $(function(){
         //alert($routeParams.search);
@@ -195,6 +202,72 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             });
         }
     });
+
+
+    function checkAttention(){
+
+        var checkApi = '/service/attention/check/' + $scope._id;
+
+        $http({
+            method: 'GET',
+            url: checkApi
+        }).success(function(data,status){
+            if(data == "false"){
+
+                $scope.seeAttention = true;
+
+
+            }else{
+
+                $scope.seeAttention = false;
+            }
+        });
+
+    };
+
+    $scope.addAttention = function(){
+
+        var checkApi = '/service/attention/addAttentions/' + $scope._id;
+
+        $.get(checkApi,function(data) {
+
+            if(data){
+                alert(data);
+                paging();
+                $scope.seeAttention = false;
+
+            }else{
+                alert("already attention!");
+                paging();
+                $scope.seeAttention = false;
+
+            }
+
+
+        })
+
+    };
+
+    $scope.deleteAttention = function(){
+
+        var checkApi = '/service/attention/deleteAttentions/' + $scope._id;
+
+        $.get(checkApi,function(data) {
+
+            if(data){
+                alert(data);
+                paging();
+                $scope.seeAttention = true;
+
+            }else{
+                alert("already cancel!");
+                paging();
+                $scope.seeAttention = true;
+
+            }
+        })
+
+    };
 }
 
 
@@ -589,7 +662,7 @@ function ToLookOneTopic($scope,$routeParams, $http, $location){
 
 function ToAddAttention($scope,$routeParams, $http, $location){
     //$scope.search = $routeParams.friendId;
-    alert("关注成功");
+    /*alert("关注成功");
     $(function(){
         var api = "/service/attention/addAttentions";
 
@@ -603,5 +676,61 @@ function ToAddAttention($scope,$routeParams, $http, $location){
 
             });
 
+    });*/
+
+    $scope.users = {};
+    $scope.pageing={
+        pageNo : 1,  //页码
+        itemsCount : 3,  //总共
+        pageSize :2  //每页有几个
+    };
+
+    $(function(){
+        paging();
     });
+
+    $scope.list = function () { //下一页
+        //paging();
+        var api = "/service/attention/searchAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
+    };
+
+    function paging(){
+        var api = "/service/attention/listAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status) {
+
+        });
+    }
+    $(function(){
+        //alert($routeParams.search);
+        var api = "/service/attention/searchAll";
+        if($routeParams.search == ""){
+            paging();
+        }else{
+            $http({
+                method: 'GET',
+                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
+            }).success(function(data, status) {
+                $scope.users = data.root;
+                $scope.pageing.itemsCount = data.total;
+            }).error(function(data, status) {
+
+            });
+        }
+    });
+
 }
