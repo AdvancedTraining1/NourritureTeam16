@@ -34,17 +34,36 @@ router.get("/",function(req,res){
     res.render('index', { title: 'Express' });
 });
 router.get('/createTopic', function(req, res) {
-    res.render('createTopic');
+    res.render('topic/createTopic');
 });
+router.get('/createTopic_angular', function(req, res) {
+    res.render('common/index');
+});
+router.get('/topicList', function(req, res) {
+    res.render('topic/topicList');
+});
+router.get('/topicList_angular', function(req, res) {
+    res.render('common/index');
+});
+
+router.get('/topicDetail', function(req, res) {
+    res.render('topic/topicDetail');
+});
+router.get('/topicDetail_angular/:topic_id', function(req, res) {
+    res.render('common/index');
+});
+
 router.get('/showTopicDetail/:topic_id',topicHander.getATopic)
 router.get('/showTopicList',topicHander.getAlltopics);
 router.post('/publishTopic',topicHander.publishTopic);
-router.post('/joinTopic',topicHander.uploadProduct);
+router.post('/uploadProduct',topicHander.uploadProduct);
+router.get('/getUploadToATopic',topicHander.getUploadToATopic);
 router.get('/likeTopicUpload/:Upload_id',topicHander.likeTopicUpload);
 router.get('/cancelLikeTopicUpload/:Upload_id',topicHander.cancelLikeTopicUpload);
 router.post('/addCommentToTopicUpload',topicHander.addCommentToTopicUpload);
 router.get('/getAllCommentToTopicUpload/:Upload_id',topicHander.getAllCommentToTopicUpload);
 router.get('/deleteCommentToTopicUpload/:comment_id',topicHander.deleteCommentToTopicUpload);
+router.post('/upload', topicHander.upload);
 
 
 module.exports = router;

@@ -15,3 +15,11 @@ CollectBlogDao.create = function(collectBlog,callback){
         return callback(null, newCollectBlog);
     });
 }
+
+CollectBlogDao.check = function (userId,recipeId,callback) {
+    CollectBlogModel.find({user_id:userId,blog_id:recipeId},function(error,collect){
+        if(error)
+            return callback(error,null);
+        return callback(null, collect);
+    });
+};

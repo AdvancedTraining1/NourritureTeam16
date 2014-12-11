@@ -21,20 +21,11 @@
 						.portfolio_description
 							h3
 								a(href='#') {{user.username}}
-							a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
-				//article.post(ng-repeat="user in users")
-					.post_header
-						h3.post_title
-							//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
-							a(href='#') {{user.head}}
-						.post_sub
-							span.glyphicon.glyphicon-time {{user.username}} &nbsp;&nbsp;
-								//a(href='/recipe/single#post_comments')
-									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
-					.post_content
-						//figure
-							a(href='/recipe/single')
-								img(alt='0' src='{{recipe.photo}}')
-						//p {{recipe.description}}
-						a.btn.btn-primary(href='#') attention
+							//a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
+							a.btn.btn-primary(href='' ng-click="addAttention()" ng-if='seeAttention')
+								span.glyphicon.glyphicon-star-empty
+								| attention
+							a.btn.btn-primary(ng-click="deleteAttention()" ng-if='!seeAttention')
+								span.glyphicon.glyphicon-star
+								| cancel attention
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")

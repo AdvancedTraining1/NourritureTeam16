@@ -11,7 +11,8 @@ var TopicUploadSchema = new mongoose.Schema({
         account: String },
     picture: String,
     title:String,
-    upload_time: { type: Date, default: Date.now },
+    story:String,
+    upload_time: { type: String },
     like_count: { type: Number, default: 0 },
 
     comment_count: { type: Number, default: 0 }

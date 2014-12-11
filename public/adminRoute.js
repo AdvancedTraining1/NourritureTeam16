@@ -11,12 +11,24 @@ angular.module('administrator', ['ngRoute','angularFileUpload']).
 				templateUrl: '/adminIndexPart',
 				controller: IndexPage
 			}).
-			when('/admin/addUser', {
-				templateUrl: '/admin/adduser'
+			when('/admin/addUser_an', {
+				templateUrl: '/admin/addUser'
 			}).
-			when('/admin/getUser', {
+			when('/admin/getUser_an', {
 				templateUrl: '/admin/getUser',
-				controller: ToGetUser
+				controller: ToUser
+			}).
+			when('/admin/updateUser_an/:_account', {
+				templateUrl: '/admin/updateUser',
+				controller: UpdateUser
+			}).
+			when('/admin/addSeason_an', {
+				templateUrl: '/admin/addSeason',
+				controller: SeasonFood
+			}).
+			when('/admin/getSeason_an', {
+				templateUrl: '/admin/getSeason',
+				controller: SeasonFood
 			}).
 			otherwise({
 				redirectTo: '/'

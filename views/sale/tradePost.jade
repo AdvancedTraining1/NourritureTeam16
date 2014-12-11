@@ -1,0 +1,27 @@
+//Created by zhangcan on 14-12-9.
+#main(style='min-height:500px')
+	.container
+		section
+			.hgroup
+				h1 {{sale.title}}
+				h2
+					span.glyphicon.glyphicon-time
+					| {{sale.create_at}} &nbsp;&nbsp;
+					//a
+					span.glyphicon.glyphicon-comment
+					| {{sale.commentNum}} comments &nbsp;
+					//a
+					span.glyphicon.glyphicon-star
+					|{{sale.collectNum}} collects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					//a
+					a(href='' ng-click="addCollect()" ng-if='seeCollect')
+						span.glyphicon.glyphicon-star-empty
+						|Collect
+					a(ng-if='!seeCollect')
+						span.glyphicon.glyphicon-star
+						|Already Collected
+				ul.breadcrumb.pull-right
+					li
+						a(href='/index') Home
+						span.divider /
+					li.active Recipes

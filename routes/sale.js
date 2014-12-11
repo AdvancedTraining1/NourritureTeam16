@@ -23,6 +23,10 @@ router.get('/listTradePost',function(req,res){
     res.render('sale/listTradePost');
 });
 
+router.get('/showTradePost',function(req,res){
+    res.render('sale/tradePost');
+});
+
 router.get('/listAll',saleHandler.listAll);
 router.get('/getAll',saleHandler.getAll);
 router.get('/getOne',saleHandler.getOne);

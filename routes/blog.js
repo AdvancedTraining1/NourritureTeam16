@@ -35,6 +35,27 @@ router.get("/",function(req,res){
 router.get('/createBlog', function(req, res) {
     res.render('blog/createBlog');
 });
+router.get('/createBlog_angular', function(req, res) {
+    res.render('common/index');
+});
+router.get('/blogList', function(req, res) {
+    res.render('blog/blogList');
+});
+
+router.get('/blogList_angular', function(req, res) {
+    res.render('common/index');
+});
+
+router.get('/blogDetail', function(req, res) {
+    res.render('blog/blogDetail');
+});
+router.get('/blogDetail_angular/:blog_id', function(req, res) {
+    res.render('common/index');
+});
+/*router.get('/blogDetail_angular/blog_id', function(req, res) {
+    res.render('common/index');
+});*/
+
 router.get('/showBlogDetail/:blog_id',BlogsHander.getABlogs)
 router.get('/showBlogList',BlogsHander.getAllBlogs);
 router.post('/publishBlog',BlogsHander.publishABlog);
@@ -43,11 +64,12 @@ router.get('/modifyBlog/:blog_id',BlogsHander.modifyBlog);
 router.post('/saveModifyBlog',BlogsHander.saveModifyBlog);
 router.get('/deleteBlog/:blog_id',BlogsHander.deleteBlog);
 router.get('/collectionBlog/:blog_id',BlogsHander.collectionBlog);
+router.get('/checkCollection/:blog_id',BlogsHander.checkCollction);
 router.get('/cancellationBlog/:blog_id',BlogsHander.cancellationBlog);
 router.get('/likeBlog/:blog_id',BlogsHander.likeBlog);
 router.get('/cancelLikeBlog/:blog_id',BlogsHander.cancelLikeBlog);
 router.post('/addCommentToBlog',BlogsHander.addCommentToBlog);
-router.get('/showCommentListToBlog/:blog_id',BlogsHander.getAllCommentToBlog);
+router.get('/showCommentListToBlog',BlogsHander.getAllCommentToBlog);
 router.get('/deleteCommentToBlog/:comment_id',BlogsHander.deleteCommentToBlog);
 
 module.exports = router;
