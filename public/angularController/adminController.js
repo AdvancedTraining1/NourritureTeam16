@@ -210,3 +210,88 @@ function UpdateUser($scope, $routeParams,$http, $location, $upload) {
 		});
 	};
 }
+
+function SeasonFood($scope, $routeParams,$http, $location, $upload) {
+	$scope.photoSee = false;
+	$scope.season = {};
+	$scope.seasons = {};
+	$scope.search_condition = {};
+
+	$scope.is_visible = false;
+	$scope.pageing={
+		pageNo : 1,
+		itemsCount : 10,
+		pageSize :5
+	};
+
+	function pageing(){
+		var api = "/admin/searchSeason";
+
+		$scope.search_condition.name = document.getElementById('txt_name').value;
+		//alert($scope.search_condition.name);
+		$http({
+			method: 'GET',
+			url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize+'&seasonName='+ $scope.search_condition.name
+		}).success(function(data, status) {
+			//alert(data);
+			$scope.seasons = data.seasons;
+
+			$scope.pageing.itemsCount = data.total;
+			//alert($scope.pageing.itemsCount);
+			$scope.search_condition.content = null;
+
+			if(data.total == 0)
+			{
+				alert("Season food not exist");
+			}else
+			{
+				$scope.is_visible = true;
+			}
+
+		}).error(function(data, status) {
+			//alert("Data error");
+		});
+
+	}
+
+	$scope.submit = function ()
+	{
+		pageing();
+	}
+
+	$scope.submitData = function ()
+	{
+		var api = "/admin/addSeason";
+		//alert($routeParams._account);
+		$http({
+			method: 'POST',
+			url: api + '?name=' + $scope.season.name + '&description='+$scope.season.description + '&type='+$scope.season.type + '&mounth='+$scope.season.mounth + '&path='+$scope.season.photo
+		}).success(function(data, status) {
+			alert(data);
+			window.location.reload();
+
+		}).error(function(data, status) {
+			//alert("Data error");
+		});
+	}
+
+	$scope.onFileSelect1 = function ($files) {
+
+		//alert("111 111 image upload success!");
+		if($files != null){
+			$scope.upload = $upload.upload({
+				url: '/admin/season/upload',
+				file: $files
+			}).progress(function (evt) {
+				console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+			}).success(function (data, status, headers, config) {        // file is uploaded successfully
+				console.log(data);
+				//alert("Season food image upload success!");
+				//alert(data);
+				//$scope.successMessage="Image upload success!";
+				$scope.season.photo = data;
+				$scope.photoSee = true;
+			});
+		}
+	};
+}

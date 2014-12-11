@@ -7,6 +7,7 @@ var UserDao = require("../dao/UserDao");
 var TopicDao = require('../dao/TopicDao');
 var UsersModel = require('../data').user;
 var querystring = require('querystring');
+//var formidable = require('formidable');
 //构造
 function AdminHandler()
 {

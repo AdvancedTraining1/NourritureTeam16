@@ -56,19 +56,20 @@ SeasonDao.update = function (conditions,update,options,callback) {
     });
 }
 
-//AdvertiseDao.getUserById = function (userId,callback) {
-//    advertiseModel.find({"account":userId}).exec(function(error,user){
-//        if(error) return callback(error,null);
-//
-//        return callback(null, user);
-//    });
-//}
-SeasonDao.searchSeasonFood = function (search,callback) {
-    seasonModel.find({"name":search}).exec(function(error,user){
+SeasonDao.searchSeasonFood = function (pageNo,pageSize,name,callback) {
+    seasonModel.find({"name":name}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function(error,user){
         if(error) return callback(error,null);
 
         return callback(null, user);
     });
+}
+
+SeasonDao.getNum = function (conditions,callback) {
+	seasonModel.count(conditions).exec(function(error,num){
+		if(error)
+			return callback(error,null);
+		return callback(null, num);
+	});
 }
 
 module.exports = SeasonDao;
