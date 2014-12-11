@@ -20,10 +20,10 @@
 							h3
 								a(href='#') {{user.username}}
 							//a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
-							a.btn.btn-primary(href='' ng-click="addAttention()" ng-if='seeAttention')
+							a.btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if='seeAttention')
 								span.glyphicon.glyphicon-star-empty
 								| attention
-							a.btn.btn-primary(ng-click="deleteAttention()" ng-if='!seeAttention')
+							a.btn.btn-primary(ng-click="deleteAttention(user._id,user.account,user.head)" ng-if='!seeAttention')
 								span.glyphicon.glyphicon-star
 								| cancel attention
 				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")

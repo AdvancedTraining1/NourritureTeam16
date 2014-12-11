@@ -37,8 +37,8 @@ module.exports = function(app){
     app.get('/service/attention/listAll',AttentionsHandler.listAll);
 
     app.get('/service/attention/check/:friendId',AttentionsHandler.checkAttention);
-    app.get('/service/attention/addAttentions/:friendId',AttentionsHandler.addAttentions);
-    app.get('/service/attention/deleteAttentions/:friendId',AttentionsHandler.deleteAttentions);
+    app.get('/service/attention/addAttentions',AttentionsHandler.addAttentions);
+    app.get('/service/attention/deleteAttentions',AttentionsHandler.deleteAttentions);
 
 
 

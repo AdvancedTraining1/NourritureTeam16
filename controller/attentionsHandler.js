@@ -141,24 +141,35 @@ AttentionsHandler.checkAttention=function (req, res) {
 AttentionsHandler.addAttentions=function(req,res){
     console.log("关注");
     var friendId = req.param('friendId');
+    var friendAccount = req.param('friendAccount');
+    var friendHead = req.param('friendHead');
+
+    var friends = {};
+    friends._id = friendId;
+    friends.account = friendAccount;
+    friends.head = friendHead;
+
+
     //var userId = req.session.user_id;
-    var userId = "5464a134462eaef3480abb39";
+    //var userAccount = req.session.user_account;
+    //var userHead = req.session.user_head;
+    //var fans={userId,userAccount,userHead};
 
     /*
     var friends = {};
     friends._id = "5464a08744ea60084850294a";
     friends.account = "ZHAIYUAN";
     friends.head = "2.img";
+     */
 
     var fans = {};
     fans._id = "5464a134462eaef3480abb39";
     fans.account = "ZHAI";
     fans.head = "2.img";
-*/
 
-    AttentionsDao.addAttentions(userId,friendId,function(err,users){
+    AttentionsDao.addAttentions(fans._id,friends,function(err,users){
         //res.write(users);
-        AttentionsDao.addAttentionsFans(friendId,userId,function (err, users) {
+        AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
@@ -171,23 +182,34 @@ AttentionsHandler.addAttentions=function(req,res){
 AttentionsHandler.deleteAttentions=function(req,res){
     console.log("取消关注");
     var friendId = req.param('friendId');
+    var friendAccount = req.param('friendAccount');
+    var friendHead = req.param('friendHead');
+
+    var friends = {};
+    friends._id = friendId;
+    friends.account = friendAccount;
+    friends.head = friendHead;
+
     //var userId = req.session.user_id;
-    var userId = "5464a134462eaef3480abb39";
+    //var userAccount = req.session.user_account;
+    //var userHead = req.session.user_head;
+    //var fans={userId,userAccount,userHead};
 
 
    /* var friends = {};
     friends._id = "5464a08744ea60084850294a";
     friends.account = "ZHAIYUAN";
     friends.head = "2.img";
+    */
 
     var fans = {};
     fans._id = "5464a134462eaef3480abb39";
     fans.account = "ZHAI";
-    fans.head = "2.img";*/
+    fans.head = "2.img";
 
 
-    AttentionsDao.deleteAttentions(userId,friends,function(err,users){
-        AttentionsDao.deleteAttentionsFans(friendId,fans,function (err, users) {
+    AttentionsDao.deleteAttentions(fans._id,friends,function(err,users){
+        AttentionsDao.deleteAttentionsFans(friends._id,fans,function (err, users) {
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });

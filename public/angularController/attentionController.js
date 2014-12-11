@@ -166,10 +166,33 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data, status) {
             $scope.users = data.root;
             $scope.pageing.itemsCount = data.total;
+            for(var i in $scope.users){
+                var friendId=$scope.users[i]._id;
+
+                checkAttention(friendId);
+            }
         }).error(function(data, status) {
 
         });
     };
+
+    function pagingSearch(){
+        var api = "/service/attention/searchAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+            for(var i in $scope.users){
+                var friendId=$scope.users[i]._id;
+
+                checkAttention(friendId);
+            }
+        }).error(function(data, status) {
+
+        });
+    }
 
     function paging(){
         var api = "/service/attention/listAll";
@@ -178,8 +201,12 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
         }).success(function(data, status) {
             $scope.users = data.root;
-
             $scope.pageing.itemsCount = data.total;
+            for(var i in $scope.users){
+                var friendId=$scope.users[i]._id;
+
+                checkAttention(friendId);
+            }
         }).error(function(data, status) {
 
         });
@@ -197,51 +224,56 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             }).success(function(data, status) {
                 $scope.users = data.root;
                 $scope.pageing.itemsCount = data.total;
+                for(var i in $scope.users){
+                    var friendId=$scope.users[i]._id;
+                    var flag=$scope.users[i].attentionFlag;
+
+                    checkAttention(friendId,flag);
+                }
             }).error(function(data, status) {
 
             });
 
-            checkAttention();//?
         }
     });
 
 
-    function checkAttention(){
+    function checkAttention(friendId,flag){
 
-        var checkApi = '/service/attention/check/' + $scope.user._id;
+        var checkApi = '/service/attention/check/' + friendId;
 
         $http({
             method: 'GET',
             url: checkApi
-        }).success(function(data,status){
+        }).success(function(data){
             if(data == "false"){
 
-                $scope.seeAttention = true;
-
+                $scope.seeAttention = true;//attention
+                flag=false;//default not attention
 
             }else{
 
-                $scope.seeAttention = false;
+                $scope.seeAttention = false;//?????????????????
             }
         });
 
     };
 
-    $scope.addAttention = function(){
-console.log($scope.user._id);
-        var checkApi = '/service/attention/addAttentions/' + $scope.user._id;
+    $scope.addAttention = function(friendId,friendAccount,friendHead){
+
+        var checkApi = '/service/attention/addAttentions/' + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
 
         $.get(checkApi,function(data) {
 
             if(data){
                 alert(data);
-                paging();
-                $scope.seeAttention = false;
+                pagingSearch();
+                //$scope.seeAttention = false;
 
             }else{
                 alert("already attention!");
-                paging();
-                $scope.seeAttention = false;
+                pagingSearch();
+                //$scope.seeAttention = false;
 
             }
 
@@ -250,21 +282,22 @@ console.log($scope.user._id);
 
     };
 
-    $scope.deleteAttention = function(){
+    $scope.deleteAttention = function(friendId,friendAccount,friendHead){
 
-        var checkApi = '/service/attention/deleteAttentions/' + $scope.user._id;
+        var checkApi = '/service/attention/deleteAttentions/'  + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
 
         $.get(checkApi,function(data) {
 
             if(data){
                 alert(data);
-                paging();
                 $scope.seeAttention = true;
+                pagingSearch();
+                //checkAttention(friendId);
 
             }else{
                 alert("already cancel!");
-                paging();
-                $scope.seeAttention = true;
+                pagingSearch();
+                //$scope.seeAttention = true;
 
             }
         })
