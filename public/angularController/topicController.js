@@ -33,7 +33,7 @@ function ToListTopic($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 10,
-        pageSize :5
+        pageSize :6
     };
     $(function(){
         pageing();
@@ -71,10 +71,11 @@ function TopicDetail($scope, $routeParams,$http, $location,$upload) {
     $scope.picture={};
     $scope.topicUpload={};
 
+
     $scope.uoloadPaging = {
         pageNo: 1,
         itemsCount: 10,
-        pageSize: 5
+        pageSize: 6
     };
 
     $(function () {
@@ -155,59 +156,15 @@ function TopicDetail($scope, $routeParams,$http, $location,$upload) {
         }
     };
 
-    $scope.addCollect = function(){
+    $scope.addLike = function(id){
 
-        var checkApi = '/blog/collectionBlog/' + $routeParams.blog_id;
-
-        $.get(checkApi,function(data) {
-            alert(data.status);
-
-            if(data.status){
-
-                alert(data.message);
-                paging();
-                //   $scope.blog.collect_count += 1;
-                $scope.seeCollect = false;
-
-            }else{
-                alert(data.message);
-            }
-
-
-        })
-
-    };
-
-    $scope.deleteCollect = function(){
-
-        var checkApi = '/blog/cancellationBlog/' + $routeParams.blog_id;
-
-        $.get(checkApi,function(data) {
-
-            if(data.status){
-
-                alert(data.message);
-                paging();
-                //       $scope.blog.collect_count -= 1;
-                $scope.seeCollect = true;
-
-            }else{
-                alert(data.message);
-            }
-        })
-
-    };
-
-    $scope.addLike = function(){
-
-        var checkApi = '/blog/likeBlog/' + $routeParams.blog_id;
+        var checkApi = '/topic/likeTopicUpload/' + id;
 
         $.get(checkApi,function(data) {
 
 
             if(data.status){
 
-                alert(data.message);
                 paging();
 
 

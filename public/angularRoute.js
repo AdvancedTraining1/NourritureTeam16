@@ -7,6 +7,10 @@
 angular.module('nourriture', ['ngRoute','angularFileUpload']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
+            when('/unauthorized', {
+                templateUrl: '/service/userinfo/gotoRegister',
+                controller: RegisterAndLogin
+            }).
             when('/index', {
                 templateUrl: '/indexPart',
 		        controller: IndexPage

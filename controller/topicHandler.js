@@ -74,15 +74,19 @@ TopicHandler.getAlltopics = function (req, res) {
     var pageNo = req.param('pageNo');
     var pageSize = req.param('pageSize');
     TopicDao.getAllTopics(pageNo,pageSize,function(err,topics){
-        if (err) {
-            res.json(500, {message: err.toString()});
-            return;
-        }
-        if (!topics) {
-            res.json(404, {message: "Not found.",status:false});
-            return;
-        }
-        res.json(200, {topics:topics,status:true});
+        TopicDao.getAllNum(function(err2,num){
+            if (err || err2) {
+                res.json(500, {message: "something wrong"});
+                return;
+            }
+            if (!topics) {
+                res.json(404, {message: "Not found.",status:false});
+                return;
+            }
+            res.json(200, {topics:topics,total:num,status:true});
+
+
+        })
 
     })
 };
@@ -331,11 +335,11 @@ TopicHandler.likeTopicUpload = function (req, res) {
                     if (error) {
                         console.log(error);
                         var message = "update failed";
-                        res.json(500, {message: message});
+                        res.json(500, {message: message,status:false});
                         return;
                     } else {
                         console.log("like successful");
-                        res.json(200, {message: "like successful"});
+                        res.json(200, {message: "like successful",status:true});
                     }
                 });
 
