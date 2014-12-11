@@ -142,8 +142,8 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     //$scope.search = $routeParams.search;
     //alert($routeParams.search);
 
-    $scope._id = $routeParams.blog_id;//?
-    $scope.seeCollect = true;
+    ///$scope._id = $routeParams.blog_id;//?
+    $scope.seeAttention = true;
 
 
     $scope.users = {};
@@ -183,7 +183,6 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
         });
 
-        checkAttention();//?
     }
     $(function(){
         //alert($routeParams.search);
@@ -200,13 +199,15 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             }).error(function(data, status) {
 
             });
+
+            checkAttention();//?
         }
     });
 
 
     function checkAttention(){
 
-        var checkApi = '/service/attention/check/' + $scope._id;
+        var checkApi = '/service/attention/check/' + $scope.user._id;
 
         $http({
             method: 'GET',
@@ -226,8 +227,8 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     };
 
     $scope.addAttention = function(){
-
-        var checkApi = '/service/attention/addAttentions/' + $scope._id;
+console.log($scope.user._id);
+        var checkApi = '/service/attention/addAttentions/' + $scope.user._id;
 
         $.get(checkApi,function(data) {
 
@@ -250,7 +251,7 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
     $scope.deleteAttention = function(){
 
-        var checkApi = '/service/attention/deleteAttentions/' + $scope._id;
+        var checkApi = '/service/attention/deleteAttentions/' + $scope.user._id;
 
         $.get(checkApi,function(data) {
 
@@ -641,9 +642,9 @@ function ToLookOneBlog($scope,$routeParams, $http, $location,$upload){
 
 
 
-function ToLookOneTopic($scope,$routeParams, $http, $location){
+function ToLookOneTopic($scope,$routeParams, $http, $location,$upload){
     //$scope.search = $routeParams.friendId;
-    $(function(){
+    /*$(function(){
         var api = "/service/attention/lookOneFriendStatusTopic";
 
         $http({
@@ -656,7 +657,115 @@ function ToLookOneTopic($scope,$routeParams, $http, $location){
 
         });
 
+    });*/
+
+
+    $scope.id = $routeParams.topic_id;
+    $scope.topic={}
+    $scope.noupload = true;
+    $scope.uploads = {};
+    $scope.upload = {};
+    $scope.picture={};
+    $scope.topicUpload={};
+
+    $scope.uploadPaging = {
+        pageNo: 1,
+        itemsCount: 10,
+        pageSize: 5
+    };
+
+    $(function () {
+        paging();
     });
+
+    $scope.list = function () {
+        uploadPage();
+    };
+
+    function paging(){
+        $http({
+            method: 'GET',
+            url: "topic/showTopicDetail/" + $scope.id
+        }).success(function (data, status) {
+            console.log(data);
+            $scope.topic = data.topic;
+
+        }).error(function (data, status) {
+
+        });
+
+        uploadPage();
+
+    }
+
+    function uploadPage() {
+        var commentApi = "/topic/getUploadToATopic";
+        $http({
+            method: 'GET',
+            url: commentApi + '?pageNo=' + $scope.uploadPaging.pageNo + '&pageSize=' + $scope.uploadPaging.pageSize + '&topic_id=' + $scope.id
+        }).success(function (data, status) {
+            $scope.uploadPaging.itemsCount = data.total;
+            $scope.uploads = data.uploads;
+
+            console.log($scope.uploads);
+            if (data.total != 0) {
+                $scope.noupload = false;
+            }
+        }).error(function (data, status) {
+
+        });
+    }
+
+
+
+    $scope.uploadProduct = function () {
+
+        $scope.topicUpload.topic_id = $scope.id;
+        $scope.topicUpload.picture = $scope.picture;
+
+
+        $.post("/topic/uploadProduct", $scope.topicUpload, function (data) {
+            if(data.status){
+                alert("upload successful");
+                paging();
+                document.getElementById("close").click();
+
+            }
+
+        });
+    };
+
+    $scope.onFileSelect = function ($files) {
+        console.log("yes");
+        console.log($files);
+        if($files != null){
+            $scope.upload = $upload.upload({
+                url: '/topic/upload',
+                file: $files
+            }).progress(function (evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function (data, status, headers, config) {        // file is uploaded successfully
+                $scope.picture=data;
+                alert("upload success!");
+
+            });
+        }
+    };
+
+
+
+
+    $scope.toRecipe = function() {
+        $location.path('/attention/friendStatusListRecipe');
+    };
+
+    $scope.toBlog = function() {
+        $location.path('/attention/friendStatusListBlog');
+    };
+
+    $scope.toTopic = function() {
+        $location.path('/attention/friendStatusListTopic');
+    };
 }
 
 
