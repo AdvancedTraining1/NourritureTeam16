@@ -8,6 +8,7 @@ var SeasonFoodSchema = new mongoose.Schema({
     name: { type: String, index: true },
     month:{ type: String },
     picture:{ type: String},
+	describe:{ type: String},
     type:{ type:Number },
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now }

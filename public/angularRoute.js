@@ -55,10 +55,6 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/sale/showTradePost',
                 controller:ShowTradePost
             }).
-            when('/blog/createBlog',{
-                templateUrl:'/blog/createBlog',
-                controller:ToCreateBlog
-            }).
 
     //---------------------------------zhaiyuan start----------------------------------------------------------------
             when('/attention/friendStatusListRecipe',{
@@ -102,6 +98,18 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             when('/blog/blogDetail_angular/:blog_id', {
                 templateUrl: '/blog/blogDetail',
                 controller: BlogDetail
+            }).
+            when('/topic/createTopic_angular', {
+                templateUrl: '/topic/createTopic',
+                controller: ToCreateTopic
+            }).
+            when('/topic/topicList_angular',{
+                templateUrl:'/topic/topicList',
+                controller:ToListTopic
+            }).
+            when('/topic/topicDetail_angular/:topic_id', {
+                templateUrl: '/topic/topicDetail',
+                controller: TopicDetail
             }).
             otherwise({
                 redirectTo: '/'
