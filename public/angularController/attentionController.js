@@ -142,8 +142,8 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     //$scope.search = $routeParams.search;
     //alert($routeParams.search);
 
-    $scope._id = $routeParams.blog_id;//?
-    $scope.seeCollect = true;
+    ///$scope._id = $routeParams.blog_id;//?
+    $scope.seeAttention = true;
 
 
     $scope.users = {};
@@ -183,7 +183,6 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
         });
 
-        checkAttention();//?
     }
     $(function(){
         //alert($routeParams.search);
@@ -200,13 +199,15 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             }).error(function(data, status) {
 
             });
+
+            checkAttention();//?
         }
     });
 
 
     function checkAttention(){
 
-        var checkApi = '/service/attention/check/' + $scope._id;
+        var checkApi = '/service/attention/check/' + $scope.user._id;
 
         $http({
             method: 'GET',
@@ -226,8 +227,8 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     };
 
     $scope.addAttention = function(){
-
-        var checkApi = '/service/attention/addAttentions/' + $scope._id;
+console.log($scope.user._id);
+        var checkApi = '/service/attention/addAttentions/' + $scope.user._id;
 
         $.get(checkApi,function(data) {
 
@@ -250,7 +251,7 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
     $scope.deleteAttention = function(){
 
-        var checkApi = '/service/attention/deleteAttentions/' + $scope._id;
+        var checkApi = '/service/attention/deleteAttentions/' + $scope.user._id;
 
         $.get(checkApi,function(data) {
 
