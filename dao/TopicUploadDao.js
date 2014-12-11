@@ -10,8 +10,8 @@ var TopicUploadDao = new DaoBase(TopicUploadModel);
 module.exports = TopicUploadDao;
 
 
-TopicUploadDao.getAllUploadToATopic = function (topic_id,callback) {
-    TopicUploadModel.find({topic_id:topic_id}).sort({'create_at':-1}).exec(function(error,uploads){
+TopicUploadDao.getAllUploadToATopic = function (topic_id,pageNo,pageSize,callback) {
+    TopicUploadModel.find({topic_id:topic_id}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'create_at':-1}).exec(function(error,uploads){
         if(error) return callback(error,null);
         return callback(null, uploads);
     });
@@ -38,4 +38,12 @@ TopicUploadDao.update = function( conditions, update ,options, callback) {
         return callback(null,doc);
     });
 
+};
+
+TopicUploadDao.listCommentNum = function (topicId,callback) {
+    TopicUploadModel.count({"topic_id":topicId}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
 };

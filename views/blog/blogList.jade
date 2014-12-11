@@ -23,15 +23,11 @@
                             .post_sub
                                 span.glyphicon.glyphicon-time
                                 | {{blog.create_at}}&nbsp;&nbsp;
-                                a(href='single_post.html#post_comments')
+                                a(href='')
                                     span.glyphicon.glyphicon-comment
                                     |  {{blog.comment_count}} comments
                         .post_content
-                            figure
-                                a(href='single_post.html')
-                                    img(alt='0', src='images/portfolio/p4.jpg')
-                            p
-                                h4 Tag: {{blog.tag}}
+                                h5 key word: {{blog.tag}}
                             a.btn.btn-primary(href='/blog/blogDetail_angular/{{blog._id}}') Read More
                     .pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
                 #sidebar.span4

@@ -52,7 +52,6 @@ router.get('/blogDetail', function(req, res) {
 router.get('/blogDetail_angular/:blog_id', function(req, res) {
     res.render('common/index');
 });
-
 /*router.get('/blogDetail_angular/blog_id', function(req, res) {
     res.render('common/index');
 });*/
@@ -65,6 +64,7 @@ router.get('/modifyBlog/:blog_id',BlogsHander.modifyBlog);
 router.post('/saveModifyBlog',BlogsHander.saveModifyBlog);
 router.get('/deleteBlog/:blog_id',BlogsHander.deleteBlog);
 router.get('/collectionBlog/:blog_id',BlogsHander.collectionBlog);
+router.get('/checkCollection/:blog_id',BlogsHander.checkCollction);
 router.get('/cancellationBlog/:blog_id',BlogsHander.cancellationBlog);
 router.get('/likeBlog/:blog_id',BlogsHander.likeBlog);
 router.get('/cancelLikeBlog/:blog_id',BlogsHander.cancelLikeBlog);

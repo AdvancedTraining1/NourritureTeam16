@@ -8,9 +8,9 @@ var TopicSchema = new mongoose.Schema({
     topicName:{ type: String, unique: true },
     content: String,
     author: {
-        id: ObjectId,
+        id: String,
         account: String },
-    time: { type: Date, default: Date.now },
+    time: { type: String },
 
     upload_count: { type: Number, default: 0 }
 });

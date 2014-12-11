@@ -51,3 +51,22 @@ function ListTradePost($scope, $http, $location){
 
     }
 }
+
+function ShowTradePost($scope, $routeParams, $http, $location){
+    $scope.id = $routeParams.saleId;
+
+    $(function(){
+        var saleApi = "/sale/getOne";
+        $http({
+            method: 'GET',
+            url: saleApi + '?saleId=' + $scope.id
+        }).success(function(data, status) {
+            $scope.sale = data;
+        }).error(function(data, status) {
+
+        });
+
+        //commentPage();
+        //productPage();
+    });
+}
