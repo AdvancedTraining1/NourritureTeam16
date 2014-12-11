@@ -85,7 +85,7 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/attention/oneBlog', //routes
                 controller:ToLookOneBlog
             }).
-            when('/attention/oneTopic/:topicId',{
+            when('/attention/oneTopic/:topic_id',{
                 templateUrl:'/attention/oneTopic', //routes
                 controller:ToLookOneTopic
             }).

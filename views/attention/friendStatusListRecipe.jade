@@ -5,8 +5,8 @@
 	.container
 		section#listFriendStatus
 			.hgroup
-				h1 All
-				h2 You
+				h1 All Friend Status Recipes Here!
+				h2 Enjoy the friend status recipes.
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
@@ -20,7 +20,7 @@
 							a(href='/attention/oneRecipe/{{recipe._id}}') {{recipe.recipeName}}
 						.post_sub
 							span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
-								a(href='/attention/oneRecipe#post_comments')
+								a(href='/attention/oneRecipe/{{recipe._id}}')
 									span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
 					.post_content
 						figure
