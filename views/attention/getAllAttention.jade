@@ -15,9 +15,7 @@
 				#protfolio_container.portfolio_strict.row
 					.portfolio_item.cat_travel.span4(ng-repeat="user in users")
 						.portfolio_photo(style="background-image:url({{user.head}})")
-							//a(href='/recipe/single/{{recipe._id}}')
-								span.glyphicon.glyphicon-share
-								p {{recipe.description}}
+
 						.portfolio_description
 							h3
 								a(href='#') {{user.username}}

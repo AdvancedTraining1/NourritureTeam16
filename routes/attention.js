@@ -82,7 +82,7 @@ router.get('/addBlog/',AttentionsHandler.addBlog);
 
 
 router.get('/commentStatus/',AttentionsHandler.commentStatus);
-router.get('/deleteComment/:comment_id',BlogsHander.deleteCommentToBlog);//??
+router.get('/deleteComment/:comment_id',BlogsHander.deleteCommentToBlog);
 router.get('/likeStatus/',AttentionsHandler.likeStatus);
 router.get('/cancelLike/',AttentionsHandler.cancelLike);
 */
