@@ -10,7 +10,7 @@ function ToListFriendStatusRecipe($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :1
+        pageSize :5
     };
 
     $(function(){
@@ -54,7 +54,7 @@ function ToListFriendStatusBlog($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :1
+        pageSize :5
     };
 
     $(function(){
@@ -98,7 +98,7 @@ function ToListFriendStatusTopic($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :1
+        pageSize :5
     };
 
     $(function(){
@@ -148,7 +148,7 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     $scope.pageing={
         pageNo : 1,  //页码
         itemsCount : 3,  //总共
-        pageSize :2  //每页有几个
+        pageSize :9  //每页有几个
     };
 
     $(function(){
@@ -231,11 +231,11 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data){
             if(data == "false"){
 
-                $scope.seeAttention = true;//attention
+                $scope.seeAttention = true;//show attention
 
             }else{
 
-                $scope.seeAttention = false;
+                $scope.seeAttention = false;//show cancel attention
             }
         });
 

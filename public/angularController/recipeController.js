@@ -185,6 +185,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     $scope.collect = {};
     $scope.productSee = false;
     $scope.seeCollect = true;
+    $scope.seeAttention = true;
     $scope.commentPaging={
         pageNo : 1,
         itemsCount : 10,
@@ -209,6 +210,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
 
         commentPage();
         productPage();
+        //checkAttention($scope.recipe.author._id);
     });
 
     $scope.list = function () {
@@ -316,6 +318,51 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
             }
         });
     };
+
+
+    function checkAttention(friendId){
+
+        var checkApi = '/service/attention/check/' + friendId;
+
+        $http({
+            method: 'GET',
+            url: checkApi
+        }).success(function(data){
+            if(data == "false"){
+
+                $scope.seeAttention = true;//show attention
+
+            }else{
+
+                $scope.seeAttention = false;//show cancel attention
+            }
+        });
+
+    };
+
+    $scope.addAttention = function(friendId,friendAccount,friendHead){
+        var checkApi = '/service/attention/addAttentions/' + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
+
+        $.get(checkApi,function(data) {
+            alert(data);
+            $scope.seeAttention = false;
+            commentPage();
+        })
+
+    }
+
+    $scope.deleteAttention = function(friendId,friendAccount,friendHead){
+
+        var checkApi = '/service/attention/deleteAttentions/'  + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
+
+        $.get(checkApi,function(data) {
+            alert(data);
+            $scope.seeAttention = true;
+            commentPage();
+        })
+
+    };
+
 
     $scope.jumpToRecipe = function(userId) {
         $location.path('/recipe/otherAll_an/' + userId);

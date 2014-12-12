@@ -62,11 +62,11 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 controller:logout
             }).
 
-            when('/sale/createTradePost',{
+            when('/sale/createTradePost_angular',{
                 templateUrl:'/sale/createTradePost',
                 controller:CreateTradePost
             }).
-            when('/sale/listTradePost',{
+            when('/sale/listTradePost_angular',{
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
