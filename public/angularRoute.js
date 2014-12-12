@@ -15,6 +15,7 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/indexPart',
 		        controller: IndexPage
             }).
+//---------------------------------chenmm start-----------------------------------------
             when('/recipe/create_an', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
@@ -35,6 +36,7 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/recipe/ownAll',
                 controller: ToOwnRecipe
             }).
+//---------------------------------chenmm end-----------------------------------------
             when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
                 controller:showInfo

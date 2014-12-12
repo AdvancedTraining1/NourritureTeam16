@@ -173,25 +173,6 @@ function ToListRecipe($scope, $http, $location){
 
         });
     }
-
-    /*$scope.addCollect = function(id){
-        var api = "/service/recipe/collect";
-        $scope.collect.recipeId = id;
-
-        var checkApi = '/service/recipe/checkCollect' + '?recipeId='+$scope.collect.recipeId;
-
-        $.get(checkApi,function(data){
-            if(data == "false"){
-                $.post(api,$scope.collect,function(data){
-                    alert(data);
-                    pageing();
-                    $scope.recipe.collectNum += 1;
-                });
-            }else{
-                alert("Already collected");
-            }
-        });
-    };*/
 }
 
 function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){

@@ -167,14 +167,23 @@ AttentionsHandler.addAttentions=function(req,res){
     fans.account = "ZHAI";
     fans.head = "2.img";
 
-    AttentionsDao.addAttentions(fans._id,friends,function(err,users){
-        //res.write(users);
-        AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
+    AttentionsDao.check(fans._id,friendId,function (err, attention) {
+        console.log(attention.length);
+        if(attention.length == 0){
+            //res.end("true");
+            AttentionsDao.addAttentions(fans._id,friends,function(err,users){
+                //res.write(users);
+                AttentionsDao.addAttentionsFans(friends._id,fans,function (err, users) {
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    });
+                    res.end("attention success!");
+                });
             });
-            res.end("attention success!");
-        });
+        }
+        else{
+            res.json("already attention!");
+        }
     });
 
 };
