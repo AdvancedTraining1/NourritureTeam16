@@ -51,6 +51,10 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/service/userinfo/gotoModifyPass',
                 controller:showInfo
             }).
+            when('/userinfo/center',{
+                templateUrl:'/service/userinfo/gotoCenter',
+                controller:showCenter
+            }).
             when('/sale/createTradePost',{
                 templateUrl:'/sale/createTradePost',
                 controller:CreateTradePost

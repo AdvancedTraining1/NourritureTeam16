@@ -16,13 +16,9 @@
             .span4.office_address
                address
                   strong  Hello,Welcom {{userinfo.account}}
-                  br
-                  |                          795 Folsom Ave, Suite 600
-                  br
-                  |                          San Francisco, CA 94107
-                  br
-                  abbr(title='Phone') P:
-                  |  (123) 456-7890
+                  article.post_content
+                     figure
+                        img(alt='0' src='{{userinfo.head}}')
                address
                   strong Email Address
                   br
