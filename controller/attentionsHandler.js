@@ -124,8 +124,8 @@ AttentionsHandler.listAll=function(req,res){
 
 AttentionsHandler.checkAttention=function (req, res) {
     var friendId = req.param('friendId');
-    //var userId = req.session.user_id;
-    var userId = "5464a134462eaef3480abb39";
+    var userId = req.session.user_id;
+    //var userId = "5464a134462eaef3480abb39";
     AttentionsDao.check(userId,friendId,function (err1, attention) {
         console.log(attention.length);
         if(attention.length != 0){
@@ -150,10 +150,13 @@ AttentionsHandler.addAttentions=function(req,res){
     friends.head = friendHead;
 
 
-    //var userId = req.session.user_id;
-    //var userAccount = req.session.user_account;
-    //var userHead = req.session.user_head;
-    //var fans={userId,userAccount,userHead};
+    var userId = req.session.user_id;
+    var userAccount = req.session.account;
+    var userHead = req.session.head;
+    var fans={};
+    fans._id=userId;
+    fans.account = userAccount;
+    fans.head = userHead;
 
     /*
     var friends = {};
@@ -162,10 +165,10 @@ AttentionsHandler.addAttentions=function(req,res){
     friends.head = "2.img";
      */
 
-    var fans = {};
+    /*var fans = {};
     fans._id = "5464a134462eaef3480abb39";
     fans.account = "ZHAI";
-    fans.head = "2.img";
+    fans.head = "2.img";*/
 
     AttentionsDao.check(fans._id,friendId,function (err, attention) {
         console.log(attention.length);
@@ -199,22 +202,25 @@ AttentionsHandler.deleteAttentions=function(req,res){
     friends.account = friendAccount;
     friends.head = friendHead;
 
-    //var userId = req.session.user_id;
-    //var userAccount = req.session.user_account;
-    //var userHead = req.session.user_head;
-    //var fans={userId,userAccount,userHead};
+    var userId = req.session.user_id;
+    var userAccount = req.session.account;
+    var userHead = req.session.head;
+    var fans={};
+    fans._id=userId;
+    fans.account = userAccount;
+    fans.head = userHead;
 
 
-   /* var friends = {};
-    friends._id = "5464a08744ea60084850294a";
-    friends.account = "ZHAIYUAN";
-    friends.head = "2.img";
-    */
-
+    /* var friends = {};
+     friends._id = "5464a08744ea60084850294a";
+     friends.account = "ZHAIYUAN";
+     friends.head = "2.img";
+     */
+/*
     var fans = {};
     fans._id = "5464a134462eaef3480abb39";
     fans.account = "ZHAI";
-    fans.head = "2.img";
+    fans.head = "2.img";*/
 
     AttentionsDao.check(fans._id,friendId,function (err, attention) {
         console.log(attention.length);
@@ -241,12 +247,13 @@ AttentionsHandler.lookFriendStatusRecipe=function(req,res){
     console.log("查看好友动态---菜谱");
 
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    var sessionId=req.session.user_id;
     var pageNo = req.param('pageNo');
     var pageSize = req.param('pageSize');
 
-    AttentionsDao.lookFriendStatusRecipe(pageNo,pageSize,function (err, recipes) {
+    AttentionsDao.lookFriendStatusRecipe(sessionId,pageNo,pageSize,function (err, recipes) {
          console.log(recipes);
-         AttentionsDao.getFriendStatusRecipeNum(function(err2,num){
+         AttentionsDao.getFriendStatusRecipeNum(sessionId,function(err2,num){
               if(!(err || err2)){
                    res.json({root:recipes,total:num});
               }
@@ -261,13 +268,13 @@ AttentionsHandler.lookFriendStatusBlog=function(req,res){
     console.log("查看好友动态---博客");
 
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
-
+    var sessionId=req.session.user_id;
     var pageNo = req.param('pageNo');
     var pageSize = req.param('pageSize');
 
-    AttentionsDao.lookFriendStatusBlog(pageNo,pageSize,function (err, blogs) {
+    AttentionsDao.lookFriendStatusBlog(sessionId,pageNo,pageSize,function (err, blogs) {
         console.log(blogs);
-        AttentionsDao.getFriendStatusBlogNum(function(err2,num){
+        AttentionsDao.getFriendStatusBlogNum(sessionId,function(err2,num){
             if(!(err || err2)){
                 res.json({root:blogs,total:num});
             }
@@ -283,13 +290,13 @@ AttentionsHandler.lookFriendStatusTopic=function(req,res){
     console.log("查看好友动态---话题");
 
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
-
+    var sessionId=req.session.user_id;
     var pageNo = req.param('pageNo');
     var pageSize = req.param('pageSize');
 
-    AttentionsDao.lookFriendStatusTopic(pageNo,pageSize,function (err, topics) {
+    AttentionsDao.lookFriendStatusTopic(sessionId,pageNo,pageSize,function (err, topics) {
         console.log(topics);
-        AttentionsDao.getFriendStatusTopicNum(function(err2,num){
+        AttentionsDao.getFriendStatusTopicNum(sessionId,function(err2,num){
             if(!(err || err2)){
                 res.json({root:topics,total:num});
             }
