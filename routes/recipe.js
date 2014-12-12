@@ -11,6 +11,10 @@ var recipe = require('./../controller/recipeHandler');
 module.exports = function (app) {
 
     app.get('/recipe/create', function(req,res){
+        //if (req.session.user_id == null) {
+            //res.status(401).end();
+            //return;
+        //}
         res.render("recipe/createRecipe");
     });
     app.get('/recipe/create_an', function(req,res){

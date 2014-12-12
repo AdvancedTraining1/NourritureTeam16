@@ -22,6 +22,14 @@ angular.module('administrator', ['ngRoute','angularFileUpload']).
 				templateUrl: '/admin/updateUser',
 				controller: UpdateUser
 			}).
+			when('/admin/addSeason_an', {
+				templateUrl: '/admin/addSeason',
+				controller: SeasonFood
+			}).
+			when('/admin/getSeason_an', {
+				templateUrl: '/admin/getSeason',
+				controller: SeasonFood
+			}).
 			otherwise({
 				redirectTo: '/'
 			});

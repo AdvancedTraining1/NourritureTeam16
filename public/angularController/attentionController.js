@@ -142,8 +142,8 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     //$scope.search = $routeParams.search;
     //alert($routeParams.search);
 
-    $scope._id = $routeParams.blog_id;//?
-    $scope.seeCollect = true;
+    ///$scope._id = $routeParams.blog_id;//?
+    $scope.seeAttention = true;
 
 
     $scope.users = {};
@@ -166,10 +166,33 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data, status) {
             $scope.users = data.root;
             $scope.pageing.itemsCount = data.total;
+            for(var i in $scope.users){
+                var friendId=$scope.users[i]._id;
+
+                checkAttention(friendId);
+            }
         }).error(function(data, status) {
 
         });
     };
+
+    function pagingSearch(){
+        var api = "/service/attention/searchAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
+        }).success(function(data, status) {
+            $scope.users = data.root;
+            $scope.pageing.itemsCount = data.total;
+            for(var i in $scope.users){
+                var friendId=$scope.users[i]._id;
+
+                checkAttention(friendId);
+            }
+        }).error(function(data, status) {
+
+        });
+    }
 
     function paging(){
         var api = "/service/attention/listAll";
@@ -179,11 +202,15 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data, status) {
             $scope.users = data.root;
             $scope.pageing.itemsCount = data.total;
+            for(var i in $scope.users){
+                var friendId=$scope.users[i]._id;
+
+                checkAttention(friendId);
+            }
         }).error(function(data, status) {
 
         });
 
-        checkAttention();//?
     }
     $(function(){
         //alert($routeParams.search);
@@ -197,49 +224,56 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             }).success(function(data, status) {
                 $scope.users = data.root;
                 $scope.pageing.itemsCount = data.total;
+                for(var i in $scope.users){
+                    var friendId=$scope.users[i]._id;
+                    var flag=$scope.users[i].attentionFlag;
+
+                    checkAttention(friendId,flag);
+                }
             }).error(function(data, status) {
 
             });
+
         }
     });
 
 
-    function checkAttention(){
+    function checkAttention(friendId,flag){
 
-        var checkApi = '/service/attention/check/' + $scope._id;
+        var checkApi = '/service/attention/check/' + friendId;
 
         $http({
             method: 'GET',
             url: checkApi
-        }).success(function(data,status){
+        }).success(function(data){
             if(data == "false"){
 
-                $scope.seeAttention = true;
-
+                $scope.seeAttention = true;//attention
+                flag=false;//default not attention
 
             }else{
 
-                $scope.seeAttention = false;
+                $scope.seeAttention = false;//?????????????????
             }
         });
 
     };
 
-    $scope.addAttention = function(){
+    $scope.addAttention = function(friendId,friendAccount,friendHead){
 
-        var checkApi = '/service/attention/addAttentions/' + $scope._id;
+        var checkApi = '/service/attention/addAttentions/' + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
 
         $.get(checkApi,function(data) {
 
             if(data){
                 alert(data);
-                paging();
-                $scope.seeAttention = false;
+                pagingSearch();
+                //$scope.seeAttention = false;
 
             }else{
                 alert("already attention!");
-                paging();
-                $scope.seeAttention = false;
+                pagingSearch();
+                //$scope.seeAttention = false;
 
             }
 
@@ -248,21 +282,22 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
 
     };
 
-    $scope.deleteAttention = function(){
+    $scope.deleteAttention = function(friendId,friendAccount,friendHead){
 
-        var checkApi = '/service/attention/deleteAttentions/' + $scope._id;
+        var checkApi = '/service/attention/deleteAttentions/'  + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
 
         $.get(checkApi,function(data) {
 
             if(data){
                 alert(data);
-                paging();
                 $scope.seeAttention = true;
+                pagingSearch();
+                //checkAttention(friendId);
 
             }else{
                 alert("already cancel!");
-                paging();
-                $scope.seeAttention = true;
+                pagingSearch();
+                //$scope.seeAttention = true;
 
             }
         })
@@ -641,9 +676,9 @@ function ToLookOneBlog($scope,$routeParams, $http, $location,$upload){
 
 
 
-function ToLookOneTopic($scope,$routeParams, $http, $location){
+function ToLookOneTopic($scope,$routeParams, $http, $location,$upload){
     //$scope.search = $routeParams.friendId;
-    $(function(){
+    /*$(function(){
         var api = "/service/attention/lookOneFriendStatusTopic";
 
         $http({
@@ -656,81 +691,113 @@ function ToLookOneTopic($scope,$routeParams, $http, $location){
 
         });
 
-    });
-}
-
-
-function ToAddAttention($scope,$routeParams, $http, $location){
-    //$scope.search = $routeParams.friendId;
-    /*alert("关注成功");
-    $(function(){
-        var api = "/service/attention/addAttentions";
-
-            $http({
-                method: 'GET',
-                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
-            }).success(function(data, status) {
-                $scope.users = data.root;
-                $scope.pageing.itemsCount = data.total;
-            }).error(function(data, status) {
-
-            });
-
     });*/
 
-    $scope.users = {};
-    $scope.pageing={
-        pageNo : 1,  //页码
-        itemsCount : 3,  //总共
-        pageSize :2  //每页有几个
+
+    $scope.id = $routeParams.topic_id;
+    $scope.topic={}
+    $scope.noupload = true;
+    $scope.uploads = {};
+    $scope.upload = {};
+    $scope.picture={};
+    $scope.topicUpload={};
+
+    $scope.uploadPaging = {
+        pageNo: 1,
+        itemsCount: 10,
+        pageSize: 5
     };
 
-    $(function(){
+    $(function () {
         paging();
     });
 
-    $scope.list = function () { //下一页
-        //paging();
-        var api = "/service/attention/searchAll";
+    $scope.list = function () {
+        uploadPage();
+    };
+
+    function paging(){
         $http({
             method: 'GET',
-            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
-        }).success(function(data, status) {
-            $scope.users = data.root;
-            $scope.pageing.itemsCount = data.total;
-        }).error(function(data, status) {
+            url: "topic/showTopicDetail/" + $scope.id
+        }).success(function (data, status) {
+            console.log(data);
+            $scope.topic = data.topic;
+
+        }).error(function (data, status) {
+
+        });
+
+        uploadPage();
+
+    }
+
+    function uploadPage() {
+        var commentApi = "/topic/getUploadToATopic";
+        $http({
+            method: 'GET',
+            url: commentApi + '?pageNo=' + $scope.uploadPaging.pageNo + '&pageSize=' + $scope.uploadPaging.pageSize + '&topic_id=' + $scope.id
+        }).success(function (data, status) {
+            $scope.uploadPaging.itemsCount = data.total;
+            $scope.uploads = data.uploads;
+
+            console.log($scope.uploads);
+            if (data.total != 0) {
+                $scope.noupload = false;
+            }
+        }).error(function (data, status) {
+
+        });
+    }
+
+
+
+    $scope.uploadProduct = function () {
+
+        $scope.topicUpload.topic_id = $scope.id;
+        $scope.topicUpload.picture = $scope.picture;
+
+
+        $.post("/topic/uploadProduct", $scope.topicUpload, function (data) {
+            if(data.status){
+                alert("upload successful");
+                paging();
+                document.getElementById("close").click();
+
+            }
 
         });
     };
 
-    function paging(){
-        var api = "/service/attention/listAll";
-        $http({
-            method: 'GET',
-            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
-        }).success(function(data, status) {
-            $scope.users = data.root;
-            $scope.pageing.itemsCount = data.total;
-        }).error(function(data, status) {
-
-        });
-    }
-    $(function(){
-        //alert($routeParams.search);
-        var api = "/service/attention/searchAll";
-        if($routeParams.search == ""){
-            paging();
-        }else{
-            $http({
-                method: 'GET',
-                url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
-            }).success(function(data, status) {
-                $scope.users = data.root;
-                $scope.pageing.itemsCount = data.total;
-            }).error(function(data, status) {
+    $scope.onFileSelect = function ($files) {
+        console.log("yes");
+        console.log($files);
+        if($files != null){
+            $scope.upload = $upload.upload({
+                url: '/topic/upload',
+                file: $files
+            }).progress(function (evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function (data, status, headers, config) {        // file is uploaded successfully
+                $scope.picture=data;
+                alert("upload success!");
 
             });
         }
-    });
+    };
 
+
+
+
+    $scope.toRecipe = function() {
+        $location.path('/attention/friendStatusListRecipe');
+    };
+
+    $scope.toBlog = function() {
+        $location.path('/attention/friendStatusListBlog');
+    };
+
+    $scope.toTopic = function() {
+        $location.path('/attention/friendStatusListTopic');
+    };
 }

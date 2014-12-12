@@ -65,9 +65,9 @@ AttentionsDao.check = function (userId,friendId,callback) {
     }); //db.blogs.find({"comment":{"$elemMatch":{"author":"joe", "score":{"$gte":5}}}});
 };
 
-AttentionsDao.addAttentions = function (id,friendId,callback) {
-    //User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){
-    User.findByIdAndUpdate(id,{$push:{"friends._id":friendId},$inc:{friends_count:1}},function(error,users){
+AttentionsDao.addAttentions = function (id,friends,callback) {
+    User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){
+    //User.findByIdAndUpdate(id,{$push:{"friends._id":friendId},$inc:{friends_count:1}},function(error,users){
         return callback(null,users);
     });
 

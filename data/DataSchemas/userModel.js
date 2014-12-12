@@ -12,7 +12,7 @@ var UserSchema = new mongoose.Schema({
     type: { type: Number },
     phone: { type: String},
     sex: { type: Number },
-    head:{ type: String },
+    head:{ type: String , default:'/head/defaulthead.jpeg' },
     friends: [{
         _id: ObjectId,
         account : String,
@@ -29,7 +29,8 @@ var UserSchema = new mongoose.Schema({
     blog_count: { type: Number, default: 0 },
     comment_count: { type: Number, default: 0 },
     friends_count: { type: Number, default: 0 },
-    fans_count: { type: Number, default: 0 }
+    fans_count: { type: Number, default: 0 },
+
 });
 
 module.exports = UserSchema;

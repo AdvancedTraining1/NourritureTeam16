@@ -96,7 +96,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
         $scope.recipe.sNum = s_explain.length;
         /*alert($scope.recipe.toString());
          alert(JSON.stringify($scope.recipe));*/
-        $scope.recipe.authorId = 11;
+        //$scope.recipe.authorId = 11;
 
         $.post('/service/recipe/create',$scope.recipe,function(data){
             alert(data);

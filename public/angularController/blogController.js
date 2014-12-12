@@ -168,7 +168,7 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
             alert(data);
             commentPage();
             $scope.comment.content = null;
-            $scope.blog.comment_count += 1;
+
         });
     };
 

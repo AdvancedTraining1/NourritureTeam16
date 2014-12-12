@@ -38,6 +38,22 @@ router.get('/addUser_an', function(req, res) {
 router.get('/getUser_an', function(req, res) {
 	res.render("admin/adminIndex");
 });
+
+router.get('/addSeason', function(req, res) {
+	res.render("admin/addseason");
+});
+
+router.get('/addSeason_an', function(req, res) {
+	res.render("admin/adminIndex");
+});
+
+router.get('/getSeason_an', function(req, res) {
+	res.render("admin/adminIndex");
+});
+
+router.get('/getSeason', function(req, res) {
+	res.render("admin/getseason");
+});
 /*
 user
 * */
@@ -67,8 +83,8 @@ router.post('/searchTopic',topicHandler.searchTopic);
 * */
 router.post('/addSeason',seasonHandler.add);
 router.post('/getAllSeason',seasonHandler.getAll);
-router.post('/searchSeason',seasonHandler.searchSeasonFood);
-
+router.get('/searchSeason',seasonHandler.searchSeasonFood);
+router.post('/season/upload', seasonHandler.upload);
 //传统的方法链接数据库
 //var mongo = require('mongodb');
 //var port = mongo.Connection.DEFAULT_PORT;

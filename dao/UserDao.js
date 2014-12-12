@@ -14,11 +14,16 @@ module.exports = UserDao;
 UserDao.save = function (obj,callback)
 {
     obj.save(function (err) {
-        if (err)
+        if (err){
+            console.log("err"+err);
             callback(err,null);
-        else
+        }
+        else{
+            console.log("userdao add user成功！");
             callback(null,'UserDao.prototype.save success');
+        }
     });
+
 };
 
 UserDao.getAllUsers = function (callback)
@@ -38,8 +43,8 @@ UserDao.getAllUsers = function (callback)
 
 };
 
-UserDao.delete = function (conditions,callback) {
-    UsersModel.remove(conditions).exec(function(error,user){
+UserDao.delete = function (list,callback) {
+    UsersModel.remove({account:{$in:list}}).exec(function(error,user){
         if(error) return callback(error,null);
 
         return callback(null, user);
@@ -48,29 +53,25 @@ UserDao.delete = function (conditions,callback) {
 }
 
 UserDao.update = function (conditions,update,options,callback) {
-    UsersModel.update(conditions,update,options).exec(function(error,message){
+    UsersModel.update(conditions,update,options).exec(function(error,user){
         if(error) return callback(error,null);
-        return callback(null, message);
+        return callback(null, user);
     });
 }
 
-UserDao.getUsers = function (pageNo,pageSize,conditions,callback) {
-    UsersModel.find(conditions).skip((pageNo-1)*pageSize).limit(pageSize).sort({'account':-1}).exec(function(error,users){
-        if(error) return callback(error,null);
-        return callback(null, users);
+UserDao.getUserByAccount = function (account,callback) {
+    UsersModel.find({account:account}).exec(function(err,user){
+        if (err){
+            console.log("err"+err);
+            callback(err,null);
+        }
+        else{
+            callback(null,user);
+        }
     });
 }
-
-UserDao.getUserNum = function (conditions,callback) {
-	UsersModel.count(conditions).exec(function(error,num){
-		if(error)
-			return callback(error,null);
-		return callback(null, num);
-	});
-}
-
-UserDao.getUserByAccount=function (_account,callback) {
-    UsersModel.findOne({account:_account}).exec(function(error,user){
+UserDao.getUserByAccountAndPass=function (username,password,callback) {
+    UsersModel.findOne({account:username,password:password}).exec(function(error,user){
         if(error)
             return callback(error,null);
         return callback(null, user);
