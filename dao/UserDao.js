@@ -14,11 +14,16 @@ module.exports = UserDao;
 UserDao.save = function (obj,callback)
 {
     obj.save(function (err) {
-        if (err)
+        if (err){
+            console.log("err"+err);
             callback(err,null);
-        else
+        }
+        else{
+            console.log("userdao add user成功！");
             callback(null,'UserDao.prototype.save success');
+        }
     });
+
 };
 
 UserDao.getAllUsers = function (callback)
@@ -48,16 +53,21 @@ UserDao.delete = function (list,callback) {
 }
 
 UserDao.update = function (conditions,update,options,callback) {
-    UsersModel.update(conditions,update,options).exec(function(error,message){
+    UsersModel.update(conditions,update,options).exec(function(error,user){
         if(error) return callback(error,null);
-        return callback(null, message);
+        return callback(null, user);
     });
 }
 
-UserDao.getUserByAccount = function (Account,callback) {
-    UsersModel.find({account:Account}).exec(function(error,user){
-        if(error) return callback(error,null);
-        return callback(null, user);
+UserDao.getUserByAccount = function (account,callback) {
+    UsersModel.find({account:account}).exec(function(err,user){
+        if (err){
+            console.log("err"+err);
+            callback(err,null);
+        }
+        else{
+            callback(null,user);
+        }
     });
 }
 UserDao.getUserByAccountAndPass=function (username,password,callback) {

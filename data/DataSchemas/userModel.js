@@ -12,7 +12,7 @@ var UserSchema = new mongoose.Schema({
     type: { type: Number },
     phone: { type: String},
     sex: { type: Number },
-    head:{ type: String },
+    head:{ type: String , default:'/head/defaulthead.jpeg' },
     friends: [{
         _id: ObjectId,
         account : String,

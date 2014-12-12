@@ -33,15 +33,19 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             }).
             when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
-                controller:showuser
+                controller:showInfo
             }).
             when('/userinfo/register',{    //这是index里面在ng-app中对应的urls
                 templateUrl:'/service/userinfo/gotoRegister',  //去route里面找
                 controller:RegisterAndLogin
             }).
-            when('/userinfo/info',{    //这是index里面在ng-app中对应的urls
-                templateUrl:'/service/userinfo/gotoInfo',  //去route里面找
-                controller:showuser
+            when('/userinfo/info',{
+                templateUrl:'/service/userinfo/gotoInfo',
+                controller:showInfo
+            }).
+            when('/userinfo/modifypass',{
+                templateUrl:'/service/userinfo/gotoModifyPass',
+                controller:showInfo
             }).
             when('/sale/createTradePost',{
                 templateUrl:'/sale/createTradePost',

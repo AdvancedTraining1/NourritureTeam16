@@ -67,8 +67,8 @@ html(ng-app="nourriture")
 											a(href='/sale/createTradePost') Publish Trade Post
 
 				#sign
-					a(href='/userinfo/register')
-						span.glyphicon.glyphicon-user  Register / Sign In
+					a(href='/userinfo/register',id='loginAddress')
+						span.glyphicon.glyphicon-user(id='loginName') Register / Sign In
 
 		block team
 
@@ -111,6 +111,27 @@ script.
 		function tab() {
 			$(this).addClass("active").siblings().removeClass("active");
 		};
+
+		$.ajax({
+			async : false,
+			cache : false,      type: 'POST',
+			dataType : "json",
+			url: "/service/userinfo/isLogin",//请求的action路径
+			error: function () {//请求失败处理函数
+				//alert('请求失败');
+			},
+			success:function(data){ //请求成功后处理函数。
+				if(data.message=="1"){
+					//alert("data.username--"+data.username);
+					document.getElementById('loginAddress').href="/userinfo/info";
+					document.getElementById('loginName').innerHTML=data.username;
+
+				}
+
+
+			}
+		});
+
 	});
 
 
