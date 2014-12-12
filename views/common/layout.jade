@@ -69,6 +69,8 @@ html(ng-app="nourriture")
 				#sign
 					a(href='/userinfo/register',id='loginAddress')
 						span.glyphicon.glyphicon-user(id='loginName') Register / Sign In
+					a(href='/userinfo/logout',id='loginAddress2')
+						span  &nbsp;&nbsp;&nbsp;&nbsp;,Logout
 
 		block team
 
@@ -119,6 +121,7 @@ script.
 			url: "/service/userinfo/isLogin",//请求的action路径
 			error: function () {//请求失败处理函数
 				//alert('请求失败');
+				document.getElementById("loginAddress2").style.visibility = "hidden";//隐藏
 			},
 			success:function(data){ //请求成功后处理函数。
 				if(data.message=="1"){
@@ -126,6 +129,9 @@ script.
 					document.getElementById('loginAddress').href="/userinfo/info";
 					document.getElementById('loginName').innerHTML=data.username;
 
+					document.getElementById("loginAddress2").style.visibility = "visible";//显示
+				}else{
+					document.getElementById("loginAddress2").style.visibility = "hidden";//隐藏
 				}
 
 

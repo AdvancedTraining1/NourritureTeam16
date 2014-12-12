@@ -145,9 +145,40 @@ function showCenter($scope, $http, $location){
             url: '/service/userinfo/getUserBlogs?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize,
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
         }).success(function(data, status, headers, config) {
-            alert("abc");
             $scope.blogs = data.root;
             $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status, headers, config) {
+
+        });
+    };
+}
+
+function logout($scope, $http, $location){
+
+    function queryRecipe(){
+        var api = "/service/recipe/listAll";
+        $http({
+            method: 'GET',
+            url: api + '?pageNo=1&pageSize=3'
+        }).success(function(data, status) {
+            $scope.recipes = data.root;
+        });
+    }
+
+    $(function(){
+        logoutAccount();
+        queryRecipe();
+    });
+
+    function logoutAccount(){
+        $http({
+            method  : 'GET',
+            url: '/service/userinfo/logout',
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+        }).success(function(data, status, headers, config) {
+            $scope.message = data.message;
+            alert($scope.message);
+            window.location.href='/index';
         }).error(function(data, status, headers, config) {
 
         });

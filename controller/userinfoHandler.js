@@ -85,7 +85,7 @@ UserinfoHandler.login=function(req,res){
                 req.session.user_name = user.username;
                 req.session.password = user.password;
                 req.session.head = user.head;
-                console.log(req.session.user_id);
+                console.log('登录成功---user_id:'+req.session.user_id);
                 res.json({message:"登陆成功！",user:user});
 
                 //res.writeHead(200, {
@@ -223,5 +223,15 @@ UserinfoHandler.getUserBlogs=function(req,res){
 
 };
 
+UserinfoHandler.logout=function(req,res){
+    req.session.user_id = "";
+    req.session.account = "";
+    req.session.user_name = "";
+    req.session.password = "";
+    req.session.head = "";
+
+    console.log("UserHandler---注销");
+    res.json({message:"注销成功"});
+}
 
 module.exports = UserinfoHandler;

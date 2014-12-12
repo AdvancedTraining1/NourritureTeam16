@@ -34,6 +34,7 @@ module.exports = function (app) {
 	app.post('/service/userinfo/isLogin',UserinfoHandler.isLogin);
 
 	app.get('/service/userinfo/getUserBlogs',UserinfoHandler.getUserBlogs);
+	app.get('/service/userinfo/logout',UserinfoHandler.logout);
 
 	app.post('/showuserinfo',UserinfoHandler.viewUserinfo);
 
