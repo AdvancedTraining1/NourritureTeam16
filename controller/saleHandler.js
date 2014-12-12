@@ -30,17 +30,8 @@ SaleHandler.getAll = function(req, res){
 }
 
 SaleHandler.getOne = function(req, res){
-    var id = req.params.id;
-//    SaleDao.getOne(id,function(err, sale){
-//        if(err)
-//        {
-//            res.json(500, {message: err.toString()});
-//            return;
-//        }
-//        res.json(sale);
-//    });
-
-    SaleDao.getById(id,function(err,sale){
+    var id = req.params.saleId;
+    SaleDao.getOne(id,function(err, sale){
         if(err)
         {
             res.json(500, {message: err.toString()});
@@ -48,6 +39,15 @@ SaleHandler.getOne = function(req, res){
         }
         res.json(sale);
     });
+
+//    SaleDao.getById(id,function(err,sale){
+//        if(err)
+//        {
+//            res.json(500, {message: err.toString()});
+//            return;
+//        }
+//        res.json(sale);
+//    });
 }
 
 /*SaleHandler.getAllByLast = function(req,res){
@@ -174,19 +174,21 @@ SaleHandler.search = function(req, res){
 }
 
 SaleHandler.createSaleComment = function(req, res){
+
     req.setEncoding("utf-8");
-     var postData = "";
-     req.addListener("data", function(postDataChunk){
-         postData += postDataChunk;
-     });
+    var postData = "";
+    req.addListener("data", function(postDataChunk){
+        postData += postDataChunk;
+    });
 
     req.addListener("end",function(){
         var params = querystring.parse(postData);//GET & POST
-        var content = params.comment;
+
+        var content = params.content;
         var user_id = req.session.user_id;
         var account = req.session.account;
-        var sale_id = params._id;
-        var reply_id = params.comment_id;
+        var sale_id = params.saleId;
+        var time = logTime();
 
         console.log('数据接收完毕');
         //var sale = createSale()
@@ -196,8 +198,9 @@ SaleHandler.createSaleComment = function(req, res){
                 id: user_id,
                 account: account },
             content: content,
-            reply_id: reply_id,
-            blog_id: sale_id
+            //reply_id: reply_id,
+            blog_id: sale_id,
+            time:time
         });
 
         SaleDao.getOne(sale_id, function(err, sale){
@@ -209,11 +212,23 @@ SaleHandler.createSaleComment = function(req, res){
                 }
                 else
                 {
-                    SaleDao.addComment(sale_id, function(err, sale){
-                        res.writeHead(200, {
-                            "Content-Type": "text/plain;charset=utf-8"
-                        });
-                        res.end("评论成功！");
+                    var message = "save successful";
+                    console.log(message);
+                    var conditions = {_id: sale_id}
+                    console.log(sale.commentNum);
+                    var comment_count = sale.commentNum + 1;
+                    var update = {$set: { commentNum: comment_count} }
+                    var options = { upsert: true};
+                    SaleDao.update(conditions, update, options, function (error, docs) {
+                        if (error) {
+                            console.log(error);
+                            var message = "update failed";
+                            res.json(500, {message: message, status:false});
+                            return;
+                        } else {
+                            console.log("comment successful");
+                            res.json(200, {message: "comment successful",status:true});
+                        }
                     });
                 }
             });
@@ -222,20 +237,40 @@ SaleHandler.createSaleComment = function(req, res){
 }
 
 SaleHandler.getAllSaleComment = function(res, req){
-    var sale_id = req.params.sale_id;
-    SaleCommentDao.getAll(sale_id, function(err,comments){
-        if(err)
-        {
-            res.json(500, {message: err.toString()});
-            return;
-        }
-        res.json(200, comments);
+//    var sale_id = req.params.saleId;
+//    SaleCommentDao.getAll(sale_id, function(err,comments){
+//        if(err)
+//        {
+//            res.json(500, {message: err.toString()});
+//            return;
+//        }
+//        res.json(200, comments);
+//
+//    });
+    console.log("hehehaha");
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var blog_id = req.param('saleId');
+    console.log("+++++")
+    SaleCommentDao.getAllCommentToBlog(pageNo,pageSize,blog_id,function(err,comments){
+        SaleCommentDao.listCommentNum(blog_id,function(err2,num){
+            if(err || err2){
+                res.json(500, {message: err.toString()});
+                return;
 
-    });
+            }
+            if (!comments) {
+                res.json(404, {message: "Not found."});
+                return;
+            }
+            res.json({root:comments,total:num});
+        });
+
+    })
 }
 
 SaleHandler.createSaleCollect = function(req, res){
-    var sale_id = req.params.sale_id;
+    var sale_id = req.params.saleId;
     var user_id = req.session.user_id;
 
     var saleCollect = new SaleCollectModel({
@@ -265,7 +300,70 @@ SaleHandler.createSaleCollect = function(req, res){
             }
         });
     });
+}
 
+SaleHandler.cancelSaleCollection = function (req, res) {
+    var sale_id = req.params.saleId;
+    var user_id = req.session.user_id;
+    var message = ""
+    SaleDao.getOne(sale_id, function (err, blog) {
+        if (err) {
+            res.json(500, {message: err.toString()});
+            return;
+        }
+        if (!blog) {
+            res.json(404, {message: "Not found."});
+            return;
+        }
+        console.log("find one");
+
+        var collect_count = sale.collectNum - 1;
+        var update = {$set: { collectNum: collect_count} }
+        var options = { upsert: true};
+        SaleDao.update({_id: sale_id}, update, options, function (error) {
+            if (error) {
+                var message = "update failed";
+                res.json(500, {message: message,status:false});
+                return;
+            } else {
+                console.log("update successful");
+                var conditions = {sale_id: sale_id, user_id: user_id};
+
+                SaleCollectDao.delete(conditions, function (error) {
+                    if (error) {
+                        console.log("cancel fail!");
+                        var message = "cancel fail!"
+                        res.json(500, {message: message,status:false});
+                        return;
+                    } else {
+                        console.log('cancel successful!');
+                        var message = "cancel successful!"
+
+                        res.json(200, {message: message,status:true});
+                    }
+                })
+
+            }
+        });
+
+    });
+
+}
+
+SaleHandler.checkCollection=function (req, res) {
+    console.log("check--------")
+    var saleId = req.param('saleId');
+    console.log(saleId);
+    var userId = req.session.user_id;
+    SaleCollectDao.check(userId,saleId,function (err1, collect) {
+        console.log(collect.length);
+        if(collect.length != 0){
+            res.end("true");
+        }
+        else{
+            res.send("false");
+        }
+    });
 }
 
 function logTime(){

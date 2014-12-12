@@ -16,3 +16,11 @@ SaleCollectDao.create = function(saleCollect, callback){
         return callback(null, newSaleCollect);
     });
 }
+
+SaleCollectDao.check = function (userId,recipeId,callback) {
+    SaleCollect.find({user_id:userId,sale_id:recipeId},function(error,collect){
+        if(error)
+            return callback(error,null);
+        return callback(null, collect);
+    });
+};

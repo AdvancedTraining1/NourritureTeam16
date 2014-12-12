@@ -264,7 +264,7 @@ BlogHander.collectionBlog = function (req, res) {
                 var update = {$set: { collect_count:collect_count} }
                 var options = { upsert: true};
                 BlogDao.update(conditions, update, options, function (error,docs) {
-                    if (error) {
+                    if (error) {comment
                         console.log(error);
                         var message = "update failed";
                         res.json(500, {message: message,status:false});
