@@ -1,15 +1,2 @@
-<!--Created by zhaiyuan on 12/7/14.--><div id="main" style="min-height:500px"><div class="container"><section id="listUser"><div class="hgroup"><h1>All here !</h1><h2>You</h2><ul class="breadcrumb pull-right"><li><a href="/index">Home</a><span class="divider">/</span></li><li class="active">Friend Status</li></ul></div></section><div class="row"><div id="leftcol" class="span8"><div id="protfolio_container" class="portfolio_strict row"><div ng-repeat="user in users" class="portfolio_item cat_travel span4"><div style="background-image:url({{user.head}})" class="portfolio_photo"><!--a(href='/recipe/single/{{recipe._id}}')span.glyphicon.glyphicon-share
-p {{recipe.description}}--></div><div class="portfolio_description"><h3><a href="#">{{user.username}}</a></h3><a href="/attention/addAttentions/{{user._id}}" class="btn btn-primary">attention</a></div></div></div><!--article.post(ng-repeat="user in users").post_header
-	h3.post_title
-		//a(ng-click='aaa(recipe)') {{recipe.recipeName}}
-		a(href='#') {{user.head}}
-	.post_sub
-		span.glyphicon.glyphicon-time {{user.username}} &nbsp;&nbsp;
-			//a(href='/recipe/single#post_comments')
-				span.glyphicon.glyphicon-comment {{recipe.commentNum}} comments
-.post_content
-	//figure
-		a(href='/recipe/single')
-			img(alt='0' src='{{recipe.photo}}')
-	//p {{recipe.description}}
-	a.btn.btn-primary(href='#') attention--><div attention-page="attention-page" page-object="pageing" click-function="list" class="pagination pagination-centered"></div></div></div></div></div>
+<!--Created by zhaiyuan on 12/7/14.--><div id="main" style="min-height:500px"><div class="container"><section id="listUser"><div class="hgroup"><h1>All Users Here!</h1><h2>Enjoy here and find your friend.</h2><ul class="breadcrumb pull-right"><li><a href="/index">Home</a><span class="divider">/</span></li><li class="active">Friend Status</li></ul></div></section><div class="row"><div id="leftcol" class="span8"><div id="protfolio_container" class="portfolio_strict row"><div ng-repeat="user in users" class="portfolio_item cat_travel span4"><div style="background-image:url({{user.head}})" class="portfolio_photo"></div><div class="portfolio_description"><h3><a href="#">{{user.username}}</a></h3><!--a(id='at{{user._id}}').btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if="seeAttention")--><a href="" ng-click="addAttention(user._id,user.account,user.head)" ng-if="seeAttention" class="btn btn-primary"><span class="glyphicon glyphicon-star-empty"></span>attention</a><!--a.btn.btn-primary(ng-click="deleteAttention(user._id,user.account,user.head)" ng-if='!seeAttention')span.glyphicon.glyphicon-star
+| cancel attention--></div></div></div><div attention-page="attention-page" page-object="pageing" click-function="list" class="pagination pagination-centered"></div></div></div></div></div>

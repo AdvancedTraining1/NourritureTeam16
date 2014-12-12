@@ -19,8 +19,16 @@ router.get('/createTradePost',function(req,res){
     res.render('sale/createTradePost');
 });
 
+router.get('/createTradePost_angular',function(req,res){
+    res.render('common/index');
+});
+
 router.get('/listTradePost',function(req,res){
     res.render('sale/listTradePost');
+});
+
+router.get('/listTradePost_angular',function(req,res){
+    res.render('common/index');
 });
 
 router.get('/showTradePost',function(req,res){
