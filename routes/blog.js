@@ -72,4 +72,5 @@ router.post('/addCommentToBlog',BlogsHander.addCommentToBlog);
 router.get('/showCommentListToBlog',BlogsHander.getAllCommentToBlog);
 router.get('/deleteCommentToBlog/:comment_id',BlogsHander.deleteCommentToBlog);
 
+
 module.exports = router;

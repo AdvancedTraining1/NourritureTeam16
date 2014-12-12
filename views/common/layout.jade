@@ -26,8 +26,8 @@ html(ng-app="nourriture")
 			.container
 				.navbar
 					.navbar-inner
-						a.brand(href='index.html')
-							img(src="images/restart_logo.png" width="90" height="90" alt="Logo")
+						a.brand(href='/index')
+							img(src="img/restart_logo.png" width="90" height="90" alt="Logo")
 							span.logo_title
 								strong Nourriture
 							span.logo_subtitle Advanced Training Team 16
@@ -48,7 +48,7 @@ html(ng-app="nourriture")
 								li
 									a(href='/topic/topicList_angular') Topic
 								li
-									a(href='#') Personal Center
+									a(href='/userinfo/center') Personal Center
 								li
 									a(href='/attention/friendStatusListRecipe') Friend Status
 								li
@@ -67,8 +67,10 @@ html(ng-app="nourriture")
 											a(href='/sale/createTradePost') Publish Trade Post
 
 				#sign
-					a(href='/userinfo/register')
-						span.glyphicon.glyphicon-user  Register / Sign In
+					a(href='/userinfo/register',id='loginAddress')
+						span.glyphicon.glyphicon-user(id='loginName') Register / Sign In
+					a(href='/userinfo/logout',id='loginAddress2')
+						span  &nbsp;&nbsp;&nbsp;&nbsp;,Logout
 
 		block team
 
@@ -111,6 +113,31 @@ script.
 		function tab() {
 			$(this).addClass("active").siblings().removeClass("active");
 		};
+
+		$.ajax({
+			async : false,
+			cache : false,      type: 'POST',
+			dataType : "json",
+			url: "/service/userinfo/isLogin",//请求的action路径
+			error: function () {//请求失败处理函数
+				//alert('请求失败');
+				document.getElementById("loginAddress2").style.visibility = "hidden";//隐藏
+			},
+			success:function(data){ //请求成功后处理函数。
+				if(data.message=="1"){
+					//alert("data.username--"+data.username);
+					document.getElementById('loginAddress').href="/userinfo/info";
+					document.getElementById('loginName').innerHTML=data.username;
+
+					document.getElementById("loginAddress2").style.visibility = "visible";//显示
+				}else{
+					document.getElementById("loginAddress2").style.visibility = "hidden";//隐藏
+				}
+
+
+			}
+		});
+
 	});
 
 
