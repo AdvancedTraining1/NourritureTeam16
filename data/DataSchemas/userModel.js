@@ -31,7 +31,6 @@ var UserSchema = new mongoose.Schema({
     friends_count: { type: Number, default: 0 },
     fans_count: { type: Number, default: 0 },
 
-    attentionFlag: {type: bool, default:false}
 });
 
 module.exports = UserSchema;

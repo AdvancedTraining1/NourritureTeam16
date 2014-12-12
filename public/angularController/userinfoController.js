@@ -11,7 +11,6 @@ function showInfo($scope, $http, $location){
     $scope.modifyUserinfo={};
     $(document).ready(function() {
         //获取userinfo信息来显示在页面上
-        alert('sfsd');
         getUserInfo();
 
     });
