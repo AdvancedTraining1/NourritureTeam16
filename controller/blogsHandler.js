@@ -134,11 +134,27 @@ BlogHander.saveABlog = function (req, res) {
         var title = params.title;
         var content = params.content;
 
-        var blog = new BlogModel({
-            title: title,
-            content: content,
-            type: "2"
-        });
+        var user_id = req.session.user_id;
+        var account = req.session.account;
+
+        if(user_id&&account){
+            var blog = new BlogModel({
+                title: title,
+                content: content,
+                type: "2",
+                author: {
+                    id: user_id,
+                    account: account }
+            });
+        }else{
+            var blog = new BlogModel({
+                title: title,
+                content: content,
+                type: "2"
+            });
+
+        }
+
         var message = "";
         BlogDao.create(blog,function (err, newblog) {
             if (err) {

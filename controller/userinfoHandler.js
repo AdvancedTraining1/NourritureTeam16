@@ -3,6 +3,14 @@
  */
 var db = require('../util/database')
 
+var BlogModel = require('../data').Blog;
+var BlogDao = require('../dao/BlogDao');
+var CollectBlogDao = require('../dao/CollectBlogDao');
+var CollectBlogModel = require('./../data').CollectBlog;
+var CommentToBlogDao = require('../dao/CommentToBlogDao');
+var CommentToBlogModel = require('./../data').CommentToBlog;
+var BlogLikeModel = require('./../data').BlogLike;
+var BlogLikeDao = require('../dao/BlogLikeDao');
 var UserDao = require("../dao/UserDao");
 var UserModel = require('../data').user;
 var querystring = require("querystring"),
@@ -77,7 +85,7 @@ UserinfoHandler.login=function(req,res){
                 req.session.user_name = user.username;
                 req.session.password = user.password;
                 req.session.head = user.head;
-                console.log(req.session.user_id);
+                console.log('登录成功---user_id:'+req.session.user_id);
                 res.json({message:"登陆成功！",user:user});
 
                 //res.writeHead(200, {
@@ -134,7 +142,7 @@ UserinfoHandler.isLogin = function(req,res){
     }else{
         res.json({message:"2"});
     }
-}
+};
 
 UserinfoHandler.modifyinfo=function(req,res){
     req.setEncoding('utf-8');
@@ -192,5 +200,38 @@ UserinfoHandler.viewUserinfo=function(req,res){
 
 };
 
+UserinfoHandler.getUserBlogs=function(req,res){
+
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    var user_id = req.session.user_id;
+
+    console.log("handler---UserBlogs");
+    BlogDao.getUserBlogs(pageNo,pageSize,user_id,function(err,blogs){
+        if(err)
+        {
+            console.log(err);
+
+        }else
+        {
+            res.json({root:blogs,total:2});
+
+        }
+
+    });
+
+};
+
+UserinfoHandler.logout=function(req,res){
+    req.session.user_id = "";
+    req.session.account = "";
+    req.session.user_name = "";
+    req.session.password = "";
+    req.session.head = "";
+
+    console.log("UserHandler---注销");
+    res.json({message:"注销成功"});
+}
 
 module.exports = UserinfoHandler;
