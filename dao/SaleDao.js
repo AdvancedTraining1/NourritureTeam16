@@ -18,7 +18,7 @@ SaleDao.getAll = function (pageNo,pageSize,callback) {
 }
 
 SaleDao.getOne = function (id, callback) {
-    Sale.find({_id:id}).sort({update_at:1}).limit(10).exec(function(err, sale){
+    Sale.findOne({_id:id}).sort({update_at:1}).limit(10).exec(function(err, sale){
         if(err)
             return callback(err, null);
         return callback(null, sale);
@@ -101,3 +101,11 @@ SaleDao.addCollect = function (id, callback){
         return callback(null, sale);
     });
 }
+
+SaleDao.update = function( conditions, update ,options, callback) {
+    Sale.update(conditions, update, options, function (error,doc) {
+        if(error) return callback(error);
+        return callback(null,doc);
+    });
+
+};
