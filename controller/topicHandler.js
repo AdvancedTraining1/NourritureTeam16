@@ -11,6 +11,8 @@ var TopicUploadCommentDao = require("../dao/TopicUploadCommentDao");
 var TopicUploadLikeModel = require('./../data').TopicUploadLike;
 var TopicUploadLikeDao = require("../dao/TopicUploadLikeDao");
 var querystring = require("querystring");
+var formidable = require('formidable');
+var fs = require('fs');
 //构造
 function TopicHandler()
 {
@@ -37,13 +39,15 @@ TopicHandler.publishTopic = function(req,res){
 
         var topicName = params.topicName;
         var content = params.content;
+        var time = getTime();
 
         var topic = new TopicModel({
             topicName: topicName,
             content: content,
             author: {
                 id: req.session.user_id,
-                account: req.session.account }
+                account: req.session.account },
+            time:time
 
         });
         var message = ""
@@ -57,7 +61,7 @@ TopicHandler.publishTopic = function(req,res){
             }
 
 
-            res.render('showtopic', {topicName: topicName, content: content, message: message})
+            res.json(200, {topic:newtopic, message: message})
 
         });
 
@@ -67,16 +71,22 @@ TopicHandler.publishTopic = function(req,res){
 
 TopicHandler.getAlltopics = function (req, res) {
     console.log("查询全部话题...");
-    TopicDao.getAllTopics(function(err,topics){
-        if (err) {
-            res.json(500, {message: err.toString()});
-            return;
-        }
-        if (!topics) {
-            res.json(404, {message: "Not found."});
-            return;
-        }
-        res.json(200, topics);
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    TopicDao.getAllTopics(pageNo,pageSize,function(err,topics){
+        TopicDao.getAllNum(function(err2,num){
+            if (err || err2) {
+                res.json(500, {message: "something wrong"});
+                return;
+            }
+            if (!topics) {
+                res.json(404, {message: "Not found.",status:false});
+                return;
+            }
+            res.json(200, {topics:topics,total:num,status:true});
+
+
+        })
 
     })
 };
@@ -84,7 +94,7 @@ TopicHandler.getATopic = function (req, res) {
     console.log("查询一个话题...");
     var topic_id = req.params.topic_id;
     console.log(topic_id);
-    TopicDao.getOne(topic_id,function(err,topic){
+    TopicDao.getOne(topic_id,function(err,topic) {
         if (err) {
             res.json(500, {message: err.toString()});
             return;
@@ -93,20 +103,41 @@ TopicHandler.getATopic = function (req, res) {
             res.json(404, {message: "Not found."});
             return;
         }
-        TopicUploadDao.getAllUploadToATopic(topic_id,function(error,uploads){
-            if(error){
+
+
+        res.json(200, {topic: topic});
+    })
+
+
+};
+
+TopicHandler.getUploadToATopic = function (req, res) {
+    console.log("查询一个话题...");
+    var topic_id = req.param('topic_id');
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    console.log(pageSize);
+
+    TopicUploadDao.getAllUploadToATopic(topic_id,pageNo,pageSize,function(err,uploads){
+        TopicUploadDao.listCommentNum(topic_id,function(err2,num){
+            if(err || err2){
+                console.log("1---"+err)
+                console.log("1---"+err2)
                 res.json(500, {message: err.toString()});
                 return;
+
             }
-           // if(!uploads){
-       // res.render('showTopicUpload', {title: topic.topicName, picture: topic.content, topic_id:topic._id});
-            //}
+            if (!uploads) {
+                res.json(404, {message: "Not found."});
+                return;
+            }
+            res.json(200,{uploads:uploads,total:num});
+        });
 
-            res.json(200, {topic: topic, uploads: uploads});
-
-        })
 
     })
+
+
 };
 
 TopicHandler.uploadProduct = function(req, res){
@@ -128,12 +159,14 @@ TopicHandler.uploadProduct = function(req, res){
         var title = params.title;
         var picture = params.picture;
         var topic_id = params.topic_id;
+        var story = params.story;
 
 
         var topicUpload = new TopicUploadModel({
             topic_id: topic_id,
             title: title,
             picture: picture,
+            story:story,
             author: {
                 id: req.session.user_id,
                 account: req.session.account }
@@ -141,15 +174,19 @@ TopicHandler.uploadProduct = function(req, res){
         });
         var message = ""
         TopicUploadDao.create(topicUpload, function (err, newTopicUpload) {
-            if (err) {
-                console.log(err);
-                message = "publish failed";
-                res.json(500, {message: message});
-                return;
-            } else {
-                message = "publish successful";
-                res.json(200, newTopicUpload);
-            }
+            TopicDao.updateUploadCount(topic_id,function(err2,topic){
+                if (err || err2) {
+                    message = "publish failed";
+                    res.json(500, {message: message,status:false});
+
+                    return;
+                } else {
+                    message = "publish successful";
+                    res.json(200, {newTopicUpload:newTopicUpload,status:true});
+                }
+
+            });
+
         });
 
     });
@@ -298,11 +335,11 @@ TopicHandler.likeTopicUpload = function (req, res) {
                     if (error) {
                         console.log(error);
                         var message = "update failed";
-                        res.json(500, {message: message});
+                        res.json(500, {message: message,status:false});
                         return;
                     } else {
                         console.log("like successful");
-                        res.json(200, {message: "like successful"});
+                        res.json(200, {message: "like successful",status:true});
                     }
                 });
 
@@ -532,5 +569,45 @@ function createTopic()
 
     return topic;
 };
+
+function getTime(){
+    var date = new Date();
+    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    console.log(dateStr);
+    return dateStr;
+}
+
+TopicHandler.upload = function(req,res){
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "./../upload/temp/";//改变临时目录
+    form.parse(req, function(error, fields, files){
+        for(var key in files){
+            var file = files[key];
+            console.log(file.type);
+            var fName = (new Date()).getTime();
+
+            switch (file.type){
+                case "image/jpeg":
+                    fName = fName + ".jpg";
+                    break;
+                case "image/png":
+                    fName = fName + ".png";
+                    break;
+                default :
+                    fName =fName + ".png";
+                    break;
+            }
+            console.log(file.size);
+            var uploadDir = "./../public/upload/" + fName;
+            fs.rename(file.path, uploadDir, function(err) {
+                if (err) {
+                    res.write(err+"\n");
+                    res.end();
+                }
+                res.end("upload/"+fName);
+            });
+        }
+    });
+}
 
 module.exports = TopicHandler;

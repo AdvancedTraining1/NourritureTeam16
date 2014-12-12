@@ -30,7 +30,6 @@ var querystring = require('querystring');
 var fs = require('fs');
 var url = require('url');
 
-
 function AttentionsHandler(){
 
 }
@@ -123,13 +122,45 @@ AttentionsHandler.listAll=function(req,res){
 };
 
 
+AttentionsHandler.checkAttention=function (req, res) {
+    var friendId = req.param('friendId');
+    //var userId = req.session.user_id;
+    var userId = "5464a134462eaef3480abb39";
+    AttentionsDao.check(userId,friendId,function (err1, attention) {
+        console.log(attention.length);
+        if(attention.length != 0){
+            res.end("true");
+        }
+        else{
+            res.send("false");
+        }
+    });
+}
+
+
 AttentionsHandler.addAttentions=function(req,res){
     console.log("关注");
+    var friendId = req.param('friendId');
+    var friendAccount = req.param('friendAccount');
+    var friendHead = req.param('friendHead');
 
+    var friends = {};
+    friends._id = friendId;
+    friends.account = friendAccount;
+    friends.head = friendHead;
+
+
+    //var userId = req.session.user_id;
+    //var userAccount = req.session.user_account;
+    //var userHead = req.session.user_head;
+    //var fans={userId,userAccount,userHead};
+
+    /*
     var friends = {};
     friends._id = "5464a08744ea60084850294a";
     friends.account = "ZHAIYUAN";
     friends.head = "2.img";
+     */
 
     var fans = {};
     fans._id = "5464a134462eaef3480abb39";
@@ -142,7 +173,7 @@ AttentionsHandler.addAttentions=function(req,res){
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("已关注！");
+            res.end("attention success!");
         });
     });
 
@@ -150,11 +181,26 @@ AttentionsHandler.addAttentions=function(req,res){
 
 AttentionsHandler.deleteAttentions=function(req,res){
     console.log("取消关注");
+    var friendId = req.param('friendId');
+    var friendAccount = req.param('friendAccount');
+    var friendHead = req.param('friendHead');
 
     var friends = {};
+    friends._id = friendId;
+    friends.account = friendAccount;
+    friends.head = friendHead;
+
+    //var userId = req.session.user_id;
+    //var userAccount = req.session.user_account;
+    //var userHead = req.session.user_head;
+    //var fans={userId,userAccount,userHead};
+
+
+   /* var friends = {};
     friends._id = "5464a08744ea60084850294a";
     friends.account = "ZHAIYUAN";
     friends.head = "2.img";
+    */
 
     var fans = {};
     fans._id = "5464a134462eaef3480abb39";
@@ -167,7 +213,7 @@ AttentionsHandler.deleteAttentions=function(req,res){
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("已取消关注！");
+            res.end("cancel attention!");
         });
 
     });
@@ -175,77 +221,117 @@ AttentionsHandler.deleteAttentions=function(req,res){
 };
 
 
-AttentionsHandler.lookFriendStatus=function(req,res){
-    console.log("查看好友动态");
+AttentionsHandler.lookFriendStatusRecipe=function(req,res){
+    console.log("查看好友动态---菜谱");
 
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
 
-    User.find({_id:sessionId},function(err,user){
-
-        /*AttentionsDao.lookFriendStatus(user,function(err,bloglist){
-            res.json(bloglist);
-        })
-*/
-        var list1=[];
-        var list2=[];
-        var list3=[];
-        for(var i= 0,len=user[0].friends.length;i<len;i++){
-
-            var friendId=user[0].friends[i]._id;
-            Blog.find({"author.id":friendId},function(err,blog){
-                list1=list1+blog;
-                //if(i+1==len)
-                res.write(list1);
-            });
-            Recipe.find({"author._id":friendId},function(err,recipe){
-                list2=list2+recipe;
-                //if(i+1==len)
-                res.write(list2);
-            });
-            Topic.find({"author.id":friendId},function(err,topic){
-                list3=list3+topic;
-                //if(i+1==len)
-                res.end(list3);
-            });
-        }
+    AttentionsDao.lookFriendStatusRecipe(pageNo,pageSize,function (err, recipes) {
+         console.log(recipes);
+         AttentionsDao.getFriendStatusRecipeNum(function(err2,num){
+              if(!(err || err2)){
+                   res.json({root:recipes,total:num});
+              }
+         });
 
     });
 
 };
 
 
-AttentionsHandler.lookOneFriendStatus=function(req,res) {
-    console.log("查看具体好友动态");                   //a little problem to do more
+AttentionsHandler.lookFriendStatusBlog=function(req,res){
+    console.log("查看好友动态---博客");
 
-    var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    /*Blog.find({_id: statusId}, function (err, blog) {
-        //res.json(blog);
-        CommentToBlogDao.getAllCommentToBlog = function (statusId,callback) {
-            CommentToBlogModel.find({blog_id:statusId}).sort({'create_at':-1}).exec(function(error,comments){
-            if(error) return callback(error,null);
-                return callback(null, comments);
-            });
-        };
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
 
-    });*/
+    AttentionsDao.lookFriendStatusBlog(pageNo,pageSize,function (err, blogs) {
+        console.log(blogs);
+        AttentionsDao.getFriendStatusBlogNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:blogs,total:num});
+            }
+        });
+
+    });
 
 
-    Recipe.find({_id: statusId}, function (err, recipe) {
+};
+
+
+AttentionsHandler.lookFriendStatusTopic=function(req,res){
+    console.log("查看好友动态---话题");
+
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+
+    AttentionsDao.lookFriendStatusTopic(pageNo,pageSize,function (err, topics) {
+        console.log(topics);
+        AttentionsDao.getFriendStatusTopicNum(function(err2,num){
+            if(!(err || err2)){
+                res.json({root:topics,total:num});
+            }
+        });
+
+    });
+
+
+};
+
+
+AttentionsHandler.lookOneFriendStatusRecipe=function(req,res) {
+    console.log("查看具体好友动态---菜谱");                   //a little problem to do more
+
+    //var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var recipeId=req.param('queryStr');
+    Recipe.find({_id: recipeId}, function (err, recipe) {
         //res.write(recipe);
 
-        CommentDao.listComment(statusId,function (err, commentList) {
+        CommentDao.listComment(recipeId,function (err, commentList) {
             res.json(commentList);
         });
 
     });
 
-   /*
-    Topic.find({_id: statusId}, function (err, topic) {    //topic problem
-        res.json(topic);
-    });*/
+};
+
+
+AttentionsHandler.lookOneFriendStatusBlog=function(req,res) {
+    console.log("查看具体好友动态---博客");                   //a little problem to do more
+
+    //var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var blogId=req.param('queryStr');
+    Blog.find({_id: blogId}, function (err, blog) {
+        //res.json(blog);
+        CommentToBlogDao.getAllCommentToBlog = function (blogId,callback) {
+            CommentToBlogModel.find({blog_id:blogId}).sort({'create_at':-1}).exec(function(error,comments){
+                if(error) return callback(error,null);
+                return callback(null, comments);
+            });
+        };
+
+     });
 
 };
+
+
+AttentionsHandler.lookOneFriendStatusTopic=function(req,res) {
+    console.log("查看具体好友动态---话题");                   //a little problem to do more
+
+    //var statusId = "5464f96cf6596eda34c8f7ca";//blog,topic or recipe id
+    var topicId=req.param('queryStr');
+    Topic.find({_id: topicId}, function (err, topic) {
+        res.json(topic);
+    });
+
+};
+
 
 AttentionsHandler.commentStatus=function(req,res) {
     console.log("评论状态");
@@ -544,17 +630,17 @@ AttentionsHandler.addRecipe=function(req,res){
 
 };
 
-AttentionsHandler.addTopic=function(req,res){
-    console.log("发布话题--test");
+AttentionsHandler.addBlog=function(req,res){
+    console.log("发布博客--test");
 
-    var topic = new Topic({
-        topicName:"2",
-        content: "2",
+    var blog = new Blog({
+        title:"1210hhh",
+        content: "1210hhh",
         author: {
-            id: "54578976af75277b630cc379",
-            account: "zhaiyuan" },
-        time: 2014-11-14,
-
+            id: "5457aa1f0233539703192dc9",
+            account: "mengchi" },
+        create_at: 2014-12-10,
+/*
         upload: {
             author: {
                 id: "54578976af75277b630cc379",
@@ -562,7 +648,41 @@ AttentionsHandler.addTopic=function(req,res){
             picture : "3.img",
             upload_time:2014-11-14,
             like_count: 4
-        },
+        },*/
+
+        like_count: 2,
+        collect_count:5,
+        comment_count: 1
+
+    });
+
+    AttentionsDao.addBlog(blog,function(err,newblog){
+        res.json(201, newblog);
+        res.render('index');
+
+    });
+
+};
+
+AttentionsHandler.addTopic=function(req,res){
+    console.log("发布话题--test");
+
+    var topic = new Topic({
+        topicName:"20141",
+        content: "20141",
+        author: {
+            id: "5457aa1f0233539703192dc9",
+            account: "mengchi" },
+        time: 2014-12-10,
+        /*
+         upload: {
+         author: {
+         id: "54578976af75277b630cc379",
+         account:  "zhaiyuan" },
+         picture : "3.img",
+         upload_time:2014-11-14,
+         like_count: 4
+         },*/
 
         upload_count: 4
 
@@ -575,5 +695,6 @@ AttentionsHandler.addTopic=function(req,res){
     });
 
 };
+
 
 module.exports = AttentionsHandler;

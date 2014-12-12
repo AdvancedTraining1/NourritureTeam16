@@ -875,3 +875,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   width: 30px;
   border: solid 5px;
 }
+
+.comment_name {
+  font-weight: 600;
+  padding-top: 10px;
+}
+
+comment_date {
+  font-size: 12px;
+}

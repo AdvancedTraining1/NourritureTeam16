@@ -20,9 +20,9 @@ TopicDao.create = function(topic,callback){
     });
 }
 
-TopicDao.getAllTopics = function (callback)
+TopicDao.getAllTopics = function (pageNo,pageSize,callback)
 {
-    topicModel.find({},function(err,topics) {
+    topicModel.find({}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'time':-1}).exec(function(err,topics) {
         if (err) {
             callback(err,null);
             return;
@@ -36,6 +36,15 @@ TopicDao.getAllTopics = function (callback)
     });
 
 };
+
+TopicDao.getAllNum = function (callback) {
+    topicModel.count({}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
+
 TopicDao.getOne = function (id,callback) {
     topicModel.findOne({_id:id}).exec(function(error,topic){
         if(error) return callback(error,null);
@@ -89,4 +98,12 @@ TopicDao.searchTopic = function (search,callback) {
     });
 }
 
+
+TopicDao.updateUploadCount = function (id,callback) {
+    topicModel.findByIdAndUpdate(id,{$inc:{upload_count:1}},function(error,topic){
+        if(error)
+            return callback(error,null);
+        return callback(null, topic);
+    });
+};
 module.exports = TopicDao;

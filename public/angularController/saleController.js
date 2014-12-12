@@ -8,6 +8,8 @@ function CreateTradePost($scope, $http, $location){
     $scope.sale = {};
 
     $scope.publishTradePost = function () {
+        var content = $('#editor').html();
+        $scope.sale.content = content;
         $.post('/sale/create',$scope.sale,function(data){
             alert(data);
             //$location.path('/sale/list');
@@ -48,4 +50,23 @@ function ListTradePost($scope, $http, $location){
     $scope.searchTradePost = function () {
 
     }
+}
+
+function ShowTradePost($scope, $routeParams, $http, $location){
+    $scope.id = $routeParams.saleId;
+
+    $(function(){
+        var saleApi = "/sale/getOne";
+        $http({
+            method: 'GET',
+            url: saleApi + '?saleId=' + $scope.id
+        }).success(function(data, status) {
+            $scope.sale = data;
+        }).error(function(data, status) {
+
+        });
+
+        //commentPage();
+        //productPage();
+    });
 }

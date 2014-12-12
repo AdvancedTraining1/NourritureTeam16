@@ -4,7 +4,8 @@
 
 var DaoBase = require('./DaoBase');
 var User = require('./../data').user;
-var Blog = require('./../data').blog;
+var Blog = require('./../data').Blog;
+var Topic = require('./../data').Topic;
 var Attentions = require('../data/models/user');
 var Recipe = require('./../data').Recipe;
 
@@ -56,8 +57,17 @@ AttentionsDao.searchNum = function (query,callback) {
 };
 //---------------------------------------------------------------------------------------------------------------------------
 
+AttentionsDao.check = function (userId,friendId,callback) {
+    User.find({_id:userId,"friends._id":friendId},function(error,attention){
+        if(error)
+            return callback(error,null);
+        return callback(null, attention);
+    }); //db.blogs.find({"comment":{"$elemMatch":{"author":"joe", "score":{"$gte":5}}}});
+};
+
 AttentionsDao.addAttentions = function (id,friends,callback) {
     User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){
+    //User.findByIdAndUpdate(id,{$push:{"friends._id":friendId},$inc:{friends_count:1}},function(error,users){
         return callback(null,users);
     });
 
@@ -88,27 +98,137 @@ AttentionsDao.deleteAttentionsFans = function (id,fans,callback) {
     });
 
 }
+//---------------------------------------------------------------------------------------------------------------------------
 
-AttentionsDao.lookFriendStatus = function (user, callback) {//a little problem??
-    var list=[];
+AttentionsDao.lookFriendStatusRecipe = function (pageNo,pageSize,callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
-    for(var i= 0,len=user[0].friends.length;i<len;i++){
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        console.log("friendIdList=="+friendIdList);
+        Recipe.find({"author._id":{$in:friendIdList.split(",")}}).sort({'logTime':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, recipes) {
+            if(err) return callback(err,null);
 
-        var friendId=user[0].friends[i]._id;
-        Blog.find({"author.id":friendId},function(err,blog){
-            list=list+blog;
-            //res.write(list);
-
-            if(i+1==len) return callback(null,list);
+            return callback(null, recipes);
         });
 
-    }
+    });
+
 }
+
+AttentionsDao.getFriendStatusRecipeNum = function (callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        Recipe.count({"author._id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
+            console.log("num=="+num);
+            if(err) return callback(err,null);
+
+            return callback(null, num);
+        });
+
+    });
+
+};
+
+
+AttentionsDao.lookFriendStatusBlog = function (pageNo,pageSize,callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        console.log("friendIdList=="+friendIdList);
+        Blog.find({"author.id":{$in:friendIdList.split(",")}}).sort({'create_at':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, blogs) {
+            if(err) return callback(err,null);
+
+            return callback(null, blogs);
+        });
+
+    });
+
+}
+
+AttentionsDao.getFriendStatusBlogNum = function (callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        Blog.count({"author.id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
+            console.log("num=="+num);
+            if(err) return callback(err,null);
+
+            return callback(null, num);
+        });
+
+    });
+
+};
+
+
+
+AttentionsDao.lookFriendStatusTopic = function (pageNo,pageSize,callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        console.log("friendIdList=="+friendIdList);
+        Topic.find({"author.id":{$in:friendIdList.split(",")}}).sort({'time':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, topics) {
+            if(err) return callback(err,null);
+
+            return callback(null, topics);
+        });
+
+    });
+
+}
+
+AttentionsDao.getFriendStatusTopicNum = function (callback) {
+    var friendIdList=[];
+    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+
+    User.find({_id:sessionId},function(err,user) {
+        for (var i = 0, len = user[0].friends.length; i < len; i++) {
+            friendIdList = friendIdList+user[0].friends[i]._id+",";
+        }
+        Topic.count({"author.id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
+            console.log("num=="+num);
+            if(err) return callback(err,null);
+
+            return callback(null, num);
+        });
+
+    });
+
+};
+
 
 AttentionsDao.addRecipe = function (newrecipe,callback){//recipe -----test
     newrecipe.save(function (error,newrec) {
         if(error) return callback(error,null);
         return callback(null,newrec);
+    });
+};
+
+AttentionsDao.addBlog = function (newblog,callback){//blog -----test
+    newblog.save(function (error,newblog) {
+        if(error) return callback(error,null);
+        return callback(null,newblog);
     });
 };
 

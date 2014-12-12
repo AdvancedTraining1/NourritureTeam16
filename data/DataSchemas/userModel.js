@@ -29,7 +29,9 @@ var UserSchema = new mongoose.Schema({
     blog_count: { type: Number, default: 0 },
     comment_count: { type: Number, default: 0 },
     friends_count: { type: Number, default: 0 },
-    fans_count: { type: Number, default: 0 }
+    fans_count: { type: Number, default: 0 },
+
+    attentionFlag: {type: bool, default:false}
 });
 
 module.exports = UserSchema;

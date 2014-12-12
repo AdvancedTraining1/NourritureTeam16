@@ -19,7 +19,7 @@ function SaleHandler(){
 }
 
 SaleHandler.getAll = function(req, res){
-    SaleDao.getAll(function(err, sale){
+    SaleDao.getAll(1,100,function(err, sale){
         if(err)
         {
             res.json(500, {message: err.toString()});
@@ -30,10 +30,17 @@ SaleHandler.getAll = function(req, res){
 }
 
 SaleHandler.getOne = function(req, res){
-    //var id = req.params.sale_id;
-    var id = "546747b89ac900691b0584ac";
+    var id = req.params.id;
+//    SaleDao.getOne(id,function(err, sale){
+//        if(err)
+//        {
+//            res.json(500, {message: err.toString()});
+//            return;
+//        }
+//        res.json(sale);
+//    });
 
-    SaleDao.getOne(id,function(err, sale){
+    SaleDao.getById(id,function(err,sale){
         if(err)
         {
             res.json(500, {message: err.toString()});
@@ -263,7 +270,7 @@ SaleHandler.createSaleCollect = function(req, res){
 
 function logTime(){
     var date = new Date();
-    var dateStr = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
     return dateStr;
 }
 
