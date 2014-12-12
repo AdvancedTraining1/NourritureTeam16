@@ -20,7 +20,7 @@
 							h3
 								a(href='#') {{user.username}}
 							//a(id='at{{user._id}}').btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if="seeAttention")
-							a.btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if="seeAttention")
+							a.btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if='seeAttention')
 								span.glyphicon.glyphicon-star-empty
 								| attention
 							//a.btn.btn-primary(ng-click="deleteAttention(user._id,user.account,user.head)" ng-if='!seeAttention')

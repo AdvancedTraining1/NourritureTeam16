@@ -216,17 +216,24 @@ AttentionsHandler.deleteAttentions=function(req,res){
     fans.account = "ZHAI";
     fans.head = "2.img";
 
+    AttentionsDao.check(fans._id,friendId,function (err, attention) {
+        console.log(attention.length);
+        if(attention.length != 0){
+            //res.end("true");
+            AttentionsDao.deleteAttentions(fans._id,friends,function(err,users){
+                AttentionsDao.deleteAttentionsFans(friends._id,fans,function (err, users) {
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    });
+                    res.end("cancel attention!");
+                });
 
-    AttentionsDao.deleteAttentions(fans._id,friends,function(err,users){
-        AttentionsDao.deleteAttentionsFans(friends._id,fans,function (err, users) {
-            res.writeHead(200, {
-                "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("cancel attention!");
-        });
-
+        }
+        else{
+            res.json("already cancel!");
+        }
     });
-
 };
 
 

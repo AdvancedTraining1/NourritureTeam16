@@ -231,11 +231,11 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data){
             if(data == "false"){
 
-                $scope.seeAttention = true;//attention
+                $scope.seeAttention = true;//show attention
 
             }else{
 
-                $scope.seeAttention = false;
+                $scope.seeAttention = false;//show cancel attention
             }
         });
 
