@@ -105,16 +105,18 @@ AttentionsDao.lookFriendStatusRecipe = function (sessionId,pageNo,pageSize,callb
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
-        for (var i = 0, len = user[0].friends.length; i < len; i++) {
-            friendIdList = friendIdList+user[0].friends[i]._id+",";
-        }
-        console.log("friendIdList=="+friendIdList);
-        Recipe.find({"author._id":{$in:friendIdList.split(",")}}).sort({'logTime':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, recipes) {
-            if(err) return callback(err,null);
+      if(err) return callback(err,null);
+      else {
+          for (var i = 0, len = user[0].friends.length; i < len; i++) {
+              friendIdList = friendIdList + user[0].friends[i]._id + ",";
+          }
+          console.log("friendIdList==" + friendIdList);
+          Recipe.find({"author._id": {$in: friendIdList.split(",")}}).sort({'logTime': -1}).skip((pageNo - 1) * pageSize).limit(pageSize).exec(function (err, recipes) {
+              if (err) return callback(err, null);
 
-            return callback(null, recipes);
-        });
-
+              return callback(null, recipes);
+          });
+      }
     });
 
 }
@@ -124,16 +126,18 @@ AttentionsDao.getFriendStatusRecipeNum = function (sessionId,callback) {
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
-        for (var i = 0, len = user[0].friends.length; i < len; i++) {
-            friendIdList = friendIdList+user[0].friends[i]._id+",";
-        }
-        Recipe.count({"author._id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
-            console.log("num=="+num);
-            if(err) return callback(err,null);
+      if(err) return callback(err,null);
+      else {
+          for (var i = 0, len = user[0].friends.length; i < len; i++) {
+              friendIdList = friendIdList + user[0].friends[i]._id + ",";
+          }
+          Recipe.count({"author._id": {$in: friendIdList.split(",")}}).exec(function (err, num) {
+              console.log("num==" + num);
+              if (err) return callback(err, null);
 
-            return callback(null, num);
-        });
-
+              return callback(null, num);
+          });
+      }
     });
 
 };
@@ -144,16 +148,18 @@ AttentionsDao.lookFriendStatusBlog = function (sessionId,pageNo,pageSize,callbac
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
-        for (var i = 0, len = user[0].friends.length; i < len; i++) {
-            friendIdList = friendIdList+user[0].friends[i]._id+",";
-        }
-        console.log("friendIdList=="+friendIdList);
-        Blog.find({"author.id":{$in:friendIdList.split(",")}}).sort({'create_at':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, blogs) {
-            if(err) return callback(err,null);
+      if(err) return callback(err,null);
+      else {
+          for (var i = 0, len = user[0].friends.length; i < len; i++) {
+              friendIdList = friendIdList + user[0].friends[i]._id + ",";
+          }
+          console.log("friendIdList==" + friendIdList);
+          Blog.find({"author.id": {$in: friendIdList.split(",")}}).sort({'create_at': -1}).skip((pageNo - 1) * pageSize).limit(pageSize).exec(function (err, blogs) {
+              if (err) return callback(err, null);
 
-            return callback(null, blogs);
-        });
-
+              return callback(null, blogs);
+          });
+      }
     });
 
 }
@@ -163,16 +169,18 @@ AttentionsDao.getFriendStatusBlogNum = function (sessionId,callback) {
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
-        for (var i = 0, len = user[0].friends.length; i < len; i++) {
-            friendIdList = friendIdList+user[0].friends[i]._id+",";
-        }
-        Blog.count({"author.id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
-            console.log("num=="+num);
-            if(err) return callback(err,null);
+      if(err) return callback(err,null);
+      else {
+          for (var i = 0, len = user[0].friends.length; i < len; i++) {
+              friendIdList = friendIdList + user[0].friends[i]._id + ",";
+          }
+          Blog.count({"author.id": {$in: friendIdList.split(",")}}).exec(function (err, num) {
+              console.log("num==" + num);
+              if (err) return callback(err, null);
 
-            return callback(null, num);
-        });
-
+              return callback(null, num);
+          });
+      }
     });
 
 };
@@ -184,16 +192,18 @@ AttentionsDao.lookFriendStatusTopic = function (sessionId,pageNo,pageSize,callba
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
-        for (var i = 0, len = user[0].friends.length; i < len; i++) {
-            friendIdList = friendIdList+user[0].friends[i]._id+",";
-        }
-        console.log("friendIdList=="+friendIdList);
-        Topic.find({"author.id":{$in:friendIdList.split(",")}}).sort({'time':-1}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function (err, topics) {
-            if(err) return callback(err,null);
+      if(err) return callback(err,null);
+      else {
+          for (var i = 0, len = user[0].friends.length; i < len; i++) {
+              friendIdList = friendIdList + user[0].friends[i]._id + ",";
+          }
+          console.log("friendIdList==" + friendIdList);
+          Topic.find({"author.id": {$in: friendIdList.split(",")}}).sort({'time': -1}).skip((pageNo - 1) * pageSize).limit(pageSize).exec(function (err, topics) {
+              if (err) return callback(err, null);
 
-            return callback(null, topics);
-        });
-
+              return callback(null, topics);
+          });
+      }
     });
 
 }
@@ -203,16 +213,18 @@ AttentionsDao.getFriendStatusTopicNum = function (sessionId,callback) {
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
-        for (var i = 0, len = user[0].friends.length; i < len; i++) {
-            friendIdList = friendIdList+user[0].friends[i]._id+",";
-        }
-        Topic.count({"author.id":{$in:friendIdList.split(",")}}).exec(function (err, num) {
-            console.log("num=="+num);
-            if(err) return callback(err,null);
+      if(err) return callback(err,null);
+      else {
+          for (var i = 0, len = user[0].friends.length; i < len; i++) {
+              friendIdList = friendIdList + user[0].friends[i]._id + ",";
+          }
+          Topic.count({"author.id": {$in: friendIdList.split(",")}}).exec(function (err, num) {
+              console.log("num==" + num);
+              if (err) return callback(err, null);
 
-            return callback(null, num);
-        });
-
+              return callback(null, num);
+          });
+      }
     });
 
 };

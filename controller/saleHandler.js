@@ -392,9 +392,9 @@ SaleHandler.checkCollection=function (req, res) {
 }
 
 function logTime(){
-    var date = new Date();
-    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-    return dateStr;
+    var data =new Date().format('yyyy-MM-dd hh:mm:ss');
+    console.log(data);
+    return data;
 }
 
 function createSale(){
