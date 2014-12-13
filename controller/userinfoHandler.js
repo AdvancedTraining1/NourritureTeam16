@@ -15,6 +15,9 @@ var UserDao = require("../dao/UserDao");
 var UserModel = require('../data').user;
 var querystring = require("querystring"),
     formidable = require('formidable'),
+    RecipeDao = require("../dao/RecipeDao"),
+    UserDao = require("../dao/UserDao"),
+    RecipeModel = require("./../data").Recipe,
     fs = require('fs'),
     url = require('url'),
     config=require("../util/config");
@@ -209,19 +212,40 @@ UserinfoHandler.getUserBlogs=function(req,res){
 
     console.log("handler---UserBlogs");
     BlogDao.getUserBlogs(pageNo,pageSize,user_id,function(err,blogs){
-        if(err)
-        {
-            console.log(err);
+        BlogDao.getUserBlogNum(user_id,function(err2,num){
+            if(err || err2){
+                res.json(500, {message: err.toString()});
+                return;
 
-        }else
-        {
-            res.json({root:blogs,total:2});
+            }
+            if (!blogs) {
+                res.json(404, {message: "Not found."});
+                return;
+            }
 
-        }
-
+            console.log("User--Num"+num)
+            res.json({root:blogs,total:num});
+        });
     });
 
 };
+
+UserinfoHandler.getUserRecipes=function(req,res){
+    var pageNo = req.param('pageNo');
+    var pageSize = req.param('pageSize');
+    var authorId = req.session.user_id;
+
+    console.log('UserHandler-----Recipes----userid:'+authorId);
+    RecipeDao.getOwn(pageNo,pageSize,authorId,function (err1, recipe) {
+        RecipeDao.getOwnNum(authorId,function(err2,num){
+            if(!(err1 || err2)){
+                res.json({root:recipe,total:num});
+            }
+        });
+    });
+
+};
+
 
 UserinfoHandler.logout=function(req,res){
     req.session.user_id = "";
