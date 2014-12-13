@@ -4,8 +4,8 @@
 	.container
 		section#listFriendStatus
 			.hgroup
-				h1 All
-				h2 You
+				h1 All Friend Status Blogs Here!
+				h2 Enjoy the friend status blogs.
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
@@ -19,7 +19,7 @@
 							a(href='/attention/oneBlog/{{blog._id}}') {{blog.title}}
 						.post_sub
 							span.glyphicon.glyphicon-time {{blog.create_at}} &nbsp;&nbsp;
-								a(href='/attention/oneBlog/#post_comments')
+								a(href='/attention/oneBlog/{{blog._id}}')
 									span.glyphicon.glyphicon-comment {{blog.comment_count}} comments
 					.post_content
 						figure
@@ -37,7 +37,7 @@
 					.search-box
 						a.search-icon(href='/attention/getAllAttention/{{search}}')
 							span.glyphicon.glyphicon-search(style='top:4px')
-						input.search(ng-model='search' placeholder='search')
+						input#search.search(ng-model='search' placeholder='search')
 				aside.widget
 					h4 Categories
 						//ul.nav.nav-tabs.nav-stacked(id='myTab')

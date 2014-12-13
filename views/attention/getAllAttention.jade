@@ -3,29 +3,26 @@
 	.container
 		section#listUser
 			.hgroup
-				h1 All here !
-				h2 You
+				h1 All Users Here!
+				h2 Enjoy here and find your friend.
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
 						span.divider /
 					li.active Friend Status
-		.row
-			#leftcol.span8
-				#protfolio_container.portfolio_strict.row
-					.portfolio_item.cat_travel.span4(ng-repeat="user in users")
-						.portfolio_photo(style="background-image:url({{user.head}})")
-							//a(href='/recipe/single/{{recipe._id}}')
-								span.glyphicon.glyphicon-share
-								p {{recipe.description}}
-						.portfolio_description
-							h3
-								a(href='#') {{user.username}}
-							//a.btn.btn-primary(href='/attention/addAttentions/{{user._id}}') attention
-							a.btn.btn-primary(href='' ng-click="addAttention()" ng-if='seeAttention')
-								span.glyphicon.glyphicon-star-empty
-								| attention
-							a.btn.btn-primary(ng-click="deleteAttention()" ng-if='!seeAttention')
-								span.glyphicon.glyphicon-star
-								| cancel attention
-				.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")
+
+			#protfolio_container.portfolio_strict.row
+				.portfolio_item.cat_travel.span4(ng-repeat="user in users")
+					.portfolio_photo(style="background-image:url({{user.head}})")
+
+					.portfolio_description
+						h3
+							a(href='#') {{user.username}}
+						//a(id='at{{user._id}}').btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if="seeAttention")
+						a.btn.btn-primary(href='' ng-click="addAttention(user._id,user.account,user.head)" ng-if='seeAttention')
+							span.glyphicon.glyphicon-star-empty
+							| attention
+						//a.btn.btn-primary(ng-click="deleteAttention(user._id,user.account,user.head)" ng-if='!seeAttention')
+							span.glyphicon.glyphicon-star
+							| cancel attention
+			.pagination.pagination-centered(attention-page page-object="pageing" click-function="list")

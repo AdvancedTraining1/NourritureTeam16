@@ -36,6 +36,15 @@ TopicDao.getAllTopics = function (pageNo,pageSize,callback)
     });
 
 };
+
+TopicDao.getAllNum = function (callback) {
+    topicModel.count({}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
+
 TopicDao.getOne = function (id,callback) {
     topicModel.findOne({_id:id}).exec(function(error,topic){
         if(error) return callback(error,null);

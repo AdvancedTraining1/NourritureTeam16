@@ -1,7 +1,7 @@
 //Created by cmm on 12/5/14.
 #main(style='min-height:500px')
 	.container
-		section#blog
+		section#recipe
 			.hgroup
 				h1 {{recipe.recipeName}}
 				h2
@@ -16,7 +16,7 @@
 					//a
 					span.glyphicon.glyphicon-hand-up
 					|{{recipe.productNum}} products &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					a(href='' ng-click="addCollect()" ng-if='seeCollect')
+					a#collect(href='' ng-click="addCollect()" ng-if='seeCollect')
 						span.glyphicon.glyphicon-star-empty
 						|Collect
 					a(ng-if='!seeCollect')
@@ -141,40 +141,30 @@
 						form
 							.row
 								.span8
-									textarea.span8(rows="4" placeholder="Comments" ng-model='comment.content')
+									textarea#commentText.span8(rows="4" placeholder="Comments" ng-model='comment.content')
 							.row
 								.span8
-									a.btn.send(ng-click='addComment()') Add comment
+									a#commentBtn.btn.send(ng-click='addComment()') Add comment
 					.new_comment
 						h4 Add Product
 						form
 							.row
 								.span8
-									textarea.span8(rows="4" placeholder="Your description about the product" ng-model='product.content')
-									input.span8(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+									textarea#productComment.span8(rows="4" placeholder="Your description about the product" ng-model='product.content')
+									input#productPhoto.span8(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
 							.row
 								.span8
-									a.btn.send(ng-click='addProduct()') Add Product
+									a#productBtn.btn.send(ng-click='addProduct()') Add Product
 
 
 				#sidebar.span4
 					aside.widget.ads.clearfix
 						h4 Author
 						.team_member(style='background:none')
-							figure(style="background-image: url({{recipe.author.head}})")
-								img(alt='0' src='{{recipe.author.head}}')
+							figure(style="background-image: url('/head/defaulthead.jpeg')")
+								img(alt='{{recipe.author.account}}' src='/head/defaulthead.jpeg')
 							h5(style='color:#555') {{recipe.author.account}}
-						a(href='')
-							img(alt='0' src='{{recipe.author.head}}')
-						.row
-							| {{recipe.author.account}}
-					aside.widget
-						.row
-							| {{recipe.author.account}}
-						.row
-							p | user's recipe_count waiting for liu's session
-
-							button.btn.btn-info(ng-click='jumpToRecipe(11)') {{}} See Recipes
-							//a(href='/recipe/otherAll/11')
-							button.btn.btn-info(ng-click='') {{}} Fans
-							button.btn.btn-info(ng-click='') {{}} Blogs
+							button#attentionBtn.btn.btn-info(href='' ng-click="addAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='seeAttention')
+								span.glyphicon.glyphicon-star-empty Attention
+							button#celAttentionBtn.btn.btn-info(ng-click="deleteAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='!seeAttention')
+								span.glyphicon.glyphicon-star Cancel attention

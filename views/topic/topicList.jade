@@ -1,8 +1,8 @@
 //   Created by mengchi on 12/10/14.
 
-#main
+#main(style='min-height:500px')
 	.container
-		section#Topic
+		section#topic
 			.hgroup
 				h1 All Topic
 				h2
@@ -17,7 +17,7 @@
 				.portfolio_item.cat_travel.span4(ng-repeat="topic in topics" style="height: 220px;")
 					.portfolio_description
 						h3
-							a(href='/topic/topicDetail_angular/{{topic._id}}') # {{topic.topicName}} #
+							a(href='/topic/topicDetail_angular/{{topic._id}}' id="{{$index}}") # {{topic.topicName}} #
 						br
 						p {{topic.content}}
 						br
@@ -26,4 +26,5 @@
 						a(href='')
 							span.glyphicon.glyphicon-camera
 						|  {{topic.upload_count}} product
-				.pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
+
+			.pagination.pagination-centered(topic-page page-object="pageing" click-function="list")

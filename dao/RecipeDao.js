@@ -12,7 +12,7 @@ var RecipeDao = new DaoBase(Recipe);
 module.exports = RecipeDao;
 
 RecipeDao.getOwn = function (pageNo,pageSize,authorId,callback) {
-    Recipe.find({"author.id":authorId,flag:true}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,recipe){
+    Recipe.find({"author._id":authorId,flag:true}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'logTime':-1}).exec(function(error,recipe){
         if(error)
             return callback(error,null);
         return callback(null, recipe);

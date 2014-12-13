@@ -4,8 +4,8 @@
 	.container
 		section#listFriendStatus
 			.hgroup
-				h1 All
-				h2 You
+				h1 All Friend Status Topics Here!
+				h2 Enjoy the friend status topics.
 				ul.breadcrumb.pull-right
 					li
 						a(href='/index') Home
@@ -16,7 +16,7 @@
 				article.post(ng-repeat="topic in topics")
 					.post_header
 						h3.post_title
-							a(href='/attention/oneTopic/{{topic._id}}') {{topic.topicName}}
+							a(href='/attention/oneTopic/{{topic._id}}') # {{topic.topicName}} #
 						.post_sub
 							span.glyphicon.glyphicon-time {{topic.time}} &nbsp;&nbsp;
 								//a(href='/topic/single#post_comments')
@@ -37,7 +37,7 @@
 					.search-box
 						a.search-icon(href='/attention/getAllAttention/{{search}}')
 							span.glyphicon.glyphicon-search(style='top:4px')
-						input.search(ng-model='search' placeholder='search')
+						input#search.search(ng-model='search' placeholder='search')
 				aside.widget
 					h4 Categories
 						//ul.nav.nav-tabs.nav-stacked(id='myTab')

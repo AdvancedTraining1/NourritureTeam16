@@ -1,7 +1,7 @@
 //
    Created by mengchi on 12/8/14.
 
-#main
+#main(style='min-height:500px')
     .container
         section#blog
             .hgroup
@@ -18,7 +18,7 @@
                     article.post(ng-repeat="blog in blogs")
                         .post_header
                             h3.post_title
-                                a(href='/blog/blogDetail_angular/{{blog._id}}')
+                                a(href='/blog/blogDetail_angular/{{blog._id}}' id="{{$index}}")
                                     | {{blog.title}}
                             .post_sub
                                 span.glyphicon.glyphicon-time
@@ -29,7 +29,7 @@
                         .post_content
                                 h5 key word: {{blog.tag}}
                             a.btn.btn-primary(href='/blog/blogDetail_angular/{{blog._id}}') Read More
-                    .pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
+                    .pagination.pagination-centered(blog-page page-object="pageing" click-function="list")
                 #sidebar.span4
                     aside.widget
                         h4 Blog Categories

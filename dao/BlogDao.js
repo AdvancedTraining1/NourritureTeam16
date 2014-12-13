@@ -46,7 +46,19 @@ BlogDao.getAll = function (pageNo,pageSize,callback) {
         return callback(null, blogs);
     });
 };
-
+BlogDao.getUserBlogs = function (pageNo,pageSize,user_id,callback) {
+    Blog.find({ 'author.id':user_id}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'create_at':-1}).exec(function(error,blogs){
+        if(error) return callback(error,null);
+        return callback(null, blogs);
+    });
+};
+BlogDao.getUserBlogNum = function (user_id,callback) {
+    Blog.count({ 'author.id':user_id}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
 BlogDao.getAllNum = function (callback) {
     Blog.count({}).exec(function(error,num){
         if(error)

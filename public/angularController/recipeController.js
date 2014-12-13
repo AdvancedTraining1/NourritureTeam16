@@ -11,6 +11,9 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
     $scope.stepSee = false;
     $scope.moreSteps = [{step:1}];
     $scope.moreMaterials = [{material:1}];
+    /////////////////
+    $scope.recipe.photo = '/upload/recipe_add1.jpg';
+    $scope.step.push('/upload/recipe_add2.jpg');
 
     $scope.onFileSelect = function ($files) {
         if($files != null){
@@ -31,6 +34,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log(data);
                 alert("Step image upload success!");
                 //$scope.successMessage="Image upload success!";
+                //////////////////////////////////
                 $scope.step.push(data);
                 $scope.stepSee = true;
             });
@@ -48,6 +52,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log(data);
                 alert("Recipe image upload success!");
                 //$scope.successMessage="Image upload success!";
+                ///////////////////////
                 $scope.recipe.photo = data;
                 $scope.photoSee = true;
             });
@@ -96,7 +101,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
         $scope.recipe.sNum = s_explain.length;
         /*alert($scope.recipe.toString());
          alert(JSON.stringify($scope.recipe));*/
-        $scope.recipe.authorId = 11;
+        //$scope.recipe.authorId = 11;
 
         $.post('/service/recipe/create',$scope.recipe,function(data){
             alert(data);
@@ -173,25 +178,6 @@ function ToListRecipe($scope, $http, $location){
 
         });
     }
-
-    /*$scope.addCollect = function(id){
-        var api = "/service/recipe/collect";
-        $scope.collect.recipeId = id;
-
-        var checkApi = '/service/recipe/checkCollect' + '?recipeId='+$scope.collect.recipeId;
-
-        $.get(checkApi,function(data){
-            if(data == "false"){
-                $.post(api,$scope.collect,function(data){
-                    alert(data);
-                    pageing();
-                    $scope.recipe.collectNum += 1;
-                });
-            }else{
-                alert("Already collected");
-            }
-        });
-    };*/
 }
 
 function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
@@ -204,6 +190,9 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     $scope.collect = {};
     $scope.productSee = false;
     $scope.seeCollect = true;
+    $scope.seeAttention = true;
+    ////////////////////////
+    $scope.product.picture = '/upload/recipe_add3.jpg';
     $scope.commentPaging={
         pageNo : 1,
         itemsCount : 10,
@@ -228,6 +217,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
 
         commentPage();
         productPage();
+        //checkAttention($scope.recipe.author._id);
     });
 
     $scope.list = function () {
@@ -294,6 +284,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
             }).success(function (data, status, headers, config) {        // file is uploaded successfully
                 console.log(data);
                 alert("Product image upload success!");
+                //////////////////
                 $scope.product.picture = data;
                 $scope.productSee = true;
             });
@@ -335,6 +326,51 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
             }
         });
     };
+
+
+    function checkAttention(friendId){
+
+        var checkApi = '/service/attention/check/' + friendId;
+
+        $http({
+            method: 'GET',
+            url: checkApi
+        }).success(function(data){
+            if(data == "false"){
+
+                $scope.seeAttention = true;//show attention
+
+            }else{
+
+                $scope.seeAttention = false;//show cancel attention
+            }
+        });
+
+    };
+
+    $scope.addAttention = function(friendId,friendAccount,friendHead){
+        var checkApi = '/service/attention/addAttentions/' + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
+
+        $.get(checkApi,function(data) {
+            alert(data);
+            $scope.seeAttention = false;
+            commentPage();
+        })
+
+    }
+
+    $scope.deleteAttention = function(friendId,friendAccount,friendHead){
+
+        var checkApi = '/service/attention/deleteAttentions/'  + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
+
+        $.get(checkApi,function(data) {
+            alert(data);
+            $scope.seeAttention = true;
+            commentPage();
+        })
+
+    };
+
 
     $scope.jumpToRecipe = function(userId) {
         $location.path('/recipe/otherAll_an/' + userId);

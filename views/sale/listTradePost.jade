@@ -11,26 +11,23 @@
                     li
                         a(href='/index') Home
                         span.divider /
-                    li.active Recipes
-            .row
+                    li.active Trade
+            .row(style="background-color:white;")
                 .span1
                 .span7
                     article.post(ng-repeat = "sale in sales" style = "padding:0 0 15px 0; margin:0 0 15px 0")
                         .post_header
                             h3.post_title
-                                a(href='/sale/showTradePost/{{sale._id}}') {{sale.title}}
+                                a(id = "sale" href='/sale/showTradePost_angular/{{sale._id}}') {{sale.title}}
                             .post_sub
                                 span.glyphicon.glyphicon-time
-                                | {{sale.create_at}} &nbsp;&nbsp;
+                                | {{sale.create_at}} &nbsp;&nbsp;&nbsp;
                                 a
                                     span.glyphicon.glyphicon-comment
-                                    |{{recipe.commentNum}} comments &nbsp;
+                                    |{{sale.commentNum}} comments &nbsp;&nbsp;
                                 a
                                     span.glyphicon.glyphicon-star
-                                    |{{recipe.collectNum}} collects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                a.pull-right(href='' ng-click="addCollect(recipe._id)")
-                                    span.glyphicon.glyphicon-star-empty
-                                    |Collect it
+                                    |{{sale.collectNum}} collects
                     .pagination.pagination-centered(trade-page page-object="pageing" click-function="list")
                 sidebar.span3
                     aside.widget

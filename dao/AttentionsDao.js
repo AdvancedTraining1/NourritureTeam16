@@ -65,9 +65,9 @@ AttentionsDao.check = function (userId,friendId,callback) {
     }); //db.blogs.find({"comment":{"$elemMatch":{"author":"joe", "score":{"$gte":5}}}});
 };
 
-AttentionsDao.addAttentions = function (id,friendId,callback) {
-    //User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){
-    User.findByIdAndUpdate(id,{$push:{"friends._id":friendId},$inc:{friends_count:1}},function(error,users){
+AttentionsDao.addAttentions = function (id,friends,callback) {
+    User.findByIdAndUpdate(id,{$push:{friends:friends},$inc:{friends_count:1}},function(error,users){
+    //User.findByIdAndUpdate(id,{$push:{"friends._id":friendId},$inc:{friends_count:1}},function(error,users){
         return callback(null,users);
     });
 
@@ -100,9 +100,9 @@ AttentionsDao.deleteAttentionsFans = function (id,fans,callback) {
 }
 //---------------------------------------------------------------------------------------------------------------------------
 
-AttentionsDao.lookFriendStatusRecipe = function (pageNo,pageSize,callback) {
+AttentionsDao.lookFriendStatusRecipe = function (sessionId,pageNo,pageSize,callback) {
     var friendIdList=[];
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {
@@ -119,9 +119,9 @@ AttentionsDao.lookFriendStatusRecipe = function (pageNo,pageSize,callback) {
 
 }
 
-AttentionsDao.getFriendStatusRecipeNum = function (callback) {
+AttentionsDao.getFriendStatusRecipeNum = function (sessionId,callback) {
     var friendIdList=[];
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {
@@ -139,9 +139,9 @@ AttentionsDao.getFriendStatusRecipeNum = function (callback) {
 };
 
 
-AttentionsDao.lookFriendStatusBlog = function (pageNo,pageSize,callback) {
+AttentionsDao.lookFriendStatusBlog = function (sessionId,pageNo,pageSize,callback) {
     var friendIdList=[];
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {
@@ -158,9 +158,9 @@ AttentionsDao.lookFriendStatusBlog = function (pageNo,pageSize,callback) {
 
 }
 
-AttentionsDao.getFriendStatusBlogNum = function (callback) {
+AttentionsDao.getFriendStatusBlogNum = function (sessionId,callback) {
     var friendIdList=[];
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {
@@ -179,9 +179,9 @@ AttentionsDao.getFriendStatusBlogNum = function (callback) {
 
 
 
-AttentionsDao.lookFriendStatusTopic = function (pageNo,pageSize,callback) {
+AttentionsDao.lookFriendStatusTopic = function (sessionId,pageNo,pageSize,callback) {
     var friendIdList=[];
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {
@@ -198,9 +198,9 @@ AttentionsDao.lookFriendStatusTopic = function (pageNo,pageSize,callback) {
 
 }
 
-AttentionsDao.getFriendStatusTopicNum = function (callback) {
+AttentionsDao.getFriendStatusTopicNum = function (sessionId,callback) {
     var friendIdList=[];
-    var sessionId="5464a134462eaef3480abb39";//ZHAI id
+    //var sessionId="5464a134462eaef3480abb39";//ZHAI id
 
     User.find({_id:sessionId},function(err,user) {
         for (var i = 0, len = user[0].friends.length; i < len; i++) {

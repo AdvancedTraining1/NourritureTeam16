@@ -8,10 +8,9 @@ var SaleCommentDao = new DaoBase(SaleComment);
 
 module.exports = SaleCommentDao;
 
-SaleCommentDao.getAll = function (sale_id, callback) {
-    SaleComment.find({blog_id:sale_id}).sort({'create_at':-1}).exec(function(error,comments){
-        if(error)
-            return callback(error, null);
+SaleCommentDao.getAllCommentToBlog = function (pageNo,pageSize,blod_id,callback) {
+    SaleComment.find({blog_id:blod_id}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'create_at':-1}).exec(function(error,comments){
+        if(error) return callback(error,null);
         return callback(null, comments);
     });
 };
@@ -24,3 +23,11 @@ SaleCommentDao.create = function(saleComment, callback){
         return callback(null, newSaleComment);
     });
 }
+
+SaleCommentDao.listCommentNum = function (blogId,callback) {
+    SaleComment.count({"blog_id":blogId}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};

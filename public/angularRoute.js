@@ -7,6 +7,10 @@
 angular.module('nourriture', ['ngRoute','angularFileUpload','ui.bootstrap.collapse']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
+            when('/unauthorized', {
+                templateUrl: '/service/userinfo/gotoRegister',
+                controller: RegisterAndLogin
+            }).
             when('/index', {
                 templateUrl: '/indexPart',
 		        controller: IndexPage
@@ -33,25 +37,42 @@ angular.module('nourriture', ['ngRoute','angularFileUpload','ui.bootstrap.collap
             }).
             when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
-                controller:showuser
+                controller:showInfo
             }).
             when('/userinfo/register',{    //这是index里面在ng-app中对应的urls
                 templateUrl:'/service/userinfo/gotoRegister',  //去route里面找
                 controller:RegisterAndLogin
             }).
-            when('/userinfo/info',{    //这是index里面在ng-app中对应的urls
-                templateUrl:'/service/userinfo/gotoInfo',  //去route里面找
-                controller:showuser
+            when('/userinfo/info',{
+                templateUrl:'/service/userinfo/gotoInfo',
+                controller:showInfo
             }).
-            when('/sale/createTradePost',{
+            when('/userinfo/modifypass',{
+                templateUrl:'/service/userinfo/gotoModifyPass',
+                controller:showInfo
+            }).
+            when('/userinfo/centerBlogs',{
+                templateUrl:'/service/userinfo/gotoCenterBlogs',
+                controller:showCenterBlogs
+            }).
+            when('/userinfo/centerRecipes',{
+                templateUrl:'/service/userinfo/gotoCenterRecipes',
+                controller:showCenterRecipes
+            }).
+            when('/userinfo/logout',{
+                templateUrl:'/indexPart',
+                controller:logout
+            }).
+
+            when('/sale/createTradePost_angular',{
                 templateUrl:'/sale/createTradePost',
                 controller:CreateTradePost
             }).
-            when('/sale/listTradePost',{
+            when('/sale/listTradePost_angular',{
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
-            when('/sale/showTradePost/:saleId',{
+            when('/sale/showTradePost_angular/:saleId',{
                 templateUrl:'/sale/showTradePost',
                 controller:ShowTradePost
             }).
@@ -81,7 +102,7 @@ angular.module('nourriture', ['ngRoute','angularFileUpload','ui.bootstrap.collap
                 templateUrl:'/attention/oneBlog', //routes
                 controller:ToLookOneBlog
             }).
-            when('/attention/oneTopic/:topicId',{
+            when('/attention/oneTopic/:topic_id',{
                 templateUrl:'/attention/oneTopic', //routes
                 controller:ToLookOneTopic
             }).
