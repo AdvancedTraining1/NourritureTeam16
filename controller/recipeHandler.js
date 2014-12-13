@@ -57,7 +57,7 @@ exports.modify = function(req,res){
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("修改菜谱成功！");
+            res.end("modify recipe success！");
         });
     });
 
@@ -70,7 +70,7 @@ exports.deleteRecipe = function(req,res){
         res.writeHead(200, {
             "Content-Type": "text/plain;charset=utf-8"
         });
-        res.end("删除菜谱成功！");
+        res.end("delete recipe success！");
     });
 };
 
@@ -149,7 +149,7 @@ exports.create = function (req, res){
                 res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
-                res.end("发布菜谱成功！");
+                res.end("create recipe success！");
             }
         });
     });
@@ -225,7 +225,7 @@ exports.comment = function(req,res){
                         res.writeHead(200, {
                             "Content-Type": "text/plain;charset=utf-8"
                         });
-                        res.end("评论成功！");
+                        res.end("comment success！");
                     }
                 });
             }
@@ -256,7 +256,7 @@ exports.collect = function (req,res) {
                         res.writeHead(200, {
                             "Content-Type": "text/plain;charset=utf-8"
                         });
-                        res.end("collect成功！");
+                        res.end("collect success！");
                     }
                 });
             }
@@ -299,7 +299,7 @@ exports.createProduct = function(req,res){
                         res.writeHead(200, {
                             "Content-Type": "text/plain;charset=utf-8"
                         });
-                        res.end("product成功！");
+                        res.end("product success！");
                     }
                 });
             }
@@ -358,7 +358,7 @@ exports.checkCollect = function(req,res){
                 res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
-                res.end("like成功！");
+                res.end("like成功！");s
             });
         });
 
