@@ -90,7 +90,9 @@ BlogHander.publishABlog = function (req, res) {
             create_at:time,
             author: {
                 id: req.session.user_id,
-                account: req.session.account }
+                account: req.session.account,
+                head : req.session.head
+            }
 
         });
         var message = ""
@@ -136,6 +138,7 @@ BlogHander.saveABlog = function (req, res) {
 
         var user_id = req.session.user_id;
         var account = req.session.account;
+        var head = req.session.head;
 
         if(user_id&&account){
             var blog = new BlogModel({
@@ -144,7 +147,8 @@ BlogHander.saveABlog = function (req, res) {
                 type: "2",
                 author: {
                     id: user_id,
-                    account: account }
+                    account: account,
+                    head:head}
             });
         }else{
             var blog = new BlogModel({

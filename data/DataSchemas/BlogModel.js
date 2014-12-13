@@ -16,7 +16,8 @@ var BlogSchema = new Schema({
     update_at: { type: String},
     author: {
         id: String,
-        account: String },
+        account: String,
+        head:String},
 
     like_count: { type: Number, default: 0 },
     collect_count:{ type: Number, default: 0 },

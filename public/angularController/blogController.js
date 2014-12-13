@@ -10,12 +10,12 @@ function ToCreateBlog($scope, $http,$location) {
         $scope.blog={}
 
         var title =  $scope.blogtitle;
-        //var content=$('#editor').wysiwyg();
+
         var content=$('#editor').html();
         $scope.blog.title =title;
         $scope.blog.content = content;
         $scope.blog.tags=$scope.blogtag;
-        alert($scope.blog.tags);
+
 
         $.post('/blog/publishBlog',$scope.blog,function(data){
             $location.path("/blog/blogDetail_angular/"+data.newId);
@@ -165,7 +165,7 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
 
 
         $.post("/blog/addCommentToBlog", $scope.comment, function (data) {
-            alert(data);
+
             commentPage();
             $scope.comment.content = null;
 
@@ -177,7 +177,7 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
         var checkApi = '/blog/collectionBlog/' + $routeParams.blog_id;
 
         $.get(checkApi,function(data) {
-            alert(data.status);
+
 
             if(data.status){
 

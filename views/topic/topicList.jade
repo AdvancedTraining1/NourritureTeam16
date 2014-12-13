@@ -17,7 +17,7 @@
 				.portfolio_item.cat_travel.span4(ng-repeat="topic in topics" style="height: 220px;")
 					.portfolio_description
 						h3
-							a(href='/topic/topicDetail_angular/{{topic._id}}') # {{topic.topicName}} #
+							a(href='/topic/topicDetail_angular/{{topic._id}}' id="{{$index}}") # {{topic.topicName}} #
 						br
 						p {{topic.content}}
 						br
