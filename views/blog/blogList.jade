@@ -27,7 +27,7 @@
                                     span.glyphicon.glyphicon-comment
                                     |  {{blog.comment_count}} comments
                         .post_content
-                                h5 key word: {{blog.tag}}
+                                h5 key content: {{blog.tag}}
                             a.btn.btn-primary(href='/blog/blogDetail_angular/{{blog._id}}') Read More
                     .pagination.pagination-centered(blog-page page-object="pageing" click-function="list")
                 #sidebar.span4
@@ -40,10 +40,6 @@
                                 a(href='#') News
                             li
                                 a(href='#') Press
-                    aside.widget
-                        h4 Text Widget
-                        p
-                            | Fugiat dapibus, tellus ac cursus commodo, mauesris condime ntum nibh, ut fermentum mas justo sitters amet risus. Cras mattis cosi sectetut amet fermens etrsaters tum aecenas faucib sadips amets.
                     aside.widget.ads.clearfix
                         h4 Ads
                         a(href='#')
