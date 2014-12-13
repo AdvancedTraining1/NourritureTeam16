@@ -468,6 +468,7 @@ BlogHander.addCommentToBlog=function(req, res){
         var content = params.content;
         var user_id = req.session.user_id;
         var account = req.session.account;
+        var head = req.session.head;
         var blog_id = params.blog_id;
         var time = getTime();
         console.log("blog_id----"+blog_id)
@@ -477,7 +478,10 @@ BlogHander.addCommentToBlog=function(req, res){
         var commentToBlog = new CommentToBlogModel({
             author: {
                 id: user_id,
-                account: account },
+                account: account,
+                head:head
+
+            },
             content: content,
          //   reply_id: reply_id,
             blog_id:blog_id,
