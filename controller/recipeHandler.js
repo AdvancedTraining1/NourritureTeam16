@@ -57,7 +57,7 @@ exports.modify = function(req,res){
             res.writeHead(200, {
                 "Content-Type": "text/plain;charset=utf-8"
             });
-            res.end("修改菜谱成功！");
+            res.end("modify recipe success！");
         });
     });
 
@@ -70,7 +70,7 @@ exports.deleteRecipe = function(req,res){
         res.writeHead(200, {
             "Content-Type": "text/plain;charset=utf-8"
         });
-        res.end("删除菜谱成功！");
+        res.end("delete recipe success！");
     });
 };
 
@@ -149,7 +149,7 @@ exports.create = function (req, res){
                 res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
-                res.end("发布菜谱成功！");
+                res.end("create recipe success！");
             }
         });
     });
@@ -225,7 +225,7 @@ exports.comment = function(req,res){
                         res.writeHead(200, {
                             "Content-Type": "text/plain;charset=utf-8"
                         });
-                        res.end("评论成功！");
+                        res.end("comment success！");
                     }
                 });
             }
@@ -256,7 +256,7 @@ exports.collect = function (req,res) {
                         res.writeHead(200, {
                             "Content-Type": "text/plain;charset=utf-8"
                         });
-                        res.end("collect成功！");
+                        res.end("collect success！");
                     }
                 });
             }
@@ -278,6 +278,7 @@ exports.createProduct = function(req,res){
         var product = new ProductModel();
         product = params;
         product.logTime = logTime();
+        //product.logTime = Date.now;
 
         product.author = {
             _id : req.session.user_id,
@@ -299,7 +300,7 @@ exports.createProduct = function(req,res){
                         res.writeHead(200, {
                             "Content-Type": "text/plain;charset=utf-8"
                         });
-                        res.end("product成功！");
+                        res.end("product success！");
                     }
                 });
             }
@@ -358,7 +359,7 @@ exports.checkCollect = function(req,res){
                 res.writeHead(200, {
                     "Content-Type": "text/plain;charset=utf-8"
                 });
-                res.end("like成功！");
+                res.end("like成功！");s
             });
         });
 
@@ -493,9 +494,29 @@ function createLike(params){
 }
 */
 
-function logTime(){
-    var date = new Date();
-    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-    console.log(dateStr);
-    return dateStr;
+Date.prototype.format =function(format)
+{
+    var o = {
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(),    //day
+        "h+" : this.getHours(),   //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+        (this.getFullYear()+"").substr(4- RegExp.$1.length));
+    for(var k in o)if(new RegExp("("+ k +")").test(format))
+        format = format.replace(RegExp.$1,
+            RegExp.$1.length==1? o[k] :
+                ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
 }
+
+function logTime(){
+    var data =new Date().format('yyyy-MM-dd hh:mm:ss');
+    console.log(data);
+    return data;
+}
+

@@ -28,7 +28,7 @@
 								br
 								.input-group
 									span.input-group-addon &nbsp&nbsp&nbsp&nbsp&nbspPhone
-									input.form-control(type='text' ng-model='user.phone' id = "txt_cellphone" placeholder="Phone" onkeypress = "IsNum(event);")
+									input.form-control(type='text' ng-model='user.phone' id = "txt_cellphone" placeholder="Phone")
 								br
 								.input-group
 									span.input-group-addon Password
@@ -58,7 +58,7 @@
 						.row
 							.span5
 							.span3
-								button.btn.btn-primary.btn-large.pull-left(onclick='submitData()')
+								button.btn.btn-primary.btn-large.pull-left(id = "btn_submit" onclick='submitData()')
 									span.glyphicon.glyphicon-ok &nbsp;Submit
 							.span4
 						br
