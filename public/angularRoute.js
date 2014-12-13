@@ -51,9 +51,13 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/service/userinfo/gotoModifyPass',
                 controller:showInfo
             }).
-            when('/userinfo/center',{
-                templateUrl:'/service/userinfo/gotoCenter',
-                controller:showCenter
+            when('/userinfo/centerBlogs',{
+                templateUrl:'/service/userinfo/getUserBlogs',
+                controller:showCenterBlogs
+            }).
+            when('/userinfo/centerRecipes',{
+                templateUrl:'/service/userinfo/getUserRecipes',
+                controller:showCenterRecipes
             }).
             when('/userinfo/logout',{
                 templateUrl:'/indexPart',
