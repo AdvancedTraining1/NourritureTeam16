@@ -52,9 +52,9 @@ UserinfoHandler.register=function(req,res){
 
         UserDao.save(user, function (err, data) {
             if(err&& err.length>0){
-                res.json({message:"Register Successful！"});
-            }else {
                 res.json({message:"Register Failed！"});
+            }else {
+                res.json({message:"Register Successful！"});
             }
 
         });
@@ -89,7 +89,7 @@ UserinfoHandler.login=function(req,res){
                 req.session.password = user.password;
                 req.session.head = user.head;
                 console.log('登录成功---user_id:'+req.session.user_id);
-                res.json({message:"Login Success！",user:user});
+                res.json({message:"Login Successful！",user:user});
 
                 //res.writeHead(200, {
                 //    "Content-Type": "text/plain;charset=utf-8"
@@ -132,7 +132,7 @@ UserinfoHandler.modifypass=function(req,res){
         }else
         {
             req.session.password =newpass ;  //修改session中的值
-            res.json({message:"Modify password success!"});
+            res.json({message:"Modify password successful!"});
 
         }
     });

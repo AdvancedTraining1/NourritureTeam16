@@ -368,6 +368,7 @@ exports.checkCollect = function(req,res){
 
 exports.upload = function(req,res){
     var form = new formidable.IncomingForm();
+    console.log("ok");
     form.uploadDir = "./../upload/temp/";//改变临时目录
     form.parse(req, function(error, fields, files){
         for(var key in files){
