@@ -16,7 +16,7 @@
 					//a
 					span.glyphicon.glyphicon-hand-up
 					|{{recipe.productNum}} products &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					a(href='' ng-click="addCollect()" ng-if='seeCollect')
+					a#collect(href='' ng-click="addCollect()" ng-if='seeCollect')
 						span.glyphicon.glyphicon-star-empty
 						|Collect
 					a(ng-if='!seeCollect')
@@ -141,20 +141,20 @@
 						form
 							.row
 								.span8
-									textarea.span8(rows="4" placeholder="Comments" ng-model='comment.content')
+									textarea#commentText.span8(rows="4" placeholder="Comments" ng-model='comment.content')
 							.row
 								.span8
-									a.btn.send(ng-click='addComment()') Add comment
+									a#commentBtn.btn.send(ng-click='addComment()') Add comment
 					.new_comment
 						h4 Add Product
 						form
 							.row
 								.span8
-									textarea.span8(rows="4" placeholder="Your description about the product" ng-model='product.content')
-									input.span8(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+									textarea#productComment.span8(rows="4" placeholder="Your description about the product" ng-model='product.content')
+									input#productPhoto.span8(type='file' name='files' ng-file-select="onFileSelect($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
 							.row
 								.span8
-									a.btn.send(ng-click='addProduct()') Add Product
+									a#productBtn.btn.send(ng-click='addProduct()') Add Product
 
 
 				#sidebar.span4
@@ -164,7 +164,7 @@
 							figure(style="background-image: url('/head/defaulthead.jpeg')")
 								img(alt='{{recipe.author.account}}' src='/head/defaulthead.jpeg')
 							h5(style='color:#555') {{recipe.author.account}}
-							button.btn.btn-info(href='' ng-click="addAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='seeAttention')
+							button#attentionBtn.btn.btn-info(href='' ng-click="addAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='seeAttention')
 								span.glyphicon.glyphicon-star-empty Attention
-							button.btn.btn-info(ng-click="deleteAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='!seeAttention')
+							button#celAttentionBtn.btn.btn-info(ng-click="deleteAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='!seeAttention')
 								span.glyphicon.glyphicon-star Cancel attention
