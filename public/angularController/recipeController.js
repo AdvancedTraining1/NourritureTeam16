@@ -11,8 +11,9 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
     $scope.stepSee = false;
     $scope.moreSteps = [{step:1}];
     $scope.moreMaterials = [{material:1}];
-    //$scope.recipe.photo = '/upload/recipe_add1.jpg';
-    //$scope.step.push('/upload/recipe_add2.jpg');
+    /////////////////
+    $scope.recipe.photo = '/upload/recipe_add1.jpg';
+    $scope.step.push('/upload/recipe_add2.jpg');
 
     $scope.onFileSelect = function ($files) {
         if($files != null){
@@ -33,6 +34,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log(data);
                 alert("Step image upload success!");
                 //$scope.successMessage="Image upload success!";
+                //////////////////////////////////
                 $scope.step.push(data);
                 $scope.stepSee = true;
             });
@@ -50,6 +52,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
                 console.log(data);
                 alert("Recipe image upload success!");
                 //$scope.successMessage="Image upload success!";
+                ///////////////////////
                 $scope.recipe.photo = data;
                 $scope.photoSee = true;
             });
@@ -188,7 +191,8 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     $scope.productSee = false;
     $scope.seeCollect = true;
     $scope.seeAttention = true;
-    //$scope.product.picture = '/upload/recipe_add3.jpg';
+    ////////////////////////
+    $scope.product.picture = '/upload/recipe_add3.jpg';
     $scope.commentPaging={
         pageNo : 1,
         itemsCount : 10,
@@ -280,6 +284,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
             }).success(function (data, status, headers, config) {        // file is uploaded successfully
                 console.log(data);
                 alert("Product image upload success!");
+                //////////////////
                 $scope.product.picture = data;
                 $scope.productSee = true;
             });
