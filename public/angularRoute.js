@@ -65,11 +65,11 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
             }).
 
             when('/sale/createTradePost',{
-                templateUrl:'/sale/createTradePost',
+                templateUrl:'/sale/createTradePost_angular',
                 controller:CreateTradePost
             }).
             when('/sale/listTradePost',{
-                templateUrl:'/sale/listTradePost',
+                templateUrl:'/sale/listTradePost_angular',
                 controller:ListTradePost
             }).
             when('/sale/showTradePost_angular/:saleId',{
