@@ -278,6 +278,7 @@ exports.createProduct = function(req,res){
         var product = new ProductModel();
         product = params;
         product.logTime = logTime();
+        //product.logTime = Date.now;
 
         product.author = {
             _id : req.session.user_id,
