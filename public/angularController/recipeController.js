@@ -105,6 +105,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
 
         $.post('/service/recipe/create',$scope.recipe,function(data){
             alert(data);
+            $location.path('/recipe/list_an');
         });
         /*$http.post('service/recipe/create', $scope.recipe).
          success(function(data) {
