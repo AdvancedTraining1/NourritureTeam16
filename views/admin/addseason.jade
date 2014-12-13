@@ -29,7 +29,7 @@
 							.span4
 								.input-group
 									span.input-group-addon Describe
-									input.form-control(type='text' ng-model='season.description' placeholder="Your description")
+									input.form-control(type='text' ng-model='season.description' id = "txt_description" placeholder="Your description")
 							.span4
 						br
 						.row
@@ -66,7 +66,7 @@
 							.span1
 								p(style='padding: 6px 12px;font-size: 14px;font-weight: normal;line-height: 1;color: #555;text-align: center;background-color: #eee;border: 1px solid #ccc;border-radius: 4px;') Picture
 							.span2
-								input.form-control(type='file' name='files' ng-file-select="onFileSelect1($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
+								input.form-control(id = "sel_file" type='file' name='files' ng-file-select="onFileSelect1($files)" multiple accept="image/*" style='background-color: #fff;border: 1px solid #ccc;border-radius: 4px;')
 							.span5
 						.row
 							.span4
@@ -79,7 +79,7 @@
 						.row
 							.span5
 							.span3
-								button.btn.btn-primary.btn-large.pull-left(ng-click='submitData()')
+								button.btn.btn-primary.btn-large.pull-left(id = "btn_submit" ng-click='submitData()')
 									span.glyphicon.glyphicon-ok &nbsp;Submit
 							.span4
 						.row
