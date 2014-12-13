@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('nourriture', ['ngRoute','angularFileUpload']).
+angular.module('nourriture', ['ngRoute','angularFileUpload','ui.bootstrap.collapse']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/unauthorized', {
@@ -52,11 +52,11 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 controller:showInfo
             }).
             when('/userinfo/centerBlogs',{
-                templateUrl:'/service/userinfo/getUserBlogs',
+                templateUrl:'/service/userinfo/gotoCenterBlogs',
                 controller:showCenterBlogs
             }).
             when('/userinfo/centerRecipes',{
-                templateUrl:'/service/userinfo/getUserRecipes',
+                templateUrl:'/service/userinfo/gotoCenterRecipes',
                 controller:showCenterRecipes
             }).
             when('/userinfo/logout',{
@@ -132,6 +132,10 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/topic/topicDetail',
                 controller: TopicDetail
             }).
+	        when('/season/season_an', {
+		        templateUrl: '/season/season',
+		        controller: Season
+	        }).
             otherwise({
                 redirectTo: '/'
             });

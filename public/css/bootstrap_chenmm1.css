@@ -881,6 +881,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding-top: 10px;
 }
 
-comment_date {
+.comment_date {
   font-size: 12px;
+}
+
+.collapse.in {
+    display: block;
+    visibility: visible;
 }

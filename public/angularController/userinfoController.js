@@ -174,7 +174,6 @@ function showCenterRecipes($scope, $http, $location){
             url: '/service/userinfo/getUserRecipes?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize,
             headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
         }).success(function(data, status, headers, config) {
-            alert(data.root);
             $scope.recipes = data.root;
             $scope.pageing.itemsCount = data.total;
         }).error(function(data, status, headers, config) {

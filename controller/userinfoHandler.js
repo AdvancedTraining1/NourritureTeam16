@@ -52,9 +52,9 @@ UserinfoHandler.register=function(req,res){
 
         UserDao.save(user, function (err, data) {
             if(err&& err.length>0){
-                res.json({message:"注册失败！"});
+                res.json({message:"Register Successful！"});
             }else {
-                res.json({message:"注册成功！"});
+                res.json({message:"Register Failed！"});
             }
 
         });
@@ -75,13 +75,13 @@ UserinfoHandler.login=function(req,res){
         UserDao.getUserByAccountAndPass(params['username'], params['password'], function (err, user) {
 
             if(err&& err.length>0){
-                res.json({message:"登录失败！",user:null});
+                res.json({message:"Login Failed！",user:null});
                 //res.writeHead(500, {
                 //    "Content-Type": "text/plain;charset=utf-8"
                 //});
                 //res.end("登录失败！");
             }else if(user==null){
-                res.json({message:"用户名不存在或密码错误，请重新登录！",user:null});
+                res.json({message:"Username Or Password error,Please login again！",user:null});
             } else{
                 req.session.user_id = user._id;
                 req.session.account = user.account;
@@ -89,7 +89,7 @@ UserinfoHandler.login=function(req,res){
                 req.session.password = user.password;
                 req.session.head = user.head;
                 console.log('登录成功---user_id:'+req.session.user_id);
-                res.json({message:"登陆成功！",user:user});
+                res.json({message:"Login Success！",user:user});
 
                 //res.writeHead(200, {
                 //    "Content-Type": "text/plain;charset=utf-8"
@@ -116,7 +116,7 @@ UserinfoHandler.modifypass=function(req,res){
 
     var oldpassOfUser=req.session.password;
     if(oldpass!=oldpassOfUser){
-        res.json({message:"原密码输入不正确"});
+        res.json({message:"Old Password Error!"});
         return 0;
     }
     var conditions = {_id:req.session.user_id};
@@ -127,12 +127,12 @@ UserinfoHandler.modifypass=function(req,res){
         if(err)
         {
             console.log(err);
-            res.json({message:"修改密码失败！"});
+            res.json({message:"Modify password failed！"});
 
         }else
         {
             req.session.password =newpass ;  //修改session中的值
-            res.json({message:"修改密码成功！"});
+            res.json({message:"Modify password success!"});
 
         }
     });
@@ -169,12 +169,12 @@ UserinfoHandler.modifyinfo=function(req,res){
         if(err)
         {
             console.log(err);
-            res.json({message:"修改失败！"});
+            res.json({message:"Modify userinfo successful！"});
 
         }else
         {
 
-            res.json({message:"修改成功！"});
+            res.json({message:"Modify userinfo failed！"});
 
         }
     });
@@ -191,12 +191,12 @@ UserinfoHandler.viewUserinfo=function(req,res){
         if(err)
         {
             console.log(err);
-            res.json({message:"获取个人信息失败....",user:null});
+            res.json({message:"Get userinfo successful!",user:null});
 
         }else
         {
 
-            res.json({message:"获取个人信息成功！",user:user});
+            res.json({message:"Get userinfo failed！",user:user});
 
         }
     });
@@ -223,7 +223,7 @@ UserinfoHandler.getUserBlogs=function(req,res){
                 return;
             }
 
-            console.log("User--Num"+num)
+            console.log("User--Num:"+num)
             res.json({root:blogs,total:num});
         });
     });
@@ -255,7 +255,7 @@ UserinfoHandler.logout=function(req,res){
     req.session.head = "";
 
     console.log("UserHandler---注销");
-    res.json({message:"注销成功"});
+    res.json({message:"Logout successful!"});
 }
 
 module.exports = UserinfoHandler;
