@@ -135,6 +135,7 @@ function ShowTradePost($scope, $routeParams, $http, $location){
 
         $scope.comment.blog_id = $routeParams.saleId;
 
+        //alert(JSON.stringify($scope.comment));
         $.post("/sale/addSaleComment", $scope.comment, function (data) {
             alert(data);
             commentPage();
@@ -153,9 +154,10 @@ function ShowTradePost($scope, $routeParams, $http, $location){
             if(data.status){
 
                 alert(data.message);
+                $scope.seeCollect = false;
                 paging();
                 //   $scope.blog.collect_count += 1;
-                $scope.seeCollect = false;
+
 
             }else{
                 alert(data.message);
@@ -166,7 +168,7 @@ function ShowTradePost($scope, $routeParams, $http, $location){
 
     };
 
-    $scope.deleteCollect = function(){
+    $scope.cancelCollect = function(){
 
         var checkApi = '/sale/cancelSaleCollection/' + $routeParams.saleId;
 

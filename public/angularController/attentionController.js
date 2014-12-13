@@ -10,7 +10,7 @@ function ToListFriendStatusRecipe($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :1
+        pageSize :5
     };
 
     $(function(){
@@ -54,7 +54,7 @@ function ToListFriendStatusBlog($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :1
+        pageSize :5
     };
 
     $(function(){
@@ -98,7 +98,7 @@ function ToListFriendStatusTopic($scope, $http, $location){
     $scope.pageing={
         pageNo : 1,
         itemsCount : 3,
-        pageSize :1
+        pageSize :5
     };
 
     $(function(){
@@ -142,15 +142,13 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     //$scope.search = $routeParams.search;
     //alert($routeParams.search);
 
-    ///$scope._id = $routeParams.blog_id;//?
     $scope.seeAttention = true;
-
 
     $scope.users = {};
     $scope.pageing={
         pageNo : 1,  //页码
         itemsCount : 3,  //总共
-        pageSize :2  //每页有几个
+        pageSize :9  //每页有几个
     };
 
     $(function(){
@@ -158,22 +156,7 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     });
 
     $scope.list = function () { //下一页
-        //paging();
-        var api = "/service/attention/searchAll";
-        $http({
-            method: 'GET',
-            url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize +'&queryStr=' + $routeParams.search
-        }).success(function(data, status) {
-            $scope.users = data.root;
-            $scope.pageing.itemsCount = data.total;
-            for(var i in $scope.users){
-                var friendId=$scope.users[i]._id;
-
-                checkAttention(friendId);
-            }
-        }).error(function(data, status) {
-
-        });
+        pagingSearch();
     };
 
     function pagingSearch(){
@@ -184,11 +167,11 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data, status) {
             $scope.users = data.root;
             $scope.pageing.itemsCount = data.total;
-            for(var i in $scope.users){
+            /*for(var i in $scope.users){
                 var friendId=$scope.users[i]._id;
 
                 checkAttention(friendId);
-            }
+            }*/
         }).error(function(data, status) {
 
         });
@@ -202,16 +185,17 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data, status) {
             $scope.users = data.root;
             $scope.pageing.itemsCount = data.total;
-            for(var i in $scope.users){
+            /*for(var i in $scope.users){
                 var friendId=$scope.users[i]._id;
 
                 checkAttention(friendId);
-            }
+            }*/
         }).error(function(data, status) {
 
         });
 
     }
+
     $(function(){
         //alert($routeParams.search);
         var api = "/service/attention/searchAll";
@@ -224,12 +208,11 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
             }).success(function(data, status) {
                 $scope.users = data.root;
                 $scope.pageing.itemsCount = data.total;
-                for(var i in $scope.users){
+                /*for(var i in $scope.users){
                     var friendId=$scope.users[i]._id;
-                    var flag=$scope.users[i].attentionFlag;
 
-                    checkAttention(friendId,flag);
-                }
+                    checkAttention(friendId);
+                }*/
             }).error(function(data, status) {
 
             });
@@ -238,7 +221,7 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
     });
 
 
-    function checkAttention(friendId,flag){
+    function checkAttention(friendId){
 
         var checkApi = '/service/attention/check/' + friendId;
 
@@ -248,12 +231,11 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         }).success(function(data){
             if(data == "false"){
 
-                $scope.seeAttention = true;//attention
-                flag=false;//default not attention
+                $scope.seeAttention = true;//show attention
 
             }else{
 
-                $scope.seeAttention = false;//?????????????????
+                $scope.seeAttention = false;//show cancel attention
             }
         });
 
@@ -264,19 +246,21 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
         var checkApi = '/service/attention/addAttentions/' + '?friendId='+friendId+'&friendAccount='+friendAccount+'&friendHead='+friendHead;
 
         $.get(checkApi,function(data) {
-
-            if(data){
+            alert(data);
+            /*if(data){
                 alert(data);
-                pagingSearch();
+                *//*$("#at"+friendId).hide();
+                $("#att"+friendId).show();*//*
+                //pagingSearch();
                 //$scope.seeAttention = false;
 
             }else{
-                alert("already attention!");
-                pagingSearch();
+                alert(data);
+                //pagingSearch();
                 //$scope.seeAttention = false;
 
             }
-
+*/
 
         })
 
@@ -292,12 +276,11 @@ function ToListAllAttention($scope,$routeParams, $http, $location){
                 alert(data);
                 $scope.seeAttention = true;
                 pagingSearch();
-                //checkAttention(friendId);
 
             }else{
                 alert("already cancel!");
+                $scope.seeAttention = true;
                 pagingSearch();
-                //$scope.seeAttention = true;
 
             }
         })

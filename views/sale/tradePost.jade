@@ -44,10 +44,10 @@
 											.accordion-inner
 												.row(ng-repeat='comment in comments')
 													figure.span1
-														p author
 														img(alt='0' src='{{comment.author.head}}')
 													.span6
-														.comment_name user: {{comment.author.account}}
+														.comment_name
+															strong{{comment.author.account}}
 															//a.reply(ng-click='addComment(comment.author._id)') Reply
 														.comment_date
 															span.glyphicon.glyphicon-time

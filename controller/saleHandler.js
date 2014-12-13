@@ -187,11 +187,12 @@ SaleHandler.createSaleComment = function(req, res){
         var content = params.content;
         var user_id = req.session.user_id;
         var account = req.session.account;
-        var sale_id = params.saleId;
+        var sale_id = params.blog_id;
         var time = logTime();
 
         console.log('数据接收完毕');
         //var sale = createSale()
+        console.log("--------------"+sale_id);
 
         var saleComment = new SaleCommentModel({
             author: {
@@ -214,7 +215,8 @@ SaleHandler.createSaleComment = function(req, res){
                 {
                     var message = "save successful";
                     console.log(message);
-                    var conditions = {_id: sale_id}
+                    var conditions = {_id: sale_id};
+                    console.log(sale);
                     console.log(sale.commentNum);
                     var comment_count = sale.commentNum + 1;
                     var update = {$set: { commentNum: comment_count} }
@@ -236,7 +238,7 @@ SaleHandler.createSaleComment = function(req, res){
     });
 }
 
-SaleHandler.getAllSaleComment = function(res, req){
+SaleHandler.getAllSaleComment = function(req , res){
 //    var sale_id = req.params.saleId;
 //    SaleCommentDao.getAll(sale_id, function(err,comments){
 //        if(err)
@@ -273,32 +275,55 @@ SaleHandler.createSaleCollect = function(req, res){
     var sale_id = req.params.saleId;
     var user_id = req.session.user_id;
 
-    var saleCollect = new SaleCollectModel({
+    /*var saleCollect = new SaleCollectModel({
         user: {
             account: req.session.account,
             head:""
         },
         blog_id: sale_id,
         user_id: user_id
-    });
+    });*/
+
 
     SaleDao.getOne(sale_id, function(err, sale){
-        SaleCollectDao.create(saleCollect, function(err, newSaleCollect){
-            if(err)
-            {
-                res.json(500, {message: err.toString()});
-                return;
-            }
-            else
-            {
-                SaleDao.addCollect(sale_id, function(err, sale){
-                    res.writeHead(200, {
-                        "Content-Type": "text/plain;charset=utf-8"
-                    });
-                    res.end("收藏成功！");
-                });
-            }
+        console.log("find one");
+        var saleCollect = new SaleCollectModel({
+            user: {
+                account: req.session.account,
+                head:""
+            },
+            blog_id: sale_id,
+            user_id: req.session.user_id
         });
+
+        console.log("======"+saleCollect);
+        SaleCollectDao.create(saleCollect,function (err,newCollectBlog){
+            if (err) {
+                var message = "save failed";
+                res.json(500, {message: message});
+                return;
+            } else {
+                var message = "save successful";
+                console.log(message);
+                var conditions = {_id: sale_id}
+                console.log( sale.collectNum);
+                var collect_count =sale.collectNum+1;
+                var update = {$set: { collectNum:collect_count} }
+                var options = { upsert: true};
+                SaleDao.update(conditions, update, options, function (error,docs) {
+                    if (error) {
+                        console.log(error);
+                        var message = "update failed";
+                        res.json(500, {message: message,status:false});
+                        return;
+                    } else {
+                        console.log("collection successful");
+                        res.json(200, {message: "collection successful",status:true});
+                    }
+                });
+
+            }
+        })
     });
 }
 
@@ -306,12 +331,12 @@ SaleHandler.cancelSaleCollection = function (req, res) {
     var sale_id = req.params.saleId;
     var user_id = req.session.user_id;
     var message = ""
-    SaleDao.getOne(sale_id, function (err, blog) {
+    SaleDao.getOne(sale_id, function (err, sale) {
         if (err) {
             res.json(500, {message: err.toString()});
             return;
         }
-        if (!blog) {
+        if (!sale) {
             res.json(404, {message: "Not found."});
             return;
         }
@@ -327,7 +352,7 @@ SaleHandler.cancelSaleCollection = function (req, res) {
                 return;
             } else {
                 console.log("update successful");
-                var conditions = {sale_id: sale_id, user_id: user_id};
+                var conditions = {blog_id: sale_id, user_id: user_id};
 
                 SaleCollectDao.delete(conditions, function (error) {
                     if (error) {
