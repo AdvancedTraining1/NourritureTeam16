@@ -52,6 +52,13 @@ BlogDao.getUserBlogs = function (pageNo,pageSize,user_id,callback) {
         return callback(null, blogs);
     });
 };
+BlogDao.getUserBlogNum = function (user_id,callback) {
+    Blog.count({ 'author.id':user_id}).exec(function(error,num){
+        if(error)
+            return callback(error,null);
+        return callback(null, num);
+    });
+};
 BlogDao.getAllNum = function (callback) {
     Blog.count({}).exec(function(error,num){
         if(error)

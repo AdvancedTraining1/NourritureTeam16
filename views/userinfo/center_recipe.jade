@@ -1,12 +1,13 @@
 //
    Created by liuhanxu on 14-12-12.
+
 #main(style='min-height:500px')
    .container
       section#blog
          .hgroup
-            h1 Personal Center
+            h1 Personal Center------Recipes
             h2
-               | Your Own Blog
+               | Your Own Recipes
             ul.breadcrumb.pull-right
                li
                   a(href='/index') Home
@@ -14,45 +15,44 @@
                li.active Blog
          .row
             #leftcol.span8
-               article.post(ng-repeat="blog in blogs")
-                  .post_header
-                     h3.post_title
-                        a(href='/blog/blogDetail_angular/{{blog._id}}')
-                           | {{blog.title}}
-                     .post_sub
-                        span.glyphicon.glyphicon-time
-                        | {{blog.create_at}}&nbsp;&nbsp;
-                        a(href='')
-                           span.glyphicon.glyphicon-comment
-                           | {{blog.comment_count}} comments
-                  .post_content
-                     h5 key word: {{blog.tag}}
-                  a.btn.btn-primary(href='/blog/blogDetail_angular/{{blog._id}}') Read More
-               .pagination.pagination-centered(blog-page page-object="pageing" click-function="list")
+               #protfolio_container.portfolio_strict.row
+                  .portfolio_item.cat_travel.span4(ng-repeat="recipe in recipes")
+                     .portfolio_photo(style="background-image:url({{recipe.photo}})")
+                        a(href='/recipe/single_an/{{recipe._id}}')
+                           span.glyphicon.glyphicon-share
+                           p {{recipe.description}}
+                     .portfolio_description
+                        h3
+                           a(href='/recipe/single_an/{{recipe._id}}') {{recipe.recipeName}}
+               .pagination.pagination-centered(recipe-page page-object="pageing" click-function="list")
             #sidebar.span4
                aside.widget
-                  h4 Blog Categories
+                  h4 Categories
                   ul.nav.nav-tabs.nav-stacked
+                     li
+                        a(href='/userinfo/centerBlogs') My Blogs
                      li.active
-                        a(href='#') All
+                        a(href='/userinfo/centerRecipes') My Recipes
                      li
-                        a(href='#') News
+                        a(href='#') My Trades
                      li
-                        a(href='#') Press
-               aside.widget
-                  h4 Text Widget
-                  p
-                     | Fugiat dapibus, tellus ac cursus commodo, mauesris condime ntum nibh, ut fermentum mas justo sitters amet risus. Cras mattis cosi sectetut amet fermens etrsaters tum aecenas faucib sadips amets.
+                        a(href='#') My Topics
+                     li
+                        a(href='#') My Uploads
+
                aside.widget.ads.clearfix
-                  h4 Ads
+                  h4 Friends
                   a(href='#')
-                     img(src='http://placehold.it/110', alt='')
+                     img.friend(src='/head/defaulthead.jpeg', alt='')
                   a(href='#')
-                     img(src='http://placehold.it/110', alt='')
+                     img.friend(src='/head/defaulthead.jpeg', alt='')
                   a(href='#')
-                     img(src='http://placehold.it/110', alt='')
+                     img.friend(src='/head/defaulthead.jpeg', alt='')
                   a(href='#')
-                     img(src='http://placehold.it/110', alt='')
+                     img.friend(src='/head/defaulthead.jpeg', alt='')
+               aside.widget.ads.clearfix
+                  h5
+                     a(href='#') More Friends--->
                aside.widget
                   h4 Tabs
                   ul#myTab.nav.nav-tabs

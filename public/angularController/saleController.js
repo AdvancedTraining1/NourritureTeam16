@@ -12,8 +12,9 @@ function CreateTradePost($scope, $http, $location){
         $scope.sale.content = content;
         $.post('/sale/create',$scope.sale,function(data){
             alert(data);
-            //$location.path('/sale/list');
+
         });
+        $location.path('/sale/listTradePost_angular/');
     }
 }
 
@@ -137,7 +138,7 @@ function ShowTradePost($scope, $routeParams, $http, $location){
 
         //alert(JSON.stringify($scope.comment));
         $.post("/sale/addSaleComment", $scope.comment, function (data) {
-            alert(data);
+            alert("success");
             commentPage();
             $scope.comment.content = null;
             $scope.sale.commentNum += 1;
@@ -149,7 +150,6 @@ function ShowTradePost($scope, $routeParams, $http, $location){
         var checkApi = '/sale/addSaleCollection/' + $routeParams.saleId;
 
         $.get(checkApi,function(data) {
-            alert(data.status);
 
             if(data.status){
 
