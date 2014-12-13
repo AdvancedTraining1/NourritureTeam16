@@ -17,7 +17,7 @@
 				article.post(ng-repeat="recipe in recipes")
 					.post_header
 						h3.post_title
-							a(href='/attention/oneRecipe/{{recipe._id}}') {{recipe.recipeName}}
+							a(href='/attention/oneRecipe/{{recipe._id}}' id="{{$index}}") {{recipe.recipeName}}
 						.post_sub
 							span.glyphicon.glyphicon-time {{recipe.logTime}} &nbsp;&nbsp;
 								a(href='/attention/oneRecipe/{{recipe._id}}')
