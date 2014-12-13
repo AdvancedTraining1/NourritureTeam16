@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('nourriture', ['ngRoute','angularFileUpload']).
+angular.module('nourriture', ['ngRoute','angularFileUpload','ui.bootstrap.collapse']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/index', {
@@ -111,6 +111,10 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/topic/topicDetail',
                 controller: TopicDetail
             }).
+	        when('/season/season_an', {
+		        templateUrl: '/season/season',
+		        controller: Season
+	        }).
             otherwise({
                 redirectTo: '/'
             });

@@ -17,6 +17,7 @@ var recipe = require('./routes/recipe');
 var sale = require('./routes/sale');
 var userinfo = require('./routes/userinfo');
 var common = require('./routes/common');
+var seasonpage = require('./routes/season');
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use('/topic', topic);
 //app.use('/attention',attention);
 attention(app);
 app.use('/admin',adminpage);
+app.use('/season',seasonpage);
 app.use('/advertise',advertisepage);
 app.use('/sale',sale);
 userinfo(app);
