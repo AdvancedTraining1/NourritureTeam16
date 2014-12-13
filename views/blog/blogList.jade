@@ -18,7 +18,7 @@
                     article.post(ng-repeat="blog in blogs")
                         .post_header
                             h3.post_title
-                                a(href='/blog/blogDetail_angular/{{blog._id}}')
+                                a(href='/blog/blogDetail_angular/{{blog._id}}' id="{{$index}}")
                                     | {{blog.title}}
                             .post_sub
                                 span.glyphicon.glyphicon-time

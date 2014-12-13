@@ -15,7 +15,7 @@
 							span.glyphicon.glyphicon-camera
 							| &nbsp;&nbsp;{{topic.upload_count}} product
 
-						a(href='#' data-toggle='modal', data-target='#myModal'  style="margin-left:50px")
+						a#uploadone(href='#' data-toggle='modal', data-target='#myModal'  style="margin-left:50px")
 							span.glyphicon.glyphicon-plus
 							| upload one
 
@@ -29,7 +29,7 @@
 			#protfolio_container.portfolio_strict.row
 				.portfolio_item.cat_travel.span4(ng-repeat = "upload in uploads")
 					.portfolio_photo(style="background-image:url({{upload.picture}})")
-					a(href='' ng-click="addLike(upload._id)")
+					a(href='' ng-click="addLike(upload._id)" id="{{$index}}")
 						span.glyphicon.glyphicon-thumbs-up  {{ upload.like_count}}
 					a(href='')
 						p {{upload.title}}
@@ -51,25 +51,25 @@
 								.span4
 									.input-group
 										span.input-group-addon Product Name
-										input.form-control(type='text' name='title' ng-model='topicUpload.title' placeholder="Product Name")
+										input.form-control#uploadname(type='text' name='title' ng-model='topicUpload.title' placeholder="Product Name")
 
 							.row
 								.span4(style="margin-top:5px")
 									.input-group
 										span.input-group-addon Product&nbsp; story&nbsp;
-										textarea.form-control(type='text' name='content' ng-model='topicUpload.story' rows="3" placeholder="Product Story")
+										textarea.form-control#uploadstory(type='text' name='content' ng-model='topicUpload.story' rows="3" placeholder="Product Story")
 
 							.row
 								.span4(style="margin-top:5px")
 									.input-group
-										div(onclick="file.click()")
+										div#myfile(onclick="file.click()")
 											span.glyphicon.glyphicon-plus
 												| &nbsp;&nbsp;Choose a picture
-											input(type='file' id='file' name='files' ng-file-select="onFileSelect($files)"  accept="image/*" style="display:none")
+											input(type='file' id='file' name='files' ng-file-select="onFileSelect($files)"  accept="image/*" )
 
 						.modal-footer
 							button.btn.btn-default(type='button', data-dismiss='modal' id="close")
 								| close
-							button.btn.btn-primary(type='button' ng-click="uploadProduct()")
+							button#uploadclick.btn.btn-primary(type='button' ng-click="uploadProduct()")
 								| upload
 

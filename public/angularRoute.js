@@ -52,11 +52,11 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 controller:showInfo
             }).
             when('/userinfo/centerBlogs',{
-                templateUrl:'/service/userinfo/getUserBlogs',
+                templateUrl:'/service/userinfo/gotoCenterBlogs',
                 controller:showCenterBlogs
             }).
             when('/userinfo/centerRecipes',{
-                templateUrl:'/service/userinfo/getUserRecipes',
+                templateUrl:'/service/userinfo/gotoCenterRecipes',
                 controller:showCenterRecipes
             }).
             when('/userinfo/logout',{
@@ -64,12 +64,12 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 controller:logout
             }).
 
-            when('/sale/createTradePost',{
-                templateUrl:'/sale/createTradePost_angular',
+            when('/sale/createTradePost_angular',{
+                templateUrl:'/sale/createTradePost',
                 controller:CreateTradePost
             }).
-            when('/sale/listTradePost',{
-                templateUrl:'/sale/listTradePost_angular',
+            when('/sale/listTradePost_angular',{
+                templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).
             when('/sale/showTradePost_angular/:saleId',{

@@ -223,7 +223,7 @@ UserinfoHandler.getUserBlogs=function(req,res){
                 return;
             }
 
-            console.log("User--Num"+num)
+            console.log("User--Num:"+num)
             res.json({root:blogs,total:num});
         });
     });
