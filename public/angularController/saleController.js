@@ -12,8 +12,9 @@ function CreateTradePost($scope, $http, $location){
         $scope.sale.content = content;
         $.post('/sale/create',$scope.sale,function(data){
             alert(data);
-            //$location.path('/sale/list');
+
         });
+        $location.path('/sale/listTradePost_angular/');
     }
 }
 
