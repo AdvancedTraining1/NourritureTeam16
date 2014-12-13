@@ -20,10 +20,12 @@ module.exports = function (app) {
 	app.get('/service/userinfo/gotoModifyPass',function(req,res){
 		res.render('userinfo/modifypass');
 	});
-	app.get('/service/userinfo/gotoCenter',function(req,res){
-		res.render('userinfo/center');
+	app.get('/service/userinfo/gotoCenterBlogs',function(req,res){
+		res.render('userinfo/center_blog');
 	});
-
+	app.get('/service/userinfo/gotoCenterRecipes',function(req,res){
+		res.render('userinfo/center_recipe');
+	});
 
 
 	app.post('/service/userinfo/register',UserinfoHandler.register);
@@ -34,6 +36,7 @@ module.exports = function (app) {
 	app.post('/service/userinfo/isLogin',UserinfoHandler.isLogin);
 
 	app.get('/service/userinfo/getUserBlogs',UserinfoHandler.getUserBlogs);
+	app.get('/service/userinfo/getUserRecipes',UserinfoHandler.getUserRecipes);
 	app.get('/service/userinfo/logout',UserinfoHandler.logout);
 
 	app.post('/showuserinfo',UserinfoHandler.viewUserinfo);

@@ -17,6 +17,13 @@
 .clearfix:after {
   clear: both;
 }
+.friend{
+  width: 110px;
+  height: 110px;
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
 .hide-text {
   font: 0/0 a;
   color: transparent;

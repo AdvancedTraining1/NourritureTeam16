@@ -164,7 +164,12 @@
 							figure(style="background-image: url('/head/defaulthead.jpeg')")
 								img(alt='{{recipe.author.account}}' src='/head/defaulthead.jpeg')
 							h5(style='color:#555') {{recipe.author.account}}
+<<<<<<< HEAD
+							button.btn.btn-info(ng-click='')
+								span.glyphicon.glyphicon-plus &nbsp;Attention
+=======
 							button.btn.btn-info(href='' ng-click="addAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='seeAttention')
 								span.glyphicon.glyphicon-star-empty Attention
 							button.btn.btn-info(ng-click="deleteAttention(recipe.author._id,recipe.author.account,recipe.author.head)" ng-if='!seeAttention')
 								span.glyphicon.glyphicon-star Cancel attention
+>>>>>>> 631e1e189953ad5fa65c4738968f9ba4592ad90f
