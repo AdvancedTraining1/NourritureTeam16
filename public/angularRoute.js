@@ -52,11 +52,11 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 controller:showInfo
             }).
             when('/userinfo/centerBlogs',{
-                templateUrl:'/service/userinfo/getUserBlogs',
+                templateUrl:'/service/userinfo/gotoCenterBlogs',
                 controller:showCenterBlogs
             }).
             when('/userinfo/centerRecipes',{
-                templateUrl:'/service/userinfo/getUserRecipes',
+                templateUrl:'/service/userinfo/gotoCenterRecipes',
                 controller:showCenterRecipes
             }).
             when('/userinfo/logout',{
