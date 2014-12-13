@@ -17,3 +17,43 @@
 				.portfolio_description
 					h3
 						a(href='/recipe/single_an/{{recipe._id}}') {{recipe.recipeName}}
+
+		section#recipe
+			.hgroup
+				h2 Newest topic
+				ul.breadcrumb.pull-right
+					li
+						a(href='/topic/topicList_angular') More
+		#protfolio_container.portfolio_strict.row
+			.portfolio_item.cat_travel.span4(ng-repeat="topic in topics" style="height: 220px;")
+				.portfolio_description
+					h3
+						a(href='/topic/topicDetail_angular/{{topic._id}}' id="{{$index}}") # {{topic.topicName}} #
+					br
+					p {{topic.content}}
+					br
+					span.glyphicon.glyphicon-time
+					| {{topic.time}}&nbsp;&nbsp;
+					a(href='')
+						span.glyphicon.glyphicon-camera
+					|  {{topic.upload_count}} product
+
+		section#recipe
+			.hgroup
+				h2 Newest Blog
+				ul.breadcrumb.pull-right
+					li
+						a(href='/blog/blogList_angular') More
+		#protfolio_container.portfolio_strict.row
+			.portfolio_item.cat_travel.span4(ng-repeat="blog in blogs" style="height: 220px;")
+				.portfolio_description
+					h3
+						a(href='/blog/blogDetail_angular/{{blog._id}}' id="{{$index}}")  {{blog.title}}
+					br
+					p  {{blog.tag}}
+					br
+					span.glyphicon.glyphicon-time
+					| {{blog.create_at}}&nbsp;&nbsp;
+					a(href='')
+						span.glyphicon.glyphicon-comment
+					|  {{blog.comment_count}} comments

@@ -166,8 +166,10 @@ function BlogDetail($scope, $routeParams,$http, $location,$upload) {
 
         $.post("/blog/addCommentToBlog", $scope.comment, function (data) {
 
-            commentPage();
+            paging();
             $scope.comment.content = null;
+            /*commentPage();
+            */
 
         });
     };
