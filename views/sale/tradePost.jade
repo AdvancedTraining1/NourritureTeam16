@@ -15,10 +15,10 @@
 					span.glyphicon.glyphicon-star
 					| {{sale.collectNum}} collects &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					//a
-					a(href='' ng-click="addCollect()" ng-if='seeCollect')
+					a(id="collect" href='' ng-click="addCollect()" ng-if='seeCollect')
 						span.glyphicon.glyphicon-star-empty
 						|Collect
-					a(href='' ng-if='!seeCollect' ng-click="cancelCollect()")
+					a(id="collect" href='' ng-if='!seeCollect' ng-click="cancelCollect()")
 						span.glyphicon.glyphicon-star
 						|Cancel Collected
 				ul.breadcrumb.pull-right
@@ -62,10 +62,10 @@
 						form
 							.row
 								.span8
-									textarea.span8(rows="4" placeholder="Comments" ng-model='comment.content')
+									textarea.span8(id="text" rows="4" placeholder="Comments" ng-model='comment.content')
 							.row
 								.span8
-									a.btn.send(ng-click='addComment()') Add comment
+									a.btn.send(id="addComment" ng-click='addComment()') Add comment
 				#sidebar.span4
 					aside.widget.ads.clearfix
 						h4 Author
