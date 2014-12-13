@@ -16,7 +16,7 @@
 				article.post(ng-repeat="topic in topics")
 					.post_header
 						h3.post_title
-							a(href='/attention/oneTopic/{{topic._id}}') # {{topic.topicName}} #
+							a(href='/attention/oneTopic/{{topic._id}}' id="{{$index}}") # {{topic.topicName}} #
 						.post_sub
 							span.glyphicon.glyphicon-time {{topic.time}} &nbsp;&nbsp;
 								//a(href='/topic/single#post_comments')
