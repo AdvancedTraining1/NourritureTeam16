@@ -15,7 +15,6 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/indexPart',
 		        controller: IndexPage
             }).
-//---------------------------------chenmm start-----------------------------------------
             when('/recipe/create_an', {
                 templateUrl: '/recipe/create',
                 controller: ToCreateRecipe
@@ -36,7 +35,6 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl: '/recipe/ownAll',
                 controller: ToOwnRecipe
             }).
-//---------------------------------chenmm end-----------------------------------------
             when('/userinfo/show',{
                 templateUrl:'/userinfo/show',
                 controller:showInfo
@@ -53,20 +51,24 @@ angular.module('nourriture', ['ngRoute','angularFileUpload']).
                 templateUrl:'/service/userinfo/gotoModifyPass',
                 controller:showInfo
             }).
-            when('/userinfo/center',{
-                templateUrl:'/service/userinfo/gotoCenter',
-                controller:showCenter
+            when('/userinfo/centerBlogs',{
+                templateUrl:'/service/userinfo/getUserBlogs',
+                controller:showCenterBlogs
+            }).
+            when('/userinfo/centerRecipes',{
+                templateUrl:'/service/userinfo/getUserRecipes',
+                controller:showCenterRecipes
             }).
             when('/userinfo/logout',{
                 templateUrl:'/indexPart',
                 controller:logout
             }).
 
-            when('/sale/createTradePost_angular',{
+            when('/sale/createTradePost',{
                 templateUrl:'/sale/createTradePost',
                 controller:CreateTradePost
             }).
-            when('/sale/listTradePost_angular',{
+            when('/sale/listTradePost',{
                 templateUrl:'/sale/listTradePost',
                 controller:ListTradePost
             }).

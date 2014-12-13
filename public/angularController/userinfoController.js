@@ -122,7 +122,7 @@ function RegisterAndLogin($scope, $http, $location) {
     }
 }
 
-function showCenter($scope, $http, $location){
+function  showCenterBlogs($scope, $http, $location){
     $scope.blogs = {};
     $scope.collect = {};
     $scope.pageing={
@@ -152,6 +152,47 @@ function showCenter($scope, $http, $location){
         });
     };
 }
+
+function showCenterRecipes($scope, $http, $location){
+    $scope.pageing={
+        pageNo : 1,
+        itemsCount : 10,
+        pageSize :5
+    };
+
+    $(function(){
+        getUserRecipes();
+    });
+
+    $scope.list = function () {
+        getUserRecipes();
+    };
+
+    function getUserRecipes(){
+        $http({
+            method  : 'GET',
+            url: '/service/userinfo/getUserRecipes?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize,
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+        }).success(function(data, status, headers, config) {
+            alert(data.root);
+            $scope.recipes = data.root;
+            $scope.pageing.itemsCount = data.total;
+        }).error(function(data, status, headers, config) {
+
+        });
+    };
+    $scope.deleteRecipe = function (recipeId) {
+        var api = "/service/recipe/delete";
+        $http({
+            method: 'GET',
+            url: api + '/'+recipeId
+        }).success(function(data, status) {
+            page();
+        });
+    };
+}
+
+
 
 function logout($scope, $http, $location){
 
