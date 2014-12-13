@@ -18,7 +18,9 @@ function ToCreateTopic($scope, $http,$location) {
 
 
         $.post('/topic/publishTopic',$scope.topic,function(data){
-            alert(data.message)
+            alert(data.message);
+            $location.path("/topic/topicList_angular");
+            $scope.$apply();
           //  $location.path("/blog/blogDetail_angular/"+data.newId);
           //  $scope.$apply();
         });
@@ -164,7 +166,7 @@ function TopicDetail($scope, $routeParams,$http, $location,$upload) {
 
 
             if(data.status){
-
+                alert("like successful");
                 paging();
 
 
