@@ -82,7 +82,7 @@ router.post('/searchTopic',topicHandler.searchTopic);
 对时另食物的操作
 * */
 router.post('/addSeason',seasonHandler.add);
-router.post('/getAllSeason',seasonHandler.getAll);
+//router.post('/getAllSeason',seasonHandler.getAll);
 router.get('/searchSeason',seasonHandler.searchSeasonFood);
 router.post('/season/upload', seasonHandler.upload);
 //传统的方法链接数据库

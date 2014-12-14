@@ -9,10 +9,20 @@
 						a(href='/index') Home
 						span.divider /
 					li.active View season
-		div(ng-controller="Season")
-			button.btn-default(ng-click = "isCollapsed = !isCollapsed") touch here
-			hr
-			div(collapse="isCollapsed")
-				//i(ng-class="{'icon-resize-small': isCollapsed, 'icon-fullscreen': !isCollapsed}") Detail
-				div(ng-class = "{'well-lg' : isCollapsed}") Some content
-
+		//section(id="portfolio_slider_wrapper")
+		.row
+			.span1
+			.span10
+				article.post(ng-repeat="season in seasons")
+					.post_header
+						.post_sub
+					.post_content
+						div(class="flexslider" id="portfolio_slider")
+							div(class="flex-viewport" style="overflow: hidden; position: relative;")
+								ui(style="width: 2000%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(-1170px, 0px, 0px);")
+									li(class="item clone" data-thumb="{{season.picture}}" style="width: 1170px; float: left; display: block; background-image: url({{season.picture}});")
+										div(class="container")
+											div(class="carousel-caption show")
+												p(class="lead")  {{season.describe}}
+				.pagination.pagination-centered(user-page page-object="pageing" click-function="list" ng-if = 'is_visible')
+			.span1

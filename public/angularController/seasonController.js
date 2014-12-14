@@ -18,11 +18,51 @@
 //angular.module('myModule', ['ui.bootstrap.collapse']);
 
 function Season($scope, $http, $location){
-	//alert(11111111111);
-	angular.module('myModule', ['ui.bootstrap']);
+	$scope.season = {};
+	$scope.seasons = {};
 
-	$scope.isCollapsed = false;
-	$scope.hide = function($scope){
-		$scope.isCollapsed = !$scope.isCollapsed;
+	$scope.is_visible = false;
+	$scope.pageing={
+		pageNo : 1,
+		itemsCount : 10,
+		pageSize :12
+	};
+
+	$scope.list = function () {
+		pageing();
+	};
+
+	function pageing(){
+		var api = "/season/listSeason";
+
+		$http({
+			method: 'GET',
+			url: api + '?pageNo=' + $scope.pageing.pageNo + '&pageSize='+$scope.pageing.pageSize
+		}).success(function(data, status) {
+			//alert(data);
+			$scope.seasons = data.seasons;
+
+			$scope.pageing.itemsCount = data.total;
+			//alert(data.total);
+
+			if(data.total == 0)
+			{
+				alert("Season food not exist");
+			}else
+			{
+				$scope.is_visible = true;
+				//alert($scope.is_visible);
+			}
+
+		}).error(function(data, status) {
+			//alert("Data error");
+		});
+
 	}
+
+	$(function(){
+		pageing();
+	});
+
+
 }

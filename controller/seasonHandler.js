@@ -106,27 +106,23 @@ SeasonHandler.update = function(req, res)
     });
 };
 
-SeasonHandler.getAll = function(req,res)
+SeasonHandler.listSeasonFood = function(req,res)
 {
-    SeasonDao.getAllSeasonFood(function (err, data)
+	var pageNo = req.param('pageNo');
+	var pageSize = req.param('pageSize');
+
+	//console.log(11111111111111);
+    SeasonDao.getAllSeasonFood(pageNo,pageSize,function (err, data)
     {
-        if(err)
-        {
-            console.log(err);
-
-        }else
-        {
-
-            console.log(data);
-
-        }
-
-
+	    SeasonDao.getAllNum(function(err,num)
+	    {
+		    res.json({seasons:data,total:num});
+	    });
 
     });
 
     //res.send("season/getAll");
-    res.json(200, {message: "season/getAll"});
+    //res.json(200, {message: "season/getAll"});
 }
 
 
