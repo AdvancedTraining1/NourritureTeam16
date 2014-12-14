@@ -468,6 +468,7 @@ BlogHander.addCommentToBlog=function(req, res){
         var content = params.content;
         var user_id = req.session.user_id;
         var account = req.session.account;
+        var head = req.session.head;
         var blog_id = params.blog_id;
         var time = getTime();
         console.log("blog_id----"+blog_id)
@@ -477,7 +478,10 @@ BlogHander.addCommentToBlog=function(req, res){
         var commentToBlog = new CommentToBlogModel({
             author: {
                 id: user_id,
-                account: account },
+                account: account,
+                head:head
+
+            },
             content: content,
          //   reply_id: reply_id,
             blog_id:blog_id,
@@ -571,12 +575,33 @@ BlogHander.checkCollction=function (req, res) {
     });
 }
 
-function getTime(){
-    var date = new Date();
-    var dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-    console.log(dateStr);
-    return dateStr;
+Date.prototype.format =function(format)
+{
+    var o = {
+        "M+" : this.getMonth()+1, //month
+        "d+" : this.getDate(),    //day
+        "h+" : this.getHours(),   //hour
+        "m+" : this.getMinutes(), //minute
+        "s+" : this.getSeconds(), //second
+        "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+        "S" : this.getMilliseconds() //millisecond
+    }
+    if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+        (this.getFullYear()+"").substr(4- RegExp.$1.length));
+    for(var k in o)if(new RegExp("("+ k +")").test(format))
+        format = format.replace(RegExp.$1,
+                RegExp.$1.length==1? o[k] :
+                ("00"+ o[k]).substr((""+ o[k]).length));
+    return format;
 }
+
+function getTime(){
+
+    var data =new Date().format('yyyy-MM-dd hh:mm:ss');
+    console.log(data);
+    return data;
+}
+
 
 
 module.exports = BlogHander;

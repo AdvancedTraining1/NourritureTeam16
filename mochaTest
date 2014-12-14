@@ -1,2 +1,2 @@
 #!/bin/sh
-mocha > test/result
+mocha > test/result.html

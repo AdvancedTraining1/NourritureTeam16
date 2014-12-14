@@ -12,8 +12,8 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
     $scope.moreSteps = [{step:1}];
     $scope.moreMaterials = [{material:1}];
     /////////////////
-    $scope.recipe.photo = '/upload/recipe_add1.jpg';
-    $scope.step.push('/upload/recipe_add2.jpg');
+    //$scope.recipe.photo = '/upload/recipe_add1.jpg';
+    //$scope.step.push('/upload/recipe_add2.jpg');
 
     $scope.onFileSelect = function ($files) {
         if($files != null){
@@ -105,6 +105,7 @@ function ToCreateRecipe($scope, $http, $location, $upload) {
 
         $.post('/service/recipe/create',$scope.recipe,function(data){
             alert(data);
+            $location.path('/recipe/list_an');
         });
         /*$http.post('service/recipe/create', $scope.recipe).
          success(function(data) {
@@ -192,7 +193,7 @@ function ToSingleRecipe($scope, $routeParams,$http, $location,$upload){
     $scope.seeCollect = true;
     $scope.seeAttention = true;
     ////////////////////////
-    $scope.product.picture = '/upload/recipe_add3.jpg';
+    //$scope.product.picture = '/upload/recipe_add3.jpg';
     $scope.commentPaging={
         pageNo : 1,
         itemsCount : 10,
