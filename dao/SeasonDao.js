@@ -21,20 +21,14 @@ SeasonDao.save = function (obj,callback)
     });
 };
 
-SeasonDao.getAllSeasonFood = function (callback)
+SeasonDao.getAllSeasonFood = function (pageNo,pageSize,callback)
 {
-    seasonModel.find({},function(err,ads) {
-        if (err) {
-            callback(err,null);
-            return;
-        }
-        if (!ads) {
-            callback(null,"SeasonDao.getAllSeasonFood none");
-            return;
-        }
-        callback(null,ads);
+    seasonModel.find({}).skip((pageNo-1)*pageSize).limit(pageSize).exec(function(error,data){
+	    if(error) return callback(error,null);
 
-    });
+	    return callback(null, data);
+	    //return callback(null, 'RecipeDao.getAllSeasonFood success');
+    });;
 
 };
 
@@ -66,6 +60,14 @@ SeasonDao.searchSeasonFood = function (pageNo,pageSize,name,callback) {
 
 SeasonDao.getNum = function (conditions,callback) {
 	seasonModel.count(conditions).exec(function(error,num){
+		if(error)
+			return callback(error,null);
+		return callback(null, num);
+	});
+}
+
+SeasonDao.getAllNum = function (callback) {
+	seasonModel.count({}).exec(function(error,num){
 		if(error)
 			return callback(error,null);
 		return callback(null, num);
