@@ -47,7 +47,7 @@
 														img(alt='0' src='{{comment.author.head}}')
 													.span6
 														.comment_name
-															strong{{comment.author.account}}
+															strong {{comment.author.account}}
 															//a.reply(ng-click='addComment(comment.author._id)') Reply
 														.comment_date
 															span.glyphicon.glyphicon-time
@@ -70,13 +70,9 @@
 					aside.widget.ads.clearfix
 						h4 Author
 						.team_member(style='background:none')
-							figure(style="background-image: url({{blog.author.head}})")
-								img(alt='0' src='{{sale.author.head}}')
+							figure(style="background-image: url('/head/defaulthead.jpeg')")
+								img(alt='{{sale.author.account}}' src='/head/defaulthead.jpeg')
 							h5(style='color:#555') {{sale.author.account}}
-						a(href='')
-							img(alt='0' src='{{recipe.author.head}}')
-						.row
-							| {{recipe.author.account}}
 					aside.widget.ads.clearfix
 						h4 Ads
 						a(href='#')

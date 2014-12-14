@@ -185,6 +185,7 @@ SaleHandler.createSaleComment = function(req, res){
         var params = querystring.parse(postData);//GET & POST
 
         var content = params.content;
+        var head = req.session.head;
         var user_id = req.session.user_id;
         var account = req.session.account;
         var sale_id = params.blog_id;
@@ -197,7 +198,8 @@ SaleHandler.createSaleComment = function(req, res){
         var saleComment = new SaleCommentModel({
             author: {
                 id: user_id,
-                account: account },
+                account: account ,
+                head: head},
             content: content,
             //reply_id: reply_id,
             blog_id: sale_id,
