@@ -9,7 +9,7 @@ var CommentToBlogDao = new DaoBase(CommentToBlogModel);
 module.exports = CommentToBlogDao;
 
 CommentToBlogDao.getAllCommentToBlog = function (pageNo,pageSize,blod_id,callback) {
-    CommentToBlogModel.find({blog_id:blod_id}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'create_at':-1}).exec(function(error,comments){
+    CommentToBlogModel.find({blog_id:blod_id}).skip((pageNo-1)*pageSize).limit(pageSize).sort({'time':-1}).exec(function(error,comments){
         if(error) return callback(error,null);
         return callback(null, comments);
     });
