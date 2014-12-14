@@ -39,8 +39,12 @@ html(ng-app="nourriture")
 							span.nb_right.pull-right menu
 						.nav-collapse.collapse
 							ul#menuTab.nav.pull-right
-								li.active
-									a(href="/index") Home
+								li.dropdown.active
+									a.dropdown-toggle(data-toggle="dropdown" href="") Home
+										span.caret
+									ul#subMenu.dropdown-menu
+										li
+											a(href='/season/season_an') Season Food
 								li
 									a(href='/recipe/list_an') Recipe
 								li
@@ -65,8 +69,6 @@ html(ng-app="nourriture")
 											a(href='/topic/createTopic_angular') Publish Topic
 										li
 											a(href='/sale/createTradePost') Publish Trade Post
-										li
-											a(href='/season/season_an') Season Food
 										li
 											a(href='/sale/createTradePost_angular') Publish Trade Post
 
