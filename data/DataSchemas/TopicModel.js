@@ -11,7 +11,7 @@ var TopicSchema = new mongoose.Schema({
         id: String,
         account: String },
     time: { type: String },
-    picture :{type:String,default:"/public/img/default_topic.png"},
+    picture :{type:String},
 
     upload_count: { type: Number, default: 0 }
 });
