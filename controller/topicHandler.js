@@ -42,7 +42,7 @@ TopicHandler.publishTopic = function(req,res){
         var picture = params.picture;
 
         if(picture==""){
-            picture="/public/img/default_topic.png"
+            picture="img/default_topic.png"
         }
         var time = getTime();
 
