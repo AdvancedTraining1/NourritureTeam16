@@ -39,6 +39,11 @@ TopicHandler.publishTopic = function(req,res){
 
         var topicName = params.topicName;
         var content = params.content;
+        var picture = params.picture;
+
+        if(picture==""){
+            picture="/public/img/default_topic.png"
+        }
         var time = getTime();
 
         var topic = new TopicModel({
@@ -47,7 +52,8 @@ TopicHandler.publishTopic = function(req,res){
             author: {
                 id: req.session.user_id,
                 account: req.session.account },
-            time:time
+            time:time,
+            picture:picture
 
         });
         var message = ""

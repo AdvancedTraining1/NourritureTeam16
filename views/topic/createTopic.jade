@@ -26,6 +26,18 @@
                             .input-group
                                 span.input-group-addon Discription
                                 textarea#content.form-control(type='text' ng-model='content' rows="5")
+                    br
+                    .row
+                        .span4(style="margin-top:5px")
+                            .input-group
+                                div#myfile(onclick="file.click()")
+                                    span.glyphicon.glyphicon-plus
+                                        | &nbsp;&nbsp;Choose a picture
+                                    input(type='file' id='file' name='files' ng-file-select="onFileSelect2($files)"  accept="image/*" style="display:none")
+                        .span4(ng-if='photoSee')
+                            a(href='')
+                                img(src='{{picture}}')
+
 
                     .row.space50(style="margin-top:15px")
                         .row

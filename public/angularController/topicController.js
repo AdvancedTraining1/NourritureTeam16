@@ -4,7 +4,10 @@
 
 'use strict';
 
-function ToCreateTopic($scope, $http,$location) {
+function ToCreateTopic($scope, $http,$location,$upload) {
+    $scope.picture={};
+    $scope.photoSee=false;
+    $scope.upload = {};
 
 
     $scope.createTopic = function () {
@@ -15,9 +18,11 @@ function ToCreateTopic($scope, $http,$location) {
         var content=$scope.content;
         $scope.topic.topicName =topicname;
         $scope.topic.content = content;
+        $scope.topic.picture = $scope.picture;
 
 
         $.post('/topic/publishTopic',$scope.topic,function(data){
+
             alert(data.message);
             $location.path("/topic/topicList_angular");
             $scope.$apply();
@@ -26,6 +31,24 @@ function ToCreateTopic($scope, $http,$location) {
         });
 
     }
+
+    $scope.onFileSelect2 = function ($files) {
+        console.log("yes");
+        console.log($files);
+        if($files != null){
+            $scope.upload = $upload.upload({
+                url: '/topic/upload',
+                file: $files
+            }).progress(function (evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function (data, status, headers, config) {        // file is uploaded successfully
+                $scope.picture=data;
+                $scope.photoSee=true;
+                alert("upload success!");
+
+            });
+        }
+    };
 
 }
 
@@ -157,7 +180,6 @@ function TopicDetail($scope, $routeParams,$http, $location,$upload) {
             });
         }
     };
-
     $scope.addLike = function(id){
 
         var checkApi = '/topic/likeTopicUpload/' + id;
