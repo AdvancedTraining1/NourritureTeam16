@@ -212,15 +212,15 @@ exports.comment = function(req,res){
         
         if(androidId != null){
             comment.author = {
-            _id : req.session.user_id,
-            account : req.session.account,
-            head : req.session.head
-        };
-        }else{
-            comment.author = {
             _id : androidId,
             account : androidAccount,
             head : androidHead
+        };
+        }else{
+            comment.author = {
+            _id : req.session.user_id,
+            account : req.session.account,
+            head : req.session.head
         };
         }
         
