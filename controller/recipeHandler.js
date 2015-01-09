@@ -205,11 +205,25 @@ exports.comment = function(req,res){
         comment = params;
         comment.logTime = logTime();
         //设置用户信息
-        comment.author = {
+        
+        var androidId = params.androidId;
+        var androidAccount = params.androidAccount;
+        var androidHead = params.androidHead;
+        
+        if(androidId != null){
+            comment.author = {
             _id : req.session.user_id,
             account : req.session.account,
             head : req.session.head
         };
+        }else{
+            comment.author = {
+            _id : androidId,
+            account : androidAccount,
+            head : androidHead
+        };
+        }
+        
 
         console.log(comment);
 
