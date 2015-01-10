@@ -123,8 +123,16 @@ AttentionsHandler.listAll=function(req,res){
 
 
 AttentionsHandler.checkAttention=function (req, res) {
+    var userId;
     var friendId = req.param('friendId');
-    var userId = req.session.user_id;
+    var androidId = req.param('androidId');
+    if(androidId != null){
+        userId = androidId;
+    }else{
+        userId = req.session.user_id;
+    }
+    
+    //var userId = req.session.user_id;
     //var userId = "5464a134462eaef3480abb39";
     AttentionsDao.check(userId,friendId,function (err1, attention) {
         console.log(attention.length);
@@ -149,10 +157,20 @@ AttentionsHandler.addAttentions=function(req,res){
     friends.account = friendAccount;
     friends.head = friendHead;
 
-
-    var userId = req.session.user_id;
-    var userAccount = req.session.account;
-    var userHead = req.session.head;
+    var androidId = params.androidId;
+    var androidAccount = params.androidAccount;
+    var androidHead = params.androidHead;
+    
+    if(androidId != null){
+        var userId = androidId;
+        var userAccount = androidAccount;
+        var userHead = androidHead;
+    }else{
+        var userId = req.session.user_id;
+        var userAccount = req.session.account;
+        var userHead = req.session.head;
+    }
+    
     var fans={};
     fans._id=userId;
     fans.account = userAccount;
@@ -202,9 +220,20 @@ AttentionsHandler.deleteAttentions=function(req,res){
     friends.account = friendAccount;
     friends.head = friendHead;
 
-    var userId = req.session.user_id;
-    var userAccount = req.session.account;
-    var userHead = req.session.head;
+    var androidId = params.androidId;
+    var androidAccount = params.androidAccount;
+    var androidHead = params.androidHead;
+    
+    if(androidId != null){
+        var userId = androidId;
+        var userAccount = androidAccount;
+        var userHead = androidHead;
+    }else{
+        var userId = req.session.user_id;
+        var userAccount = req.session.account;
+        var userHead = req.session.head;
+    }
+    
     var fans={};
     fans._id=userId;
     fans.account = userAccount;
