@@ -604,6 +604,7 @@ function getTime(){
 }
 
 TopicHandler.upload = function(req,res){
+    console.log(req);
     var form = new formidable.IncomingForm();
     form.uploadDir = "./../upload/temp/";//改变临时目录
     form.parse(req, function(error, fields, files){
