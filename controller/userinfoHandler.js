@@ -90,7 +90,8 @@ UserinfoHandler.login=function(req,res){
                 req.session.password = user.password;
                 req.session.head = user.head;
                 console.log('登录成功---user_id:'+req.session.user_id);
-                res.json({message:"Login Successful！",user:user});
+                var id =req.sessionID;
+                res.json({message:"Login Successful！",user:user,sessionId:id});
 
                 //res.writeHead(200, {
                 //    "Content-Type": "text/plain;charset=utf-8"
