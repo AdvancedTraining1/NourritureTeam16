@@ -133,11 +133,23 @@ exports.create = function (req, res){
         console.log("-------"+req.session);
         console.log("-------"+JSON.stringify(req.session));
 
-        recipe.author = {
+        var androidId = params.androidId;
+        var androidAccount = params.androidAccount;
+        var androidHead = params.androidHead;
+        
+        if(androidId != null){
+            recipe.author = {
+            _id : androidId,
+            account : androidAccount,
+            head : androidHead
+        };
+        }else{
+            recipe.author = {
             _id : req.session.user_id,
             account : req.session.account,
             head : req.session.head
         };
+        }
 
         RecipeDao.create(recipe,function (err, recipes) {
             if(err){
