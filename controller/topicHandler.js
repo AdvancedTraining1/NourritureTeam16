@@ -631,6 +631,8 @@ TopicHandler.upload = function(req,res){
                     res.write(err+"\n");
                     res.end();
                 }
+                
+                console.log(res);
                 res.end("upload/"+fName);
             });
         }
