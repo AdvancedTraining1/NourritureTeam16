@@ -261,7 +261,13 @@ exports.collect = function (req,res) {
         var collect = new CollectModel();
         collect = params;
         collect.logTime = logTime();
-        collect.userId = req.session.user_id;
+        
+        var androidId = params.androidId;
+        if(androidId != null){
+            collect.userId = androidId;
+        }else{
+            collect.userId = req.session.user_id;
+        }
 
         CollectDao.create(collect,function (err, collect) {
             if(!err){
@@ -338,8 +344,14 @@ exports.listProduct = function(req,res){
 };
 
 exports.checkCollect = function(req,res){
+    var userId;
     var recipeId = req.param('recipeId');
-    var userId = req.session.user_id;
+    var androidId = req.param('androidId');
+    if(androidId != null){
+        userId = androidId;
+    }else{
+        userId = req.session.user_id;
+    }
     CollectDao.check(userId,recipeId,function (err1, collect) {
         console.log(collect.length);
         if(collect.length != 0){
