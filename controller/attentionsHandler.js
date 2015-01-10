@@ -247,9 +247,20 @@ AttentionsHandler.lookFriendStatusRecipe=function(req,res){
     console.log("查看好友动态---菜谱");
 
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
-    var sessionId=req.session.user_id;
+    //var sessionId=req.session.user_id;
     var pageNo = req.param('pageNo');
     var pageSize = req.param('pageSize');
+    
+    var androidId = params.androidId;
+    var androidAccount = params.androidAccount;
+    var androidHead = params.androidHead;
+    if(androidId != null){
+        var sessionId=androidId;
+    
+    }else{
+        var sessionId=req.session.user_id;
+
+    }
 
     AttentionsDao.lookFriendStatusRecipe(sessionId,pageNo,pageSize,function (err, recipes) {
          console.log(recipes);
