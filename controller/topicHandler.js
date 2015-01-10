@@ -166,7 +166,8 @@ TopicHandler.uploadProduct = function(req, res){
         var picture = params.picture;
         var topic_id = params.topic_id;
         var story = params.story;
-
+        
+        console.log("session test-----------"+req.session.user_id);
 
         var topicUpload = new TopicUploadModel({
             topic_id: topic_id,
