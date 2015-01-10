@@ -248,20 +248,19 @@ AttentionsHandler.lookFriendStatusRecipe=function(req,res){
 
     //var sessionId="5464a134462eaef3480abb39";//ZHAI id
     //var sessionId=req.session.user_id;
-    var pageNo = req.param('pageNo');
-    var pageSize = req.param('pageSize');
+    //var pageNo = req.param('pageNo');
+    //var pageSize = req.param('pageSize');
+    var pageNo=1;
+    var pageSize=10;
     
-    var androidId = params.androidId;
-    var androidAccount = params.androidAccount;
-    var androidHead = params.androidHead;
+    var sessionId;
+    var androidId = req.param('androidId');
     if(androidId != null){
-        var sessionId=androidId;
-    
+        sessionId = androidId;
     }else{
-        var sessionId=req.session.user_id;
-
+        sessionId = req.session.user_id;
     }
-
+    
     AttentionsDao.lookFriendStatusRecipe(sessionId,pageNo,pageSize,function (err, recipes) {
          console.log(recipes);
          AttentionsDao.getFriendStatusRecipeNum(sessionId,function(err2,num){
