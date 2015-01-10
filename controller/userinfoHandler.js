@@ -69,6 +69,7 @@ UserinfoHandler.login=function(req,res){
     });
     // 数据接收完毕，执行回调函数
     req.addListener("end", function () {
+        console.log(req);
         var params = querystring.parse(postData);
         console.log("登陆handler------params:" + params);
         console.log(params);
