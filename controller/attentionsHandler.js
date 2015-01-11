@@ -124,15 +124,16 @@ AttentionsHandler.listAll=function(req,res){
 
 AttentionsHandler.checkAttention=function (req, res) {
     var userId;
-    
-    var androidId = params.androidId;
+    userId = req.session.user_id;
+    var friendId = req.param('friendId');
+    /*var androidId = params.androidId;
     if(androidId != null){
         userId = androidId;
         var friendId = params.friendId;
     }else{
         userId = req.session.user_id;
         var friendId = req.param('friendId');
-    }
+    }*/
     
     //var userId = req.session.user_id;
     //var userId = "5464a134462eaef3480abb39";
@@ -150,7 +151,7 @@ AttentionsHandler.checkAttention=function (req, res) {
 
 AttentionsHandler.addAttentions=function(req,res){
     console.log("关注");
-    
+    /*
     var androidId = params.androidId;
     var androidAccount = params.androidAccount;
     var androidHead = params.androidHead;
@@ -174,7 +175,14 @@ AttentionsHandler.addAttentions=function(req,res){
         var friendHead = req.param('friendHead');
 
     }
-    
+    */
+    var friendId = req.param('friendId');
+    var friendAccount = req.param('friendAccount');
+    var friendHead = req.param('friendHead');
+
+    var userId = req.session.user_id;
+    var userAccount = req.session.account;
+    var userHead = req.session.head;
     
     var friends = {};
     friends._id = friendId;
@@ -222,7 +230,7 @@ AttentionsHandler.addAttentions=function(req,res){
 AttentionsHandler.deleteAttentions=function(req,res){
     console.log("取消关注");
     
-    var androidId = params.androidId;
+    /*var androidId = params.androidId;
     var androidAccount = params.androidAccount;
     var androidHead = params.androidHead;
     
@@ -244,7 +252,14 @@ AttentionsHandler.deleteAttentions=function(req,res){
         var friendAccount = req.param('friendAccount');
         var friendHead = req.param('friendHead');
 
-    }
+    }*/
+    var friendId = req.param('friendId');
+    var friendAccount = req.param('friendAccount');
+    var friendHead = req.param('friendHead');
+
+    var userId = req.session.user_id;
+    var userAccount = req.session.account;
+    var userHead = req.session.head;
     
     
     var friends = {};
