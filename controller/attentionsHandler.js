@@ -124,12 +124,14 @@ AttentionsHandler.listAll=function(req,res){
 
 AttentionsHandler.checkAttention=function (req, res) {
     var userId;
-    var friendId = req.param('friendId');
-    var androidId = req.param('androidId');
+    
+    var androidId = params.androidId;
     if(androidId != null){
         userId = androidId;
+        var friendId = params.friendId;
     }else{
         userId = req.session.user_id;
+        var friendId = req.param('friendId');
     }
     
     //var userId = req.session.user_id;
@@ -148,15 +150,7 @@ AttentionsHandler.checkAttention=function (req, res) {
 
 AttentionsHandler.addAttentions=function(req,res){
     console.log("关注");
-    var friendId = req.param('friendId');
-    var friendAccount = req.param('friendAccount');
-    var friendHead = req.param('friendHead');
-
-    var friends = {};
-    friends._id = friendId;
-    friends.account = friendAccount;
-    friends.head = friendHead;
-
+    
     var androidId = params.androidId;
     var androidAccount = params.androidAccount;
     var androidHead = params.androidHead;
@@ -165,11 +159,27 @@ AttentionsHandler.addAttentions=function(req,res){
         var userId = androidId;
         var userAccount = androidAccount;
         var userHead = androidHead;
+        
+        var friendId = params.friendId;
+        var friendAccount = params.friendAccount;
+        var friendHead = params.friendHead;
+       
     }else{
         var userId = req.session.user_id;
         var userAccount = req.session.account;
         var userHead = req.session.head;
+        
+        var friendId = req.param('friendId');
+        var friendAccount = req.param('friendAccount');
+        var friendHead = req.param('friendHead');
+
     }
+    
+    
+    var friends = {};
+    friends._id = friendId;
+    friends.account = friendAccount;
+    friends.head = friendHead;
     
     var fans={};
     fans._id=userId;
@@ -211,15 +221,7 @@ AttentionsHandler.addAttentions=function(req,res){
 
 AttentionsHandler.deleteAttentions=function(req,res){
     console.log("取消关注");
-    var friendId = req.param('friendId');
-    var friendAccount = req.param('friendAccount');
-    var friendHead = req.param('friendHead');
-
-    var friends = {};
-    friends._id = friendId;
-    friends.account = friendAccount;
-    friends.head = friendHead;
-
+    
     var androidId = params.androidId;
     var androidAccount = params.androidAccount;
     var androidHead = params.androidHead;
@@ -228,11 +230,27 @@ AttentionsHandler.deleteAttentions=function(req,res){
         var userId = androidId;
         var userAccount = androidAccount;
         var userHead = androidHead;
+        
+        var friendId = params.friendId;
+        var friendAccount = params.friendAccount;
+        var friendHead = params.friendHead;
+       
     }else{
         var userId = req.session.user_id;
         var userAccount = req.session.account;
         var userHead = req.session.head;
+        
+        var friendId = req.param('friendId');
+        var friendAccount = req.param('friendAccount');
+        var friendHead = req.param('friendHead');
+
     }
+    
+    
+    var friends = {};
+    friends._id = friendId;
+    friends.account = friendAccount;
+    friends.head = friendHead;
     
     var fans={};
     fans._id=userId;
